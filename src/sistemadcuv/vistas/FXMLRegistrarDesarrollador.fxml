@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="549.0" prefWidth="405.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLRegistrarDesarrolladorController">
+   <children>
+      <Label layoutX="32.0" layoutY="33.0" text="Registrar desarrollador">
+         <font>
+            <Font name="Times New Roman" size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="34.0" layoutY="123.0" text="Nombre Completo" />
+      <Label layoutX="33.0" layoutY="182.0" text="Semestre" />
+      <Label layoutX="31.0" layoutY="245.0" text="Matricula " />
+      <Label layoutX="31.0" layoutY="302.0" text="Correo electronio" />
+      <Label layoutX="35.0" layoutY="370.0" text="Contraseña" />
+      <TextField layoutX="71.0" layoutY="151.0" prefHeight="25.0" prefWidth="263.0" />
+      <TextField layoutX="71.0" layoutY="212.0" prefHeight="25.0" prefWidth="263.0" />
+      <TextField layoutX="71.0" layoutY="276.0" prefHeight="25.0" prefWidth="263.0" />
+      <TextField layoutX="71.0" layoutY="334.0" prefHeight="25.0" prefWidth="263.0" />
+      <TextField layoutX="71.0" layoutY="400.0" prefHeight="25.0" prefWidth="263.0" />
+      <Button layoutX="281.0" layoutY="498.0" mnemonicParsing="false" onAction="#clicCancelar" text="Cancelar" />
+      <Button layoutX="202.0" layoutY="498.0" mnemonicParsing="false" onAction="#clicGuardar" text="Guardar" />
+   </children>
+</AnchorPane>

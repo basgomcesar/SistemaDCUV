@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="802.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeParticipantesParaBitacoraController">
+   <children>
+      <TableView editable="true" layoutX="106.0" layoutY="115.0" minHeight="-Infinity" prefHeight="190.0" prefWidth="676.0" style="-fx-background-radius: 10; -fx-background-color: transparent;">
+         <columns>
+            <TableColumn prefWidth="338.0" sortType="DESCENDING" text="Nombre" />
+            <TableColumn prefWidth="369.0" text="Correo" />
+         </columns>
+         <effect>
+            <DropShadow color="#97a1a0" height="6.17" radius="2.585" width="6.17" />
+         </effect>
+      </TableView>
+      <TextField layoutX="106.0" layoutY="70.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#97a1a0" height="9.41" radius="4.205" width="9.41" />
+         </effect>
+      </TextField>
+      <Label layoutX="88.0" layoutY="14.0" prefHeight="45.0" prefWidth="336.0" text="Bitacora de Cambios">
+         <font>
+            <Font name="Arial Bold" size="32.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="744.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Imágenes/RECURSOS/8666609_user_icon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbUsuarioActivo" layoutX="654.0" layoutY="24.0" prefHeight="25.0" prefWidth="102.0" text="Usuario XYZ">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="437.0" layoutY="29.0" text="General">
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" color="#aab7b9" height="114.28" radius="62.910000000000004" spread="0.13" width="139.36" />
+         </effect>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="518.0" layoutY="30.0" text="Por desarrollador" underline="true">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Pane prefHeight="450.0" prefWidth="71.0" style="-fx-background-color: #F9FAFB; -fx-border-radius: 10; -fx-background-radius: 30;">
+         <children>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="17.0" layoutY="162.0" onMouseClicked="#btnSolicitudes" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../recursos/solicitudesIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="37.0" layoutX="18.0" layoutY="33.0" onMouseClicked="#btnActividades" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../recursos/iconActividades.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="18.0" layoutY="99.0" onMouseClicked="#btnCambios" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../recursos/cambiosIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="19.0" layoutY="240.0" onMouseClicked="#btnDefectos" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../recursos/defectosIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="19.0" layoutY="308.0" onMouseClicked="#btnParticipantes" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../recursos/participantesIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="30.0" layoutX="19.0" layoutY="371.0" onMouseClicked="#btnBitacora" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../recursos/iconBitacorasSelected.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="3.0" layoutY="64.0" text="Actividades" textFill="#000000c1" />
+            <Label layoutX="8.0" layoutY="128.0" text="Cambios" />
+            <Label layoutX="7.0" layoutY="199.0" text="Solicitudes" />
+            <Label layoutX="8.0" layoutY="271.0" text="Defectos" />
+            <Label layoutX="2.0" layoutY="332.0" text="Participantes" />
+            <Label layoutX="13.0" layoutY="401.0" text="Bitacora" />
+         </children>
+      </Pane>
+   </children>
+</Pane>
