@@ -39,8 +39,10 @@ import javafx.stage.Stage;
 import sistemadcuv.modelo.dao.ProyectoDAO;
 import sistemadcuv.utils.Utilidades;
 import javafx.util.Callback;
+import sistemadcuv.modelo.dao.DesarrolladorDAO;
+import sistemadcuv.observador.ObservadorDesarrolladores;
 
-public class FXMLParticipantesDelProyectoController implements Initializable {
+public class FXMLParticipantesDelProyectoController implements Initializable,ObservadorDesarrolladores {
 
 
     @FXML
@@ -149,7 +151,7 @@ public class FXMLParticipantesDelProyectoController implements Initializable {
             Parent vista = load.load();
             Scene escena = new Scene(vista);
             FXMLRegistrarDesarrolladorController controlador = load.getController();
-            controlador.inicializarInformacion(responsableSesion.getIdProyecto());
+            controlador.inicializarInformacion(responsableSesion.getIdProyecto(),this);
             Stage escenario = new Stage();
             escenario.setScene(escena);
             escenario.setTitle("Registrar desarrollador");
@@ -179,7 +181,7 @@ public class FXMLParticipantesDelProyectoController implements Initializable {
                                 if(Utilidades.mostrarDialogoConfirmacion("Alerta de confirmación ", 
                                         "¿Esta seguro de eliminar al desarrollador " + desarrollador.getNombreCompleto()+
                                                 "? ya que al eliminar no podra deshacer los cambios"))
-                                    eliminarDesarrollador();
+                                    eliminarDesarrollador(desarrollador);
                         });
                         HBox managebtn = new HBox( deleteIcon);
                         managebtn.setStyle("-fx-alignment:center");
@@ -219,7 +221,31 @@ public class FXMLParticipantesDelProyectoController implements Initializable {
             tvDesarrolladores.setItems(sortedDesarrolladores);
         }
     }
-    private void eliminarDesarrollador(){
-        
+    private void eliminarDesarrollador(Desarrollador desarrollador){
+        HashMap<String, Object> respuesta = DesarrolladorDAO.verificarAsignaciones(desarrollador);
+        int numeroDeAsignaciones = (int) respuesta.get("asignaciones");
+        if(numeroDeAsignaciones > 0){
+            Utilidades.mostrarAletarSimple(
+                    "Advertencia asignaciones",
+                    "No puede eliminar un desarrollador con asignaciones PENDIENTES ",
+                    Alert.AlertType.INFORMATION);
+        }else{
+             respuesta = DesarrolladorDAO.eliminarDesarrollador(desarrollador);
+             if(!((boolean)respuesta.get("error"))){
+                 Utilidades.mostrarAletarSimple("Mensaje de exito", 
+                         (String) respuesta.get("mensaje"), 
+                         Alert.AlertType.INFORMATION);
+                 cargarInformacion();
+             }else{
+                 Utilidades.mostrarAletarSimple("Mensaje de error",
+                         (String)respuesta.get("mensaje"), 
+                         Alert.AlertType.INFORMATION);
+             }
+        }
+    }
+
+    @Override
+    public void operacionExitosa(String tipoOperacion, String nombre) {
+        cargarInformacion();
     }
 }

@@ -25,7 +25,6 @@ public class FXMLInicioSesionController implements Initializable {
     private TextField tfUsuario;
     @FXML
     private PasswordField tfContrasenia;
-    String formato = "zs[a-zA-Z0-9]+";
 
 
     @Override
@@ -43,8 +42,7 @@ public class FXMLInicioSesionController implements Initializable {
         if(!esCamposVacios()){
             String usuario = tfUsuario.getText().trim();
             String contrasenia = tfContrasenia.getText().trim();
-            if(esFormatoMatricula()){
-                
+            if(Utilidades.matriculaValida(usuario)){
                 usuarioAutentificado = DesarrolladorDAO.verificarSesionDesarrollador(usuario, contrasenia); 
                 Desarrollador desarrollador = (Desarrollador) usuarioAutentificado.get("desarrollador");
                 if(!(desarrollador== null))
@@ -82,9 +80,6 @@ public class FXMLInicioSesionController implements Initializable {
         return tfUsuario.getText().trim().isEmpty() || tfContrasenia.getText().trim().isEmpty();
     }
 
-    private boolean esFormatoMatricula() {
-        return tfUsuario.getText().matches(formato);
-    }
 
     private void irPantallaPrincipalDesarrollador(Desarrollador desarrollador) {
         Utilidades.mostrarAletarSimple("Bienvenida", "Bienvenido al sistema desarrollador "+
