@@ -45,6 +45,10 @@ public class Utilidades {
             return false;
         }
     }
+    public static boolean matriculaValida(String matricula){
+        String formato = "zs[a-zA-Z0-9]+";
+        return matricula.matches(formato);
+    }
     
     public static boolean mostrarDialogoConfirmacion(String titulo, String mensaje) {
         Alert alertaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
