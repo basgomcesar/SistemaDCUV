@@ -1,5 +1,6 @@
 package sistemadcuv.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,8 +15,12 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -23,14 +28,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadcuv.modelo.dao.SolicitudDAO;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
 import sistemadcuv.modelo.pojo.SolicitudDeCambio;
+import sistemadcuv.observador.ObservadorSolicitudes;
 import sistemadcuv.utils.Utilidades;
 
-public class FXMLListadoDeSolicitudesDeCambioController implements Initializable {
+public class FXMLListadoDeSolicitudesDeCambioController implements Initializable, ObservadorSolicitudes {
 
     private Desarrollador desarrolladorSesion;
     private ResponsableDeProyecto responsableSesion;
@@ -58,6 +65,10 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
     private DatePicker dpFechaHasta;
     
     private ObservableList<SolicitudDeCambio> solicitudes;
+    private SolicitudDeCambio solicitudEdicion;
+    @FXML
+    private Button bRegistrar;
+    private int totalSolicitudes;
     
 
     @Override
@@ -71,8 +82,10 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
         cargarInformacionSolicitudes(desarrollador, responsable);
         if(desarrollador != null){
         lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
+        totalSolicitudes = solicitudes.size();
         } else{
-        lbUsuarioActivo.setText("Usuario: " + responsable.getNombreCompleto());    
+        lbUsuarioActivo.setText("Usuario: " + responsable.getNombreCompleto());
+        bRegistrar.setVisible(false);
         }
         
     }
@@ -212,6 +225,26 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
 
     @FXML
     private void btnRegistrarSolicitud(ActionEvent event) {
+        try{
+            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeSolicitudDeCambio.fxml");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+            FXMLRegistroDeSolicitudDeCambioController controller = loader.getController();
+            controller.inicializarFormulario(desarrolladorSesion, solicitudEdicion, totalSolicitudes, this);
+            
+            Stage escenario = new Stage();
+            escenario.setScene(escena);
+            escenario.setTitle("Registrar Solicitud de Cambio");
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void operacionExitosa(String tipoOperacion, String nombre) {
+        cargarInformacionSolicitudes(desarrolladorSesion, responsableSesion);
     }
     
 }

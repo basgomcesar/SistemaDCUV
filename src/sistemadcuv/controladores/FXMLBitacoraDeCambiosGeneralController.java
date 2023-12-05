@@ -42,7 +42,6 @@ import sistemadcuv.modelo.dao.CambioDAO;
 import sistemadcuv.modelo.pojo.Cambio;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
-import sistemadcuv.modelo.pojo.SolicitudDeCambio;
 import sistemadcuv.utils.Utilidades;
 
 
