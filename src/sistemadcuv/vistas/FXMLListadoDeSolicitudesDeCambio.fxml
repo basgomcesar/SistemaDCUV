@@ -53,7 +53,7 @@
             <Font name="Arial Bold" size="32.0" />
          </font>
       </Label>
-      <Button layoutX="749.0" layoutY="386.0" mnemonicParsing="false" onAction="#btnRegistrarSolicitud" prefHeight="38.0" prefWidth="39.0" style="-fx-background-color: #426B1F; -fx-background-radius: 50;" text="+" textFill="WHITE">
+      <Button fx:id="bRegistrar" layoutX="749.0" layoutY="386.0" mnemonicParsing="false" onAction="#btnRegistrarSolicitud" prefHeight="38.0" prefWidth="39.0" style="-fx-background-color: #426B1F; -fx-background-radius: 50;" text="+" textFill="WHITE">
          <effect>
             <DropShadow color="#a5abaa" height="0.0" offsetY="1.0" radius="0.0" width="0.0" />
          </effect>
