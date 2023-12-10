@@ -15,10 +15,14 @@ public class ResponsableDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idResponsableDelProyecto, nombreCompleto, "+
-                        "numeroDePersonal, correoElectronico, contrasenia, Proyecto_idProyecto, nombre \n" +
-                        "FROM ResponsableDelProyecto, proyecto \n" +
-                        "WHERE numeroDePersonal = ? AND contrasenia = ? AND  Proyecto_idProyecto = idProyecto";
+                String consulta = "SELECT idResponsableDelProyecto, nombreCompleto, " +
+"                        numeroDePersonal, correoElectronico, contrasenia, Proyecto_idProyecto, nombre" +
+"                        FROM ResponsableDelProyecto, proyecto,estadoUsuario\n" +
+"                        WHERE numeroDePersonal = ?" +
+"			 AND idEstadoUsuario = estadoUsuario_idEstadoUsuario\n" +
+"                        AND contrasenia = ?" +
+"                        AND  Proyecto_idProyecto = idProyecto\n" +
+"                        AND nombreEstado = 'ACTIVO'";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, usuario);
                 prepararSentencia.setString(2, contrasenia);

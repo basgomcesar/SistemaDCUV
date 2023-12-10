@@ -31,8 +31,8 @@ public class FXMLInicioSesionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //PROVICIONAL
-        tfUsuario.setText("zs20123456");
-        tfContrasenia.setText("1234");
+        tfUsuario.setText("zs17345678");
+        tfContrasenia.setText("123");
         
     }    
 

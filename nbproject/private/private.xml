@@ -2,8 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="PROGRAMACION">
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/RegistroDeSolicitudDeCambioController.java</file>
+        <group>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/CambioDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/DesarrolladorDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ActividadDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ProyectoDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ResponsableDAO.java</file>
         </group>
     </open-files>
 </project-private>

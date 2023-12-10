@@ -15,11 +15,11 @@ public class DesarrolladorDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idDesarrollador, nombreCompleto, "+
-                        "semestre, matricula ,correo , estado, contrasenia, Proyecto_idProyecto,nombre \n" +
-                        "FROM " +
-                        "desarrollador, proyecto \n" +
-                        "WHERE matricula = ? AND contrasenia = ? AND Proyecto_idProyecto = idProyecto";
+                String consulta = "SELECT idDesarrollador, nombreCompleto, " +
+"semestre, matricula ,correo , nombreEstado as estado, contrasenia, Proyecto_idProyecto,nombre " +
+"FROM " +
+"desarrollador, proyecto, estadoUsuario " +
+"WHERE matricula = ? AND contrasenia = ? AND Proyecto_idProyecto = idProyecto and nombreEstado = 'Activo'";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setString(1, usuario);
                 prepararSentencia.setString(2, contrasenia);
