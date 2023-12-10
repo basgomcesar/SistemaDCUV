@@ -93,4 +93,42 @@ public class SolicitudDAO {
         }
         return respuesta;
     }
+    
+    public static HashMap<String, Object> registrarSolicitudDeCambio(SolicitudDeCambio nuevaSolicitud){
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "INSERT INTO solicituddecambio(nombreSolicitudDeCambio, descripcion, " +
+                    "numeroSolicitud, razon, estatus, fechaCreacion, impacto,accionPropuesta, Desarrollador_idDesarrollador) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, nuevaSolicitud.getNombre());
+                prepararSentencia.setString(2, nuevaSolicitud.getDescripcion());
+                prepararSentencia.setInt(3, nuevaSolicitud.getNumSolicitud());
+                prepararSentencia.setString(4, nuevaSolicitud.getRazon());
+                prepararSentencia.setString(5, nuevaSolicitud.getEstatus());
+                prepararSentencia.setString(6, nuevaSolicitud.getFechaRegistro());
+                prepararSentencia.setString(7, nuevaSolicitud.getImpacto());
+                prepararSentencia.setString(8, nuevaSolicitud.getAccionPropuesta());
+                prepararSentencia.setInt(9, nuevaSolicitud.getIdDesarrollador());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                conexionBD.close();
+                if(filasAfectadas == 1){
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "Solicitud de cambio registrada");
+                }else{                    
+                    respuesta.put("mensaje", "Error al registrar");
+                }
+            }catch(SQLException ex){
+                respuesta.put("mensaje", "Error: " + ex.getMessage());
+            }
+        }else{
+            respuesta.put("mensaje", "Por el momento no hay conexion, "
+                    + "intentalo más tarde");
+        }
+        return respuesta;
+        
+    }
 }
