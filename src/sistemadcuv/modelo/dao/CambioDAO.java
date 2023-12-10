@@ -18,11 +18,12 @@ public class CambioDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta ="SELECT idCambio, nombre, c.estado , DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio', "
-                        + "         DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin', \n" +
-                                    "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador\n" +
-                                    "FROM cambio c\n" +
-                                    "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador";
+                String consulta ="SELECT idCambio, nombre, ea.nombreEstado as estado, DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio', " +
+"                            DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin'," +
+"                            Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador \n" +
+"                            FROM cambio c \n" +
+"                            INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador \n" +
+"									INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Cambio> cambios = new ArrayList();
@@ -56,12 +57,13 @@ public class CambioDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta ="SELECT idCambio, nombre, c.estado , DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio', "
-                        + "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin', \n" +
-                          "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador\n" +
-                          "FROM cambio c\n" +
-                          "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador "
-                        + "WHERE idDesarrollador = ?";
+                String consulta ="SELECT idCambio, nombre, ea.nombreEstado as estado , DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio'," +
+                    "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin', " +
+                    "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador " +
+                    "FROM cambio c " +
+                    "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador " +
+                    "INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion " +
+                    "WHERE idDesarrollador = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idDesarrollador);
                 ResultSet resultado = prepararSentencia.executeQuery();

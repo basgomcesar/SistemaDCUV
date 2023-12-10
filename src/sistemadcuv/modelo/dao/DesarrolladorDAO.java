@@ -16,10 +16,10 @@ public class DesarrolladorDAO {
         if(conexionBD != null){
             try {
                 String consulta = "SELECT idDesarrollador, nombreCompleto, " +
-                    "semestre, matricula ,correo , nombreEstado as estado, contrasenia, Proyecto_idProyecto,nombre " +
-                    "FROM " +
-                    "desarrollador, proyecto, estadoDesarrollador " +
-                    "WHERE matricula = ? AND contrasenia = ? AND Proyecto_idProyecto = idProyecto and nombreEstado = 'Activo'";
+"semestre, matricula ,correo , nombreEstado as estado, contrasenia, Proyecto_idProyecto,nombre " +
+"FROM " +
+"desarrollador, proyecto, estadoUsuario " +
+"WHERE matricula = ? AND contrasenia = ? AND Proyecto_idProyecto = idProyecto and nombreEstado = 'Activo'";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setString(1, usuario);
                 prepararSentencia.setString(2, contrasenia);

@@ -17,7 +17,7 @@ public class ProyectoDAO {
         if(conexionBD != null){
             try {
                 String consulta = "SELECT idDesarrollador, nombreCompleto, semestre, matricula, nombreEstado as estado, contrasenia, Proyecto_idProyecto, correo " +
-                    "FROM desarrollador, estadoDesarrollador " +
+                    "FROM desarrollador, estadoUsuario " +
                     "WHERE Proyecto_idProyecto = ? AND nombreestado = 'Activo'";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idProyecto);
