@@ -30,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sistemadcuv.interfaces.InitializableVentana;
 import sistemadcuv.modelo.dao.SolicitudDAO;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
@@ -37,7 +38,7 @@ import sistemadcuv.modelo.pojo.SolicitudDeCambio;
 import sistemadcuv.observador.ObservadorSolicitudes;
 import sistemadcuv.utils.Utilidades;
 
-public class FXMLListadoDeSolicitudesDeCambioController implements Initializable, ObservadorSolicitudes {
+public class FXMLListadoDeSolicitudesDeCambioController implements Initializable, ObservadorSolicitudes,InitializableVentana  {
 
     private Desarrollador desarrolladorSesion;
     private ResponsableDeProyecto responsableSesion;
@@ -76,6 +77,7 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
         configurarTabla();
     }
     
+    @Override
     public void inicializarInformacion(Desarrollador desarrollador, ResponsableDeProyecto responsable) {
         this.desarrolladorSesion = desarrollador;
         this.responsableSesion = responsable;
@@ -195,33 +197,64 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
     @FXML
     private void btnActividades(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaActividades(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeActividades.fxml",
+                "Listado de actividades");
     }
 
     @FXML
     private void btnCambios(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaListadoDeCambios(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeCambios.fxml",
+                "Listado de cambios");
     }
 
 
     @FXML
     private void btnDefectos(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaDefectos(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeDefectos.fxml",
+                "Listado de defectos");
     }
 
     @FXML
     private void btnParticipantes(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaParticipantes(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase,
+                desarrolladorSesion,
+                responsableSesion,
+                "FXMLParticipantesDelProyecto.fxml",
+                "Participantes del proyecto");
     }
 
     @FXML
     private void btnBitacora(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaBitacoraGeneral(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLBitacoraDeCambiosGeneral.fxml",
+                "Bitacora general de cambios");
     }
+
+    @FXML
+    private void btnSolicitudes(MouseEvent event) {
+        Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeSolicitudesDeCambio.fxml",
+                "Listado de solicitudes de cambio");
+    }
+    
 
     @FXML
     private void btnRegistrarSolicitud(ActionEvent event) {

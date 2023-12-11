@@ -41,7 +41,7 @@
             <Font name="Berlin Sans FB Demi Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="437.0" layoutY="29.0" text="General">
+      <Label layoutX="437.0" layoutY="29.0" onMouseClicked="#btnBitacoraGeneral" text="General">
          <effect>
             <DropShadow blurType="ONE_PASS_BOX" color="#aab7b9" height="114.28" radius="62.910000000000004" spread="0.13" width="139.36" />
          </effect>

@@ -21,14 +21,14 @@
          </font>
       </Label>
       <TextField fx:id="tfBarraBusqueda" layoutX="86.0" layoutY="72.0" prefHeight="30.0" prefWidth="226.0" promptText="Buscar por nombre" style="-fx-background-radius: 30;" />
-      <DatePicker fx:id="dpDesde" layoutX="460.0" layoutY="74.0" prefHeight="25.0" prefWidth="159.0" promptText="Desde" />
-      <DatePicker fx:id="dpHasta" layoutX="649.0" layoutY="74.0" prefHeight="25.0" prefWidth="163.0" promptText="Hasta" />
-      <Label fx:id="lbUsuarioActivo" layoutX="731.0" layoutY="31.0" text="Usuario XXX">
+      <DatePicker fx:id="dpDesde" layoutX="437.0" layoutY="74.0" prefHeight="25.0" prefWidth="159.0" promptText="Desde" />
+      <DatePicker fx:id="dpHasta" layoutX="628.0" layoutY="74.0" prefHeight="25.0" prefWidth="163.0" promptText="Hasta" />
+      <Label fx:id="lbUsuarioActivo" layoutX="690.0" layoutY="32.0" text="Usuario XXX">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TableView layoutX="88.0" layoutY="120.0" prefHeight="281.0" prefWidth="739.0" style="-fx-background-color: transparent;">
+      <TableView layoutX="88.0" layoutY="120.0" prefHeight="281.0" prefWidth="697.0" style="-fx-background-color: transparent;">
         <columns>
           <TableColumn fx:id="colNombre" prefWidth="170.6666717529297" text="Nombre" />
           <TableColumn fx:id="colEstatus" prefWidth="89.33331298828125" text="Estatus" />
@@ -37,7 +37,7 @@
             <TableColumn fx:id="colFechaFin" prefWidth="149.99995930989587" text="Fecha Fin" />
         </columns>
       </TableView>
-      <Button layoutX="772.0" layoutY="401.0" mnemonicParsing="false" onAction="#clicAgregarActividad" prefHeight="38.0" prefWidth="39.0" style="-fx-background-color: #426B1F; -fx-background-radius: 50;" text="+" textFill="WHITE">
+      <Button layoutX="745.0" layoutY="401.0" mnemonicParsing="false" onAction="#clicAgregarActividad" prefHeight="38.0" prefWidth="39.0" style="-fx-background-color: #426B1F; -fx-background-radius: 50;" text="+" textFill="WHITE">
          <effect>
             <DropShadow color="#a5abaa" height="0.0" offsetY="1.0" radius="0.0" width="0.0" />
          </effect>

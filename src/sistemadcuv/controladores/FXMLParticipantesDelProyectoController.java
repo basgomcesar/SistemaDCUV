@@ -39,10 +39,11 @@ import javafx.stage.Stage;
 import sistemadcuv.modelo.dao.ProyectoDAO;
 import sistemadcuv.utils.Utilidades;
 import javafx.util.Callback;
+import sistemadcuv.interfaces.InitializableVentana;
 import sistemadcuv.modelo.dao.DesarrolladorDAO;
 import sistemadcuv.observador.ObservadorDesarrolladores;
 
-public class FXMLParticipantesDelProyectoController implements Initializable,ObservadorDesarrolladores {
+public class FXMLParticipantesDelProyectoController implements Initializable,ObservadorDesarrolladores,InitializableVentana  {
 
 
     @FXML
@@ -68,6 +69,7 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
         configurarTabla();
     }    
 
+    @Override
     public void inicializarInformacion(Desarrollador desarrolladorSesion, ResponsableDeProyecto responsableSesion) {
         this.desarrolladorSesion = desarrolladorSesion;
         this.responsableSesion = responsableSesion;
@@ -110,38 +112,62 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
     @FXML
     private void btnActividades(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaActividades(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeActividades.fxml",
+                "Listado de actividades");
     }
 
     @FXML
     private void btnCambios(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaListadoDeCambios(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeCambios.fxml",
+                "Listado de cambios");
     }
 
 
     @FXML
     private void btnDefectos(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaDefectos(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeDefectos.fxml",
+                "Listado de defectos");
     }
 
     @FXML
     private void btnParticipantes(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaParticipantes(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase,
+                desarrolladorSesion,
+                responsableSesion,
+                "FXMLParticipantesDelProyecto.fxml",
+                "Participantes del proyecto");
     }
 
     @FXML
     private void btnBitacora(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaBitacoraGeneral(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLBitacoraDeCambiosGeneral.fxml",
+                "Bitacora general de cambios");
     }
 
     @FXML
     private void btnSolicitudes(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irVentanaSolicitudes(escenarioBase, desarrolladorSesion, responsableSesion);
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeSolicitudesDeCambio.fxml",
+                "Listado de solicitudes de cambio");
     }
 
     @FXML
@@ -155,7 +181,11 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
             Stage escenario = new Stage();
             escenario.setScene(escena);
             escenario.setTitle("Registrar desarrollador");
-            escenario.showAndWait();
+            escenario.show();
+            escenario.setOnCloseRequest(event1 -> {
+                    event1.consume();
+                    controlador.clicCancelar(null);
+        });
         } catch (IOException ex) {
             Logger.getLogger(FXMLParticipantesDelProyectoController.class.getName()).log(Level.SEVERE, null, ex);
         }        
@@ -248,4 +278,5 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
     public void operacionExitosa(String tipoOperacion, String nombre) {
         cargarInformacion();
     }
+
 }

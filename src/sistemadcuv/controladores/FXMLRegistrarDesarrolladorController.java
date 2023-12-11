@@ -1,23 +1,30 @@
 package sistemadcuv.controladores;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sistemadcuv.modelo.dao.DesarrolladorDAO;
+import sistemadcuv.modelo.dao.MateriaDAO;
 import sistemadcuv.modelo.pojo.Desarrollador;
+import sistemadcuv.modelo.pojo.Materia;
 import sistemadcuv.observador.ObservadorDesarrolladores;
 import sistemadcuv.utils.Utilidades;
 
-public class FXMLRegistrarDesarrolladorController implements Initializable {
-
+public class FXMLRegistrarDesarrolladorController {
+    private ObservableList<Materia> observableMaterias;
     private int idProyecto;
     @FXML
     private TextField tfNombreCompleto;
@@ -30,27 +37,33 @@ public class FXMLRegistrarDesarrolladorController implements Initializable {
     @FXML
     private Spinner<Integer> spSemestre;
     private ObservadorDesarrolladores observador;
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        configurarSppinerSemestre();
-    }    
+    @FXML
+    private ComboBox<Materia> cbMateria;
 
     public void inicializarInformacion(int idProyecto,ObservadorDesarrolladores observador) {
+        configurarSppinerSemestre();
+        cargarInformacionMaterias();
         this.idProyecto = idProyecto;
         this.observador = observador;
     }
-
+    private void cargarInformacionMaterias(){
+        HashMap<String, Object> resultado = MateriaDAO.obtenerMaterias();
+        if(!(boolean)resultado.get("error")){
+            observableMaterias = FXCollections.observableArrayList();
+            ArrayList<Materia> materias = (ArrayList<Materia>) resultado.get("materias");
+            observableMaterias.addAll(materias);
+            cbMateria.setItems(observableMaterias);
+        }else
+            Utilidades.mostrarAletarSimple("Error materias", 
+                    "Error al cargar materias", Alert.AlertType.ERROR);
+    }
     @FXML
-    private void clicCancelar(ActionEvent event) {
+    public void clicCancelar(ActionEvent event) {
         if(!hayCamposLlenos())
             cerrarVentana();
         else if (Utilidades.mostrarDialogoConfirmacion("Dialogo de confirmación",
                 "¿Desea cancelar el registro? tenga en cuenta  que se perdera la información"))
             cerrarVentana();
-            
     }
 
     @FXML
@@ -120,4 +133,5 @@ public class FXMLRegistrarDesarrolladorController implements Initializable {
             Utilidades.mostrarAletarSimple("Error al registrar", (String) resultado.get("mensaje"), 
                     Alert.AlertType.ERROR);
     }
+
 }

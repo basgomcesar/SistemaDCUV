@@ -85,8 +85,11 @@ public class FXMLInicioSesionController implements Initializable {
         Utilidades.mostrarAletarSimple("Bienvenida", "Bienvenido al sistema desarrollador "+
                 desarrollador.getNombreCompleto(), Alert.AlertType.INFORMATION);
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        Utilidades.irVentanaActividades(escenarioBase, desarrollador, null);
-        
+        Utilidades.irAVentana(escenarioBase, 
+                desarrollador, 
+                null,
+                "FXMLListadoDeActividades.fxml",
+                "Listado de actividades");
         
     }
 
@@ -94,7 +97,11 @@ public class FXMLInicioSesionController implements Initializable {
         Utilidades.mostrarAletarSimple("Bienvenida", "Bienvenido al sistema responsable "+
             responsable.getNombreCompleto(), Alert.AlertType.INFORMATION);
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();        
-        Utilidades.irVentanaActividades(escenarioBase, null, responsable);
+        Utilidades.irAVentana(escenarioBase, 
+                null, 
+                responsable,
+                "FXMLListadoDeActividades.fxml",
+                "Listado de actividades");
     }
     
 }

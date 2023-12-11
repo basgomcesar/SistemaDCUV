@@ -58,13 +58,13 @@ public class DesarrolladorDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta = "SELECT \n" +
-                    "    (SELECT COUNT(*) FROM Cambio WHERE Desarrollador_idDesarrollador = d.idDesarrollador AND estado = 'pendiente') + \n" +
-                    "    (SELECT COUNT(*) FROM SolicitudDeCambio WHERE Desarrollador_idDesarrollador = d.idDesarrollador AND estatus = 'pendiente') + \n" +
-                    "    (SELECT COUNT(*) FROM Defecto WHERE Desarrollador_idDesarrollador = d.idDesarrollador AND estado = 'pendiente') + \n" +
-                    "    (SELECT COUNT(*) FROM Actividad WHERE Desarrollador_idDesarrollador = d.idDesarrollador AND estado = 'pendiente') AS total_asignaciones_pendientes \n" +
-                    "FROM Desarrollador d \n" +
-                    "WHERE d.idDesarrollador = ?;";
+                String consulta = "select " +
+                    "(select count(*) from cambio c,estadoAsignacion ea where ea.idEstadoAsignacion = c.EstadoAsignacion_idEstadoAsignacion and c.Desarrollador_idDesarrollador = d.idDesarrollador and ea.nombreEstado = 'pendiente')+ " +
+                    "(select count(*) from actividad a,estadoAsignacion ea where ea.idEstadoAsignacion = a.EstadoAsignacion_idEstadoAsignacion and a.Desarrollador_idDesarrollador = d.idDesarrollador and ea.nombreEstado = 'pendiente') "+
+                    " AS total_asignaciones_pendientes " +
+                    "FROM desarrollador d " +
+                    "where " +
+                    " d.idDesarrollador = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, desarrollador.getIdDesarrollador());
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -90,7 +90,7 @@ public class DesarrolladorDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta = "UPDATE desarrollador SET estado = 'INACTIVO'"  +
+                String consulta = "UPDATE desarrollador SET EstadoDesarrollador_idEstadoDesarrollador = 2"  +
                                   "WHERE idDesarrollador = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, desarrollador.getIdDesarrollador());
