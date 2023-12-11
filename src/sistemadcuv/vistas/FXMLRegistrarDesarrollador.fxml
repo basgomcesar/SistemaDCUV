@@ -10,25 +10,38 @@
 
 <AnchorPane id="AnchorPane" prefHeight="549.0" prefWidth="405.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLRegistrarDesarrolladorController">
    <children>
-      <Label layoutX="32.0" layoutY="33.0" text="Registrar desarrollador">
+      <Label layoutX="25.0" layoutY="14.0" text="Registrar desarrollador">
          <font>
             <Font name="Times New Roman" size="27.0" />
          </font>
       </Label>
-      <Label layoutX="25.0" layoutY="123.0" text="Nombre Completo" />
-      <Label layoutX="25.0" layoutY="182.0" text="Semestre" />
+      <Label layoutX="25.0" layoutY="134.0" text="Nombre Completo" />
+      <Label layoutX="26.0" layoutY="193.0" text="Semestre" />
       <Label layoutX="25.0" layoutY="299.0" text="Matricula " />
       <Label layoutX="25.0" layoutY="355.0" text="Correo electronio" />
       <Label layoutX="25.0" layoutY="417.0" text="Contraseña" />
-      <TextField fx:id="tfNombreCompleto" layoutX="71.0" layoutY="151.0" prefHeight="25.0" prefWidth="263.0" />
+      <TextField fx:id="tfNombreCompleto" layoutX="71.0" layoutY="167.0" prefHeight="25.0" prefWidth="263.0" />
       <TextField fx:id="tfMatricula" layoutX="71.0" layoutY="327.0" prefHeight="25.0" prefWidth="263.0" />
       <TextField fx:id="tfCorreo" layoutX="70.0" layoutY="379.0" prefHeight="25.0" prefWidth="263.0" />
       <TextField fx:id="tfContrasenia" layoutX="70.0" layoutY="451.0" prefHeight="25.0" prefWidth="263.0" />
       <Button layoutX="281.0" layoutY="498.0" mnemonicParsing="false" onAction="#clicCancelar" text="Cancelar" />
       <Button layoutX="202.0" layoutY="498.0" mnemonicParsing="false" onAction="#clicGuardar" text="Guardar" />
-      <Spinner fx:id="spSemestre" layoutX="71.0" layoutY="210.0" prefHeight="25.0" prefWidth="53.0" />
-      <Label layoutX="133.0" layoutY="214.0" text="Semestre" />
+      <Spinner fx:id="spSemestre" layoutX="71.0" layoutY="218.0" prefHeight="25.0" prefWidth="53.0" />
+      <Label layoutX="136.0" layoutY="222.0" text="Semestre" />
       <ComboBox fx:id="cbMateria" layoutX="136.0" layoutY="262.0" prefHeight="25.0" prefWidth="198.0" promptText="Selecciona materia" />
       <Label layoutX="25.0" layoutY="266.0" text="Materia" />
+      <Label layoutX="152.0" layoutY="54.0" text="Periodo actual" />
+      <Label layoutX="152.0" layoutY="72.0" text="Fecha inicio">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="152.0" layoutY="97.0" text="Fecha Fin">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbFechaInicio" layoutX="235.0" layoutY="72.0" prefHeight="17.0" prefWidth="141.0" text="Fecha INICIO" />
+      <Label fx:id="lbFechaFin" layoutX="235.0" layoutY="97.0" prefHeight="17.0" prefWidth="141.0" text="Fecha FIN" />
    </children>
 </AnchorPane>

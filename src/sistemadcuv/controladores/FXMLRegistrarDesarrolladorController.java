@@ -12,20 +12,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sistemadcuv.modelo.dao.DesarrolladorDAO;
 import sistemadcuv.modelo.dao.MateriaDAO;
+import sistemadcuv.modelo.dao.PeriodoDAO;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.Materia;
+import sistemadcuv.modelo.pojo.Periodo;
 import sistemadcuv.observador.ObservadorDesarrolladores;
 import sistemadcuv.utils.Utilidades;
 
 public class FXMLRegistrarDesarrolladorController {
     private ObservableList<Materia> observableMaterias;
     private int idProyecto;
+    private Periodo periodoActual;
     @FXML
     private TextField tfNombreCompleto;
     @FXML
@@ -39,10 +43,15 @@ public class FXMLRegistrarDesarrolladorController {
     private ObservadorDesarrolladores observador;
     @FXML
     private ComboBox<Materia> cbMateria;
+    @FXML
+    private Label lbFechaInicio;
+    @FXML
+    private Label lbFechaFin;
 
     public void inicializarInformacion(int idProyecto,ObservadorDesarrolladores observador) {
         configurarSppinerSemestre();
         cargarInformacionMaterias();
+        cargarPeriodo();
         this.idProyecto = idProyecto;
         this.observador = observador;
     }
@@ -113,25 +122,44 @@ public class FXMLRegistrarDesarrolladorController {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, 1);
         spSemestre.setValueFactory(valueFactory);
     }
-
     private void registrarDesarrollador() {
         Desarrollador desarrollador = new Desarrollador();
         desarrollador.setNombreCompleto(tfNombreCompleto.getText().trim());
-        desarrollador.setCorreo(tfCorreo.getText().trim());
+        desarrollador.setSemestre(spSemestre.getValue());
         desarrollador.setMatricula(tfMatricula.getText().trim());
         desarrollador.setContrasenia(tfContrasenia.getText().trim());
-        desarrollador.setSemestre(spSemestre.getValue());
         desarrollador.setIdProyecto(idProyecto);
-        HashMap<String, Object> resultado = DesarrolladorDAO.registrarDesarrollador(desarrollador);
+        desarrollador.setCorreo(tfCorreo.getText().trim());
+        desarrollador.setIdPeriodo(periodoActual.getIdPeriodo());
+        desarrollador.setIdMateria(cbMateria.getSelectionModel().
+                getSelectedItem().getIdMateria());
+        HashMap<String, Object> resultado = DesarrolladorDAO.
+                registrarDesarrollador(desarrollador);
         if(!((boolean) resultado.get("error"))){
             Utilidades.mostrarAletarSimple("Mensaje de exito", 
                     (String) resultado.get("mensaje"), 
                     Alert.AlertType.INFORMATION);
-            observador.operacionExitosa("Operacion exitosa", desarrollador.getNombreCompleto() );
+            observador.operacionExitosa("Operacion exitosa", 
+                    desarrollador.getNombreCompleto() );
             cerrarVentana();
         }else
-            Utilidades.mostrarAletarSimple("Error al registrar", (String) resultado.get("mensaje"), 
+            Utilidades.mostrarAletarSimple("Error al registrar", 
+                    (String) resultado.get("mensaje"), 
                     Alert.AlertType.ERROR);
+    }
+    private void cargarPeriodo() {
+        HashMap<String, Object> resultado = PeriodoDAO.
+                obtenerPeriodoActual(Utilidades.obtenerFechaActual());
+        if(!(boolean)resultado.get("error")){
+            periodoActual = (Periodo) resultado.get("periodo");
+            lbFechaInicio.setText(Utilidades.formatearFecha(periodoActual.
+                    getFechaInicio()));
+            lbFechaFin.setText(Utilidades.formatearFecha(periodoActual.
+                    getFechaFin()));
+        }else{
+            Utilidades.mostrarAletarSimple("Error al cargar periodo",
+                    "Hubo un error al cargar el periodo", Alert.AlertType.ERROR);
+        }
     }
 
 }

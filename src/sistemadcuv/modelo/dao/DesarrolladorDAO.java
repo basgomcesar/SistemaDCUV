@@ -16,10 +16,10 @@ public class DesarrolladorDAO {
         if(conexionBD != null){
             try {
                 String consulta = "SELECT idDesarrollador, nombreCompleto, " +
-"semestre, matricula ,correo , nombreEstado as estado, contrasenia, Proyecto_idProyecto,nombre " +
-"FROM " +
-"desarrollador, proyecto, estadoUsuario " +
-"WHERE matricula = ? AND contrasenia = ? AND Proyecto_idProyecto = idProyecto and nombreEstado = 'Activo'";
+                    "semestre, matricula ,correo , nombreEstado as estado, contrasenia, Proyecto_idProyecto,nombre " +
+                    "FROM " +
+                    "desarrollador, proyecto, estadoUsuario " +
+                    "WHERE matricula = ? AND contrasenia = ? AND Proyecto_idProyecto = idProyecto and nombreEstado = 'Activo'";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setString(1, usuario);
                 prepararSentencia.setString(2, contrasenia);
@@ -90,7 +90,7 @@ public class DesarrolladorDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta = "UPDATE desarrollador SET EstadoDesarrollador_idEstadoDesarrollador = 2"  +
+                String consulta = "UPDATE desarrollador SET EstadoDesarrollador_idEstadoDesarrollador = 2 "  +
                                   "WHERE idDesarrollador = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, desarrollador.getIdDesarrollador());
@@ -118,17 +118,19 @@ public class DesarrolladorDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();       
         if(conexionBD != null){
             try {
-                String consulta = "INSERT INTO desarrollador (nombreCompleto,semestre,"
-                        + "matricula,estado,correo,contrasenia,Proyecto_idProyecto)"
-                        + " VALUES (?,?,?,?,?,?,?); ";
+                String consulta = "INSERT INTO desarrollador " +
+                    "(nombreCompleto,semestre,matricula,contrasenia,Proyecto_idProyecto,correo,Periodo_idPeriodo, " +
+                    "estadoDesarrollador_idEstadoDesarrollador,ExperieciaEducativa_idExperieciaEducativa) " +
+                    "VALUES (?,?,?,?,?,?,?,1,?); ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setString(1, desarrollador.getNombreCompleto());
                 prepararSentencia.setInt(2, desarrollador.getSemestre());
                 prepararSentencia.setString(3, desarrollador.getMatricula());
-                prepararSentencia.setString(4, "ACTIVO");
-                prepararSentencia.setString(5, desarrollador.getCorreo());
-                prepararSentencia.setString(6, desarrollador.getContrasenia());
-                prepararSentencia.setInt(7, desarrollador.getIdProyecto());
+                prepararSentencia.setString(4, desarrollador.getContrasenia());
+                prepararSentencia.setInt(5, desarrollador.getIdProyecto());
+                prepararSentencia.setString(6, desarrollador.getCorreo());
+                prepararSentencia.setInt(7, desarrollador.getIdPeriodo());
+                prepararSentencia.setInt(8, desarrollador.getIdMateria());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 conexionBD.close();
                 if(filasAfectadas > 0){

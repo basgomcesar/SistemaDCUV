@@ -10,7 +10,9 @@ public class Desarrollador {
     private String contrasenia;
     private int idProyecto;
     private String nombreProyecto;
-
+    private int idPeriodo;
+    private int idMateria;
+    
     public Desarrollador() {
     }
 
@@ -30,12 +32,24 @@ public class Desarrollador {
         this.contrasenia = contrasenia;
     }
 
+    public void setIdMateria(int idMateria) {
+        this.idMateria = idMateria;
+    }
+
+    public int getIdMateria() {
+        return idMateria;
+    }
+
     public void setIdProyecto(int idProyecto) {
         this.idProyecto = idProyecto;
     }
 
     public String getNombreCompleto() {
         return nombreCompleto;
+    }
+
+    public int getIdPeriodo() {
+        return idPeriodo;
     }
 
     public void setNombreCompleto(String nombreCompleto) {
@@ -84,6 +98,10 @@ public class Desarrollador {
 
     public String getCorreo() {
         return correo;
+    }
+
+    public void setIdPeriodo(int idPeriodo) {
+        this.idPeriodo = idPeriodo;
     }
         
 }

@@ -7,33 +7,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import sistemadcuv.modelo.ConexionBD;
-import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.Materia;
+import sistemadcuv.modelo.pojo.Periodo;
 
-
-public class MateriaDAO {
-    public static HashMap<String, Object> obtenerMaterias(){
+public class PeriodoDAO {
+    public static HashMap<String, Object> obtenerPeriodoActual(String fechaActual){
+        System.out.println("antes del error 1 ");
         HashMap<String, Object> respuesta = new HashMap<>();
         respuesta.put("error", true);
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idExperieciaEducativa, nombreExperiencia from experieciaeducativa;";
+                String consulta = "SELECT idPeriodo, fechaInicio, fechaFin "
+                        + "FROM periodo "
+                        + "WHERE ? BETWEEN fechaInicio AND fechaFin ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setString(1, fechaActual);
                 ResultSet resultado = prepararSentencia.executeQuery();
-                ArrayList<Materia> materias = new ArrayList();
+                Periodo periodoActual = new Periodo();
                 respuesta.put("error", false);
                 while(resultado.next()){
-                    Materia materia = new Materia();
-                    materia.setIdMateria(resultado.getInt("idExperieciaEducativa"));
-                    materia.setNombreMateria(resultado.getString("nombreExperiencia"));
-                    materias.add(materia);
+                    periodoActual.setIdPeriodo(resultado.getInt("idPeriodo"));
+                    periodoActual.setFechaInicio(resultado.getString("fechaInicio"));
+                    periodoActual.setFechaFin(resultado.getString("fechaFin"));
                 }
                 conexionBD.close();
                 respuesta.put("error", false);
-                respuesta.put("materias", materias);
+                respuesta.put("periodo", periodoActual);
             } catch (SQLException ex) {
-                respuesta.put("materias", "Error "+ex.getMessage());
+                respuesta.put("periodo", "Error "+ex.getMessage());
             }
         }else{
             respuesta.put("mensaje", "Por el momento no hay conexion,"
