@@ -17,6 +17,7 @@ import sistemadcuv.controladores.FXMLListadoDeCambiosController;
 import sistemadcuv.controladores.FXMLListadoDeDefectosController;
 import sistemadcuv.controladores.FXMLListadoDeSolicitudesDeCambioController;
 import sistemadcuv.controladores.FXMLParticipantesDelProyectoController;
+import sistemadcuv.interfaces.InitializableVentana;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
 
@@ -59,101 +60,124 @@ public class Utilidades {
         
         return (botonClic.get() == ButtonType.OK);
     }
-    public static void irVentanaActividades(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
-        try {
-            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeActividades.fxml");
-            Parent vista = loader.load();
-            FXMLListadoDeActividadesController controlador = loader.getController();
+//    public static void irVentanaActividades(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
+//        try {
+//            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeActividades.fxml");
+//            Parent vista = loader.load();
+//            FXMLListadoDeActividadesController controlador = loader.getController();
+//            controlador.inicializarInformacion(desarrollador, responsable);
+//            Scene escena = new Scene(vista);
+//            escenarioBase.setScene(escena);
+//            escenarioBase.show();
+//            escenarioBase.setTitle("Listado de actividades");
+//        } catch (IOException ex) {
+//            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
+//                    ex.getMessage(), 
+//                    Alert.AlertType.INFORMATION);
+//        }
+//    }
+//    public static void irVentanaListadoDeCambios(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
+//        try {
+//            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeCambios.fxml");
+//            Parent vista = loader.load();
+//            FXMLListadoDeCambiosController controlador = loader.getController();
+//            controlador.inicializarInformacion(desarrollador, responsable);
+//            Scene escena = new Scene(vista);
+//            escenarioBase.setScene(escena);
+//            escenarioBase.show();
+//            escenarioBase.setTitle("Listado de cambios");
+//        } catch (IOException ex) {
+//            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
+//                    ex.getMessage(), 
+//                    Alert.AlertType.INFORMATION);
+//        }
+//    }
+//    public static void irVentanaSolicitudes(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
+//        try {
+//            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeSolicitudesDeCambio.fxml");
+//            Parent vista = loader.load();
+//            FXMLListadoDeSolicitudesDeCambioController controlador = loader.getController();
+//            controlador.inicializarInformacion(desarrollador, responsable);
+//            Scene escena = new Scene(vista);
+//            escenarioBase.setScene(escena);
+//            escenarioBase.show();
+//            escenarioBase.setTitle("Listado de solicitudes de cambio");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
+//                    ex.getMessage(), 
+//                    Alert.AlertType.INFORMATION);
+//        }
+//    } 
+//    public static void irVentanaDefectos(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
+//        try {
+//            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeDefectos.fxml");
+//            Parent vista = loader.load();
+//            FXMLListadoDeDefectosController controlador = loader.getController();
+//            controlador.inicializarInformacion(desarrollador, responsable);
+//            Scene escena = new Scene(vista);
+//            escenarioBase.setScene(escena);
+//            escenarioBase.show();
+//            escenarioBase.setTitle("Listado de defectos");
+//        } catch (IOException ex) {
+//            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
+//                    ex.getMessage(), 
+//                    Alert.AlertType.INFORMATION);
+//        }
+//    }    
+//    public static void irVentanaBitacoraGeneral(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
+//        try {
+//            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLBitacoraDeCambiosGeneral.fxml");
+//            Parent vista = loader.load();
+//            FXMLBitacoraDeCambiosGeneralController controlador = loader.getController();
+//            controlador.inicializarInformacion(desarrollador, responsable);
+//            Scene escena = new Scene(vista);
+//            escenarioBase.setScene(escena);
+//            escenarioBase.show();
+//            escenarioBase.setTitle("Bitacora general de cambios");
+//        } catch (IOException ex) {
+//            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
+//                    ex.getMessage(), 
+//                    Alert.AlertType.INFORMATION);
+//        }
+//    } 
+//        public static void irVentanaParticipantes(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
+//        try {
+//            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLParticipantesDelProyecto.fxml");
+//            Parent vista = loader.load();
+//            FXMLParticipantesDelProyectoController controlador = loader.getController();
+//            controlador.inicializarInformacion(desarrollador, responsable);
+//            Scene escena = new Scene(vista);
+//            escenarioBase.setScene(escena);
+//            escenarioBase.show();
+//            escenarioBase.setTitle("Participantes del proyecto");
+//        } catch (IOException ex) {
+//            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
+//                    ex.getMessage(), 
+//                    Alert.AlertType.INFORMATION);
+//        }
+//    } 
+public static void irAVentana(Stage escenarioBase, Desarrollador desarrollador, ResponsableDeProyecto responsable, String vista, String titulo) {
+    try {
+        FXMLLoader loader = Utilidades.cargarVista("vistas/" + vista);
+        Parent vistaFXML = loader.load();
+        Scene escena = new Scene(vistaFXML);
+
+        // Obtener el controlador y inicializar la información
+        Object controladorObj = loader.getController();
+        if (controladorObj instanceof InitializableVentana) {
+            InitializableVentana controlador = (InitializableVentana) controladorObj;
+            System.out.println("Llendo a "+desarrollador +" "+ responsable);
             controlador.inicializarInformacion(desarrollador, responsable);
-            Scene escena = new Scene(vista);
-            escenarioBase.setScene(escena);
-            escenarioBase.show();
-            escenarioBase.setTitle("Listado de actividades");
-        } catch (IOException ex) {
-            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
-                    ex.getMessage(), 
-                    Alert.AlertType.INFORMATION);
         }
+        // Configurar el escenario y mostrar la ventana
+        escenarioBase.setScene(escena);
+        escenarioBase.show();
+        escenarioBase.setTitle(titulo);
+    } catch (IOException ex) {
+        Utilidades.mostrarAletarSimple("Error al cargar ventana",
+                ex.getMessage(),
+                Alert.AlertType.INFORMATION);
     }
-    public static void irVentanaListadoDeCambios(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
-        try {
-            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeCambios.fxml");
-            Parent vista = loader.load();
-            FXMLListadoDeCambiosController controlador = loader.getController();
-            controlador.inicializarInformacion(desarrollador, responsable);
-            Scene escena = new Scene(vista);
-            escenarioBase.setScene(escena);
-            escenarioBase.show();
-            escenarioBase.setTitle("Listado de cambios");
-        } catch (IOException ex) {
-            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
-                    ex.getMessage(), 
-                    Alert.AlertType.INFORMATION);
-        }
-    }
-    public static void irVentanaSolicitudes(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
-        try {
-            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeSolicitudesDeCambio.fxml");
-            Parent vista = loader.load();
-            FXMLListadoDeSolicitudesDeCambioController controlador = loader.getController();
-            controlador.inicializarInformacion(desarrollador, responsable);
-            Scene escena = new Scene(vista);
-            escenarioBase.setScene(escena);
-            escenarioBase.show();
-            escenarioBase.setTitle("Listado de solicitudes de cambio");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
-                    ex.getMessage(), 
-                    Alert.AlertType.INFORMATION);
-        }
-    } 
-    public static void irVentanaDefectos(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
-        try {
-            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeDefectos.fxml");
-            Parent vista = loader.load();
-            FXMLListadoDeDefectosController controlador = loader.getController();
-            controlador.inicializarInformacion(desarrollador, responsable);
-            Scene escena = new Scene(vista);
-            escenarioBase.setScene(escena);
-            escenarioBase.show();
-            escenarioBase.setTitle("Listado de defectos");
-        } catch (IOException ex) {
-            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
-                    ex.getMessage(), 
-                    Alert.AlertType.INFORMATION);
-        }
-    }    
-    public static void irVentanaBitacoraGeneral(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
-        try {
-            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLBitacoraDeCambiosGeneral.fxml");
-            Parent vista = loader.load();
-            FXMLBitacoraDeCambiosGeneralController controlador = loader.getController();
-            controlador.inicializarInformacion(desarrollador, responsable);
-            Scene escena = new Scene(vista);
-            escenarioBase.setScene(escena);
-            escenarioBase.show();
-            escenarioBase.setTitle("Bitacora general de cambios");
-        } catch (IOException ex) {
-            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
-                    ex.getMessage(), 
-                    Alert.AlertType.INFORMATION);
-        }
-    } 
-        public static void irVentanaParticipantes(Stage escenarioBase,Desarrollador desarrollador, ResponsableDeProyecto responsable){
-        try {
-            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLParticipantesDelProyecto.fxml");
-            Parent vista = loader.load();
-            FXMLParticipantesDelProyectoController controlador = loader.getController();
-            controlador.inicializarInformacion(desarrollador, responsable);
-            Scene escena = new Scene(vista);
-            escenarioBase.setScene(escena);
-            escenarioBase.show();
-            escenarioBase.setTitle("Participantes del proyecto");
-        } catch (IOException ex) {
-            Utilidades.mostrarAletarSimple("Error al cargar ventana", 
-                    ex.getMessage(), 
-                    Alert.AlertType.INFORMATION);
-        }
-    } 
+}
 }
