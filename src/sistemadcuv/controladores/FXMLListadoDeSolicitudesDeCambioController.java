@@ -291,5 +291,12 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
             ex.printStackTrace();
         }
     }
+
+    @FXML
+    private void btnLimpiarBusqueda(ActionEvent event) {
+        tfNombre.clear();
+        dpFechaDesde.setValue(null);
+        dpFechaHasta.setValue(null);
+    }
     
 }

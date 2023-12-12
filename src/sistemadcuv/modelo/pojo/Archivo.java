@@ -1,6 +1,7 @@
 package sistemadcuv.modelo.pojo;
 
 public class Archivo {
+    private int idArchivo;
     private byte[] archivo;
     private String nombreArchivo;
     private int idSolicitud;
@@ -10,12 +11,21 @@ public class Archivo {
     public Archivo() {
     }
 
-    public Archivo(byte[] archivo, String nombreArchivo, int idSolicitud, int idCambio, int idActividad) {
+    public Archivo(int idArchivo, byte[] archivo, String nombreArchivo, int idSolicitud, int idCambio, int idActividad) {
+        this.idArchivo = idArchivo;
         this.archivo = archivo;
         this.nombreArchivo = nombreArchivo;
         this.idSolicitud = idSolicitud;
         this.idCambio = idCambio;
         this.idActividad = idActividad;
+    }
+
+    public int getIdArchivo() {
+        return idArchivo;
+    }
+
+    public void setIdArchivo(int idArchivo) {
+        this.idArchivo = idArchivo;
     }
 
     public int getIdSolicitud() {

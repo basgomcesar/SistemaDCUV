@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -111,5 +112,16 @@
             <Label layoutX="13.0" layoutY="401.0" text="Bitacora" />
          </children>
       </Pane>
+      <Button defaultButton="true" layoutX="98.0" layoutY="411.0" mnemonicParsing="false" onAction="#btnLimpiarBusqueda" prefHeight="26.0" prefWidth="153.0" style="-fx-background-color: #426B1F;" text="Limpiar Busqueda" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#7c908d" height="36.58" offsetY="1.0" radius="14.575" width="23.72" />
+         </effect>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
