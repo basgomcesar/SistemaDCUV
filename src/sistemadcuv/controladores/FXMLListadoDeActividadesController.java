@@ -1,15 +1,21 @@
 package sistemadcuv.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadcuv.interfaces.InitializableVentana;
 import sistemadcuv.modelo.pojo.Desarrollador;
@@ -39,12 +45,17 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
     private TableColumn colFechaInicio;
     @FXML
     private TableColumn colFechaFin;
+    @FXML
+    private Button btnAgregarActividad;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-    }    
-
+        
+    }   
+    
+    private void configurarTabla(){
+        
+    }
     @FXML
     private void btnActividades(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
@@ -110,15 +121,32 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
     public void inicializarInformacion(Desarrollador desarrolladorSesion,ResponsableDeProyecto responsableSesion){
         this.desarrolladorSesion = desarrolladorSesion;
         this.responsableSesion = responsableSesion;
-        cargarInformacionUsuario();
+        cargarCampos();
+        
     }
 
-    private void cargarInformacionUsuario() {
-        
+    private void cargarCampos() {
+        if(this.desarrolladorSesion != null)
+            btnAgregarActividad.setVisible(false);
     }
 
     @FXML
     private void clicAgregarActividad(ActionEvent event) {
+        try{
+            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeActividad.fxml");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+            FXMLRegistroDeActividadController controller = loader.getController();
+//            controller.inicializarFormulario(desarrolladorSesion, solicitudEdicion, totalSolicitudes, this);
+            
+            Stage escenario = new Stage();
+            escenario.setScene(escena);
+            escenario.setTitle("Registrar actividad");
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
     }
 
 }
