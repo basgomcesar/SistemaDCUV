@@ -20,7 +20,7 @@
 
 <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="802.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeSolicitudesDeCambioController">
    <children>
-      <TableView fx:id="tvListadoSolicitudes" layoutX="98.0" layoutY="93.0" minHeight="-Infinity" prefHeight="305.0" prefWidth="681.0">
+      <TableView fx:id="tvListadoSolicitudes" layoutX="98.0" layoutY="93.0" minHeight="-Infinity" onMouseClicked="#btnVerDetalles" prefHeight="305.0" prefWidth="681.0">
          <columns>
             <TableColumn fx:id="colNumSolicitud" editable="false" prefWidth="64.0" sortType="DESCENDING" text="Num" />
             <TableColumn fx:id="colNombre" prefWidth="207.0" text="Nombre" />
