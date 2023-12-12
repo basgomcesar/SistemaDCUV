@@ -40,7 +40,35 @@ public class ArchivoDAO {
         }
         return respuesta;
     }
-    
+    public static HashMap<String, Object> registrarArchivoDeCambio(Archivo nuevoArchivo){
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "INSERT INTO archivo (nombreArchivo, archivo, Cambio_idCambio) " +
+                                    "VALUES(?, ?, ?);";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, nuevoArchivo.getNombreArchivo());
+                prepararSentencia.setBytes(2, nuevoArchivo.getArchivo());
+                prepararSentencia.setInt(3, nuevoArchivo.getIdCambio());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                conexionBD.close();
+                if(filasAfectadas == 1){
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "Archivo(s) guardado(s) en la solicitud de cambio");
+                }else{                    
+                    respuesta.put("mensaje", "Error al guardar");
+                }
+            }catch(SQLException ex){
+                respuesta.put("mensaje", "Error: " + ex.getMessage());
+            }
+        }else{
+            respuesta.put("mensaje", "Por el momento no hay conexion, "
+                    + "intentalo más tarde");
+        }
+        return respuesta;
+    }
     public static HashMap<String, Object> obtenerArchivosSolicitud(int idSolicitud){
         HashMap<String, Object> respuesta = new LinkedHashMap<>();
         respuesta.put("error", true);

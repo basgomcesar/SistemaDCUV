@@ -5,7 +5,7 @@ public class Cambio {
     private int idCambio;
     private String accionPropuesta;
     private String descripcion;
-    private String esfuerzo;
+    private int esfuerzo;
     private String estado;
     private String fechaInicio;
     private String fechaFin;
@@ -15,11 +15,11 @@ public class Cambio {
     private String tipo;
     private int idDesarrollador;
     private String desarrollador;
-
+    private int idTipoCambio;
     public Cambio() {
     }
 
-    public Cambio(int idCambio, String accionPropuesta, String descripcion, String esfuerzo, String estado, String fechaInicio, String fechaFin, String impacto, String nombre, String razonCambio, String tipo, int idDesarrollador, String desarrollador) {
+    public Cambio(int idCambio, String accionPropuesta, String descripcion, int esfuerzo, String estado, String fechaInicio, String fechaFin, String impacto, String nombre, String razonCambio, String tipo, int idDesarrollador, String desarrollador) {
         this.idCambio = idCambio;
         this.accionPropuesta = accionPropuesta;
         this.descripcion = descripcion;
@@ -51,6 +51,14 @@ public class Cambio {
         this.idCambio = idCambio;
     }
 
+    public void setIdTipoCambio(int idTipoCambio) {
+        this.idTipoCambio = idTipoCambio;
+    }
+
+    public int getIdTipoCambio() {
+        return idTipoCambio;
+    }
+
     public String getDesarrollador() {
         return desarrollador;
     }
@@ -75,11 +83,11 @@ public class Cambio {
         this.descripcion = descripcion;
     }
 
-    public String getEsfuerzo() {
+    public int getEsfuerzo() {
         return esfuerzo;
     }
 
-    public void setEsfuerzo(String esfuerzo) {
+    public void setEsfuerzo(int esfuerzo) {
         this.esfuerzo = esfuerzo;
     }
 
