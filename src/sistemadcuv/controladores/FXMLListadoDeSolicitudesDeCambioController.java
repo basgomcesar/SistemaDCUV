@@ -27,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -66,7 +67,6 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
     private DatePicker dpFechaHasta;
     
     private ObservableList<SolicitudDeCambio> solicitudes;
-    private SolicitudDeCambio solicitudEdicion;
     @FXML
     private Button bRegistrar;
     private int totalSolicitudes;
@@ -95,10 +95,15 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
     public void configurarTabla(){
         this.colNumSolicitud.setCellValueFactory(new PropertyValueFactory("numSolicitud"));
         this.colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
-        this.colEstatus.setCellValueFactory(new PropertyValueFactory("estatus"));
+        this.colEstatus.setCellValueFactory(new PropertyValueFactory("estado"));
         this.colDesarrollador.setCellValueFactory(new PropertyValueFactory("nombreDesarrollador"));
         this.colFechaRegistro.setCellValueFactory(new PropertyValueFactory("fechaRegistro"));
         this.colFechaAprobacion.setCellValueFactory(new PropertyValueFactory("fechaAprobacion"));
+        tvListadoSolicitudes.setOnMouseClicked(event -> {
+        if (event.getClickCount() == 2) {
+            btnVerDetalles();
+        }
+        });
     }
     
     public void cargarInformacionSolicitudes(Desarrollador desarrollador, ResponsableDeProyecto responsable){
@@ -130,11 +135,11 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
                 public void changed(ObservableValue<? extends String> observable, 
                         String oldValue, String newValue) {
                     filtradoBusquedas.setPredicate(nombreFiltro -> {
-                        //CASO DEFAULT
+                        
                         if(newValue == null || newValue.isEmpty()){
                             return true;
                         }
-                        //CRITERIO DE EVALUACION
+                        
                         String lowerNewValue = newValue.toLowerCase();
                         if(nombreFiltro.getNombre().toLowerCase().contains(lowerNewValue)){
                             return true;
@@ -174,12 +179,10 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
             LocalDate fechaInicio = dpFechaDesde.getValue();
             LocalDate fechaFin = dpFechaHasta.getValue();
 
-            // CASO DEFAULT
             if (fechaInicio == null && fechaFin == null) {
                 return true;
             }
 
-            // CRITERIO DE EVALUACION
             DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate fechaSolicitud = LocalDate.parse(fechasFiltro.getFechaRegistro(), formatoFecha);
 
@@ -245,7 +248,6 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
                 "Bitacora general de cambios");
     }
 
-    @FXML
     private void btnSolicitudes(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
         Utilidades.irAVentana(escenarioBase, 
@@ -258,6 +260,21 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
 
     @FXML
     private void btnRegistrarSolicitud(ActionEvent event) {
+        irFormulario(null);
+    }
+
+    @Override
+    public void operacionExitosa(String tipoOperacion, String nombre) {
+        cargarInformacionSolicitudes(desarrolladorSesion, responsableSesion);
+    }
+
+    @FXML
+    private void btnVerDetalles() {
+        SolicitudDeCambio solicitudSeleccionada = tvListadoSolicitudes.getSelectionModel().getSelectedItem();
+            irFormulario(solicitudSeleccionada);
+    }
+    
+    private void irFormulario(SolicitudDeCambio solicitudEdicion){
         try{
             FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeSolicitudDeCambio.fxml");
             Parent vista = loader.load();
@@ -267,17 +284,12 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
             
             Stage escenario = new Stage();
             escenario.setScene(escena);
-            escenario.setTitle("Registrar Solicitud de Cambio");
+            escenario.setTitle("Formulario Solicitud de Cambio");
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
         }catch(IOException ex){
             ex.printStackTrace();
         }
-    }
-
-    @Override
-    public void operacionExitosa(String tipoOperacion, String nombre) {
-        cargarInformacionSolicitudes(desarrolladorSesion, responsableSesion);
     }
     
 }

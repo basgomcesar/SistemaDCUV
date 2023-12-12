@@ -12,7 +12,7 @@
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLRegistroDeSolicitudDeCambioController">
    <children>
       <Line endX="130.0" layoutX="550.0" layoutY="300.0" rotate="90.0" scaleX="2.3" startX="-100.0" />
-      <Button defaultButton="true" layoutX="469.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnRegistrar" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #426B1F;" text="Registrar" textFill="WHITE">
+      <Button fx:id="bRegistrar" defaultButton="true" layoutX="469.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnRegistrar" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #426B1F;" text="Registrar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -23,7 +23,7 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="376.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnCancelar" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #C0C0C0;" text="Cancelar" textFill="WHITE">
+      <Button fx:id="bCancelar" layoutX="376.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnCancelar" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #C0C0C0;" text="Cancelar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -39,18 +39,18 @@
             <Font name="Arial" size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lFechaRegistro" alignment="CENTER" contentDisplay="CENTER" layoutX="418.0" layoutY="45.0" prefHeight="17.0" prefWidth="115.0" text="dd/MM/yyyy" textAlignment="CENTER" textFill="#426b1f">
+      <Label fx:id="lbFechaRegistro" alignment="CENTER" contentDisplay="CENTER" layoutX="418.0" layoutY="45.0" prefHeight="17.0" prefWidth="115.0" text="dd/MM/yyyy" textAlignment="CENTER" textFill="#426b1f">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lEstado" layoutX="362.0" layoutY="139.0" prefHeight="25.0" prefWidth="192.0" text="Estado" textFill="#909090" />
+      <Label fx:id="lbEstado" layoutX="362.0" layoutY="139.0" prefHeight="25.0" prefWidth="192.0" text="Estado" textFill="#909090" />
       <TextField fx:id="tfNombreSolicitud" layoutX="29.0" layoutY="180.0" prefHeight="42.0" prefWidth="523.0" promptText="Nombre de la Solicitud" />
       <TextField fx:id="tfDescripcion" layoutX="29.0" layoutY="240.0" prefHeight="42.0" prefWidth="523.0" promptText="Descripcion" />
       <TextField fx:id="tfRazon" layoutX="29.0" layoutY="297.0" prefHeight="42.0" prefWidth="523.0" promptText="Razon del cambio" />
       <TextField fx:id="tfImpacto" layoutX="29.0" layoutY="358.0" prefHeight="42.0" prefWidth="523.0" promptText="Impacto del cambio" />
       <TextField fx:id="tfAccion" layoutX="29.0" layoutY="421.0" prefHeight="42.0" prefWidth="523.0" promptText="Accion propuesta" />
-      <Button layoutX="736.0" layoutY="534.0" mnemonicParsing="false" onAction="#btnAgregarArchivo" prefHeight="38.0" prefWidth="39.0" style="-fx-background-color: #426B1F; -fx-background-radius: 50;" text="+" textFill="WHITE">
+      <Button fx:id="bAgregar" layoutX="736.0" layoutY="534.0" mnemonicParsing="false" onAction="#btnAgregarArchivo" prefHeight="38.0" prefWidth="39.0" style="-fx-background-color: #426B1F; -fx-background-radius: 50;" text="+" textFill="WHITE">
          <effect>
             <DropShadow color="#a5abaa" height="0.0" offsetY="1.0" radius="0.0" width="0.0" />
          </effect>
@@ -65,7 +65,7 @@
           <TableColumn fx:id="colNombreArchivo" prefWidth="199.0" text="Archivo" />
         </columns>
       </TableView>
-      <Button layoutX="583.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: red;" text="Eliminar" textFill="WHITE">
+      <Button fx:id="bEliminar" layoutX="583.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: red;" text="Eliminar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -76,12 +76,38 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Button>
-      <Label fx:id="lNombreProyecto" layoutX="29.0" layoutY="98.0" prefHeight="25.0" prefWidth="321.0" text="Nombre del Proyecto" textFill="#909090" />
-      <Label fx:id="lNumSolicitud" layoutX="29.0" layoutY="139.0" prefHeight="25.0" prefWidth="321.0" text="Numero de Solicitud" textFill="#909090" />
-      <Label fx:id="lSolicitante" layoutX="360.0" layoutY="98.0" prefHeight="25.0" prefWidth="192.0" text="Solicitante" textFill="#909090" />
+      <Label fx:id="lbNombreProyecto" layoutX="29.0" layoutY="98.0" prefHeight="25.0" prefWidth="321.0" text="Nombre del Proyecto" textFill="#909090" />
+      <Label fx:id="lbNumSolicitud" layoutX="29.0" layoutY="139.0" prefHeight="25.0" prefWidth="321.0" text="Numero de Solicitud" textFill="#909090" />
+      <Label fx:id="lbSolicitante" layoutX="360.0" layoutY="98.0" prefHeight="25.0" prefWidth="192.0" text="Solicitante" textFill="#909090" />
       <Line endX="100.0" layoutX="180.0" layoutY="123.0" scaleX="1.5" scaleY="0.5" startX="-100.0" />
       <Line endX="100.0" layoutX="180.0" layoutY="164.0" scaleX="1.5" scaleY="0.5" startX="-100.0" />
       <Line endX="100.0" layoutX="440.0" layoutY="122.0" scaleX="0.8" scaleY="0.5" startX="-100.0" />
       <Line endX="100.0" layoutX="440.0" layoutY="163.0" scaleX="0.8" scaleY="0.5" startX="-100.0" />
+      <Label fx:id="lbAprobadoPor" layoutX="28.0" layoutY="471.0" prefHeight="25.0" prefWidth="321.0" text="Aprobado por:" textFill="#909090" />
+      <Label fx:id="lbFechaAprovacion" layoutX="361.0" layoutY="471.0" prefHeight="25.0" prefWidth="192.0" text="Fecha de aprobación: " textFill="#909090" />
+      <Line fx:id="lnAprobado" endX="100.0" layoutX="180.0" layoutY="496.0" scaleX="1.5" scaleY="0.5" startX="-100.0" />
+      <Line fx:id="lnFechaAprovacion" endX="100.0" layoutX="440.0" layoutY="496.0" scaleX="0.8" scaleY="0.5" startX="-100.0" />
+      <Button fx:id="bRechazar" layoutX="142.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnRechazarSolicitud" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: red;" text="Rechazar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#7c908d" height="36.58" offsetY="1.0" radius="14.575" width="23.72" />
+         </effect>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="bAceptar" defaultButton="true" layoutX="28.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnAceptarSolicitud" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #426B1F;" text="Aceptar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#7c908d" height="36.58" offsetY="1.0" radius="14.575" width="23.72" />
+         </effect>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
