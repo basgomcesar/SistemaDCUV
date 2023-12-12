@@ -99,6 +99,7 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
         this.colDesarrollador.setCellValueFactory(new PropertyValueFactory("nombreDesarrollador"));
         this.colFechaRegistro.setCellValueFactory(new PropertyValueFactory("fechaRegistro"));
         this.colFechaAprobacion.setCellValueFactory(new PropertyValueFactory("fechaAprobacion"));
+        tvListadoSolicitudes.setEditable(false);
         tvListadoSolicitudes.setOnMouseClicked(event -> {
         if (event.getClickCount() == 2) {
             btnVerDetalles();
@@ -280,7 +281,7 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
             Parent vista = loader.load();
             Scene escena = new Scene(vista);
             FXMLRegistroDeSolicitudDeCambioController controller = loader.getController();
-            controller.inicializarFormulario(desarrolladorSesion, solicitudEdicion, totalSolicitudes, this);
+            controller.inicializarFormulario(responsableSesion, desarrolladorSesion, solicitudEdicion, totalSolicitudes, this);
             
             Stage escenario = new Stage();
             escenario.setScene(escena);

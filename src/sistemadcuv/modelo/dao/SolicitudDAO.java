@@ -43,7 +43,12 @@ public class SolicitudDAO {
                     solicitud.setFechaRegistro(resultado.getString("fechaCreacion"));
                     solicitud.setFechaAprobacion(resultado.getString("fechaDeAprobacion"));
                     solicitud.setIdDesarrollador(resultado.getInt("idDesarrollador"));
-                    solicitud.setNombreDesarrollador(resultado.getString("desarrollador"));
+                    solicitud.setNombreDesarrollador(resultado.getString("nombreDesarrollador"));
+                    solicitud.setNombreResponsable(resultado.getString("nombreResponsableProyecto"));
+                    solicitud.setDescripcion(resultado.getString("descripcion"));
+                    solicitud.setRazon(resultado.getString("razon"));
+                    solicitud.setImpacto(resultado.getString("impacto"));
+                    solicitud.setAccionPropuesta(resultado.getString("accionPropuesta"));
                     solicitudes.add(solicitud);
                 }
                 conexionBD.close();
@@ -91,7 +96,7 @@ public class SolicitudDAO {
                     solicitud.setFechaAprobacion(resultado.getString("fechaDeAprobacion"));
                     solicitud.setIdDesarrollador(resultado.getInt("idDesarrollador"));
                     solicitud.setNombreDesarrollador(resultado.getString("nombreDesarrollador"));
-                    solicitud.setAprobadoPor(resultado.getString("nombreResponsableProyecto"));
+                    solicitud.setNombreResponsable(resultado.getString("nombreResponsableProyecto"));
                     solicitud.setDescripcion(resultado.getString("descripcion"));
                     solicitud.setRazon(resultado.getString("razon"));
                     solicitud.setImpacto(resultado.getString("impacto"));
@@ -159,11 +164,14 @@ public class SolicitudDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD!=null){
             try{
-                String sentencia = "UPDATE solicituddecambio SET sc.EstadoSolicitud_idEstadoSolicitud = ? "
-                        + "WHERE sc.idSolicitudDeCambio = ?";
+                String sentencia = "UPDATE solicituddecambio SET EstadoSolicitud_idEstadoSolicitud = ?, "
+                        + "fechaDeAprobacion = ?, ResponsableDelProyecto_idResponsableDelProyecto = ? "
+                        + "WHERE idSolicitudDeCambio = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, modificarSolicitud.getIdEstado());
-                prepararSentencia.setInt(2, modificarSolicitud.getIdSolicitud());
+                prepararSentencia.setString(2, modificarSolicitud.getFechaAprobacion());
+                prepararSentencia.setInt(3, modificarSolicitud.getIdResponsable());
+                prepararSentencia.setInt(4, modificarSolicitud.getIdSolicitud());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 conexionBD.close();
                 if(filasAfectadas == 1){

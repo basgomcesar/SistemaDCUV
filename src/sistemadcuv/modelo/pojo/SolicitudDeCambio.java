@@ -15,12 +15,13 @@ public class SolicitudDeCambio {
     private String nombreDesarrollador;
     private int idEstado;
     private String estado;
-    private String aprobadoPor;
+    private String nombreResponsable;
+    private int idResponsable;
 
     public SolicitudDeCambio() {
     }
 
-    public SolicitudDeCambio(int idSolicitud, String nombre, String accionPropuesta, String descripcion, String fechaRegistro, String fechaAprobacion, String impacto, int numSolicitud, String razon, int idDesarrollador, String nombreDesarrollador, int idEstado, String estado, String aprobadoPor) {
+    public SolicitudDeCambio(int idSolicitud, String nombre, String accionPropuesta, String descripcion, String fechaRegistro, String fechaAprobacion, String impacto, int numSolicitud, String razon, int idDesarrollador, String nombreDesarrollador, int idEstado, String estado, String nombreResponsable, int idResponsable) {
         this.idSolicitud = idSolicitud;
         this.nombre = nombre;
         this.accionPropuesta = accionPropuesta;
@@ -34,15 +35,24 @@ public class SolicitudDeCambio {
         this.nombreDesarrollador = nombreDesarrollador;
         this.idEstado = idEstado;
         this.estado = estado;
-        this.aprobadoPor = aprobadoPor;
+        this.nombreResponsable = nombreResponsable;
+        this.idResponsable = idResponsable;
     }
 
-    public String getAprobadoPor() {
-        return aprobadoPor;
+    public String getNombreResponsable() {
+        return nombreResponsable;
     }
 
-    public void setAprobadoPor(String aprobadoPor) {
-        this.aprobadoPor = aprobadoPor;
+    public void setNombreResponsable(String nombreResponsable) {
+        this.nombreResponsable = nombreResponsable;
+    }
+
+    public int getIdResponsable() {
+        return idResponsable;
+    }
+
+    public void setIdResponsable(int idResponsable) {
+        this.idResponsable = idResponsable;
     }
 
     public int getIdEstado() {
