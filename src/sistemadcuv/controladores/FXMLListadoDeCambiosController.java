@@ -1,5 +1,6 @@
 package sistemadcuv.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +15,10 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -24,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadcuv.interfaces.InitializableVentana;
 import sistemadcuv.modelo.dao.CambioDAO;
@@ -77,6 +82,7 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
             lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
         }else{
             lbUsuarioActivo.setText("Usuario: " + responsable.getNombreCompleto());
+            btnRegistrarCambio.setVisible(false);
         }
     }
     
@@ -246,10 +252,28 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
     private void clicRegistrarCambio(ActionEvent event) {
         Utilidades.mostrarAletarSimple("Advertencia",
                 "Recuerde que solo puede hacer cambios de menor impacto, "
-                        + "de lo contrario se tendra que "
-                        + "solicitar una solicitud de cambio", 
+                        + "de lo contrario tendra que "
+                        + "generar una solicitud de cambio", 
                 Alert.AlertType.INFORMATION);
-        
+        irVentanaRegistrarCambio();
+    }
+
+    private void irVentanaRegistrarCambio() {
+        try{
+            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeCambio.fxml");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+            FXMLRegistroDeCambioController controller = loader.getController();
+            controller.inicializarFormulario(desarrolladorSesion);
+            
+            Stage escenario = new Stage();
+            escenario.setScene(escena);
+            escenario.setTitle("Registrar cambio");
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
     }
 
     
