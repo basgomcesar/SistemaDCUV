@@ -6,7 +6,6 @@ public class SolicitudDeCambio {
     private String nombre;
     private String accionPropuesta;
     private String descripcion;
-    private String estatus;
     private String fechaRegistro;
     private String fechaAprobacion;
     private String impacto;    
@@ -14,16 +13,18 @@ public class SolicitudDeCambio {
     private String razon;
     private int idDesarrollador;
     private String nombreDesarrollador;
+    private int idEstado;
+    private String estado;
+    private String aprobadoPor;
 
     public SolicitudDeCambio() {
     }
 
-    public SolicitudDeCambio(int idSolicitud, String nombre, String accionPropuesta, String descripcion, String estatus, String fechaRegistro, String fechaAprobacion, String impacto, int numSolicitud, String razon, int idDesarrollador, String nombreDesarrollador) {
+    public SolicitudDeCambio(int idSolicitud, String nombre, String accionPropuesta, String descripcion, String fechaRegistro, String fechaAprobacion, String impacto, int numSolicitud, String razon, int idDesarrollador, String nombreDesarrollador, int idEstado, String estado, String aprobadoPor) {
         this.idSolicitud = idSolicitud;
         this.nombre = nombre;
         this.accionPropuesta = accionPropuesta;
         this.descripcion = descripcion;
-        this.estatus = estatus;
         this.fechaRegistro = fechaRegistro;
         this.fechaAprobacion = fechaAprobacion;
         this.impacto = impacto;
@@ -31,6 +32,33 @@ public class SolicitudDeCambio {
         this.razon = razon;
         this.idDesarrollador = idDesarrollador;
         this.nombreDesarrollador = nombreDesarrollador;
+        this.idEstado = idEstado;
+        this.estado = estado;
+        this.aprobadoPor = aprobadoPor;
+    }
+
+    public String getAprobadoPor() {
+        return aprobadoPor;
+    }
+
+    public void setAprobadoPor(String aprobadoPor) {
+        this.aprobadoPor = aprobadoPor;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public int getIdDesarrollador() {
@@ -79,14 +107,6 @@ public class SolicitudDeCambio {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getEstatus() {
-        return estatus;
-    }
-
-    public void setEstatus(String estatus) {
-        this.estatus = estatus;
     }
 
     public String getFechaRegistro() {

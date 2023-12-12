@@ -18,12 +18,16 @@ public class SolicitudDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idSolicitudDeCambio, nombreSolicitudDeCambio, numeroSolicitud, estatus, "
-                        + "DATE_FORMAT(fechaCreacion, '%d/%m/%Y') AS 'fechaCreacion', \n" +
-                          "DATE_FORMAT(fechaDeAprobacion, '%d/%m/%Y') AS 'fechaDeAprobacion', "
-                        + "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador\n" +
-                          "FROM SolicitudDeCambio\n" +
-                          "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador";
+                String consulta = "SELECT sc.numeroSolicitud, sc.nombreSolicitudDeCambio, es.nombreEstado AS estado, es.idEstadoSolicitud AS idEstado,\n" +
+                                    "d.idDesarrollador, d.nombreCompleto AS nombreDesarrollador, sc.idSolicitudDeCambio,\n" +
+                                    "DATE_FORMAT(sc.fechaCreacion, '%d/%m/%Y') AS fechaCreacion,\n" +
+                                    "DATE_FORMAT(sc.fechaDeAprobacion, '%d/%m/%Y') AS fechaDeAprobacion,\n" +
+                                    "sc.razon, sc.descripcion, sc.impacto,\n" +
+                                    "sc.accionPropuesta, rp.idResponsableDelProyecto, rp.nombreCompleto AS nombreResponsableProyecto\n" +
+                                    "FROM SolicitudDeCambio sc\n" +
+                                    "INNER JOIN Desarrollador d ON sc.Desarrollador_idDesarrollador = d.idDesarrollador\n" +
+                                    "INNER JOIN EstadoSolicitud es ON sc.EstadoSolicitud_idEstadoSolicitud = es.idEstadoSolicitud\n" +
+                                    "LEFT JOIN ResponsableDelProyecto rp ON sc.ResponsableDelProyecto_idResponsableDelProyecto = rp.idResponsableDelProyecto";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<SolicitudDeCambio> solicitudes = new ArrayList();
@@ -33,7 +37,8 @@ public class SolicitudDAO {
                     solicitud.setIdSolicitud(resultado.getInt("idSolicitudDeCambio"));
                     solicitud.setNombre(resultado.getString("nombreSolicitudDeCambio"));
                     solicitud.setNumSolicitud(resultado.getInt("numeroSolicitud"));
-                    solicitud.setEstatus(resultado.getString("estatus"));
+                    solicitud.setIdEstado(resultado.getInt("idEstado"));
+                    solicitud.setEstado(resultado.getString("estado"));
                     solicitud.setFechaRegistro(resultado.getString("fechaCreacion"));
                     solicitud.setFechaAprobacion(resultado.getString("fechaDeAprobacion"));
                     solicitud.setIdDesarrollador(resultado.getInt("idDesarrollador"));
@@ -58,13 +63,17 @@ public class SolicitudDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idSolicitudDeCambio, nombreSolicitudDeCambio, numeroSolicitud, estatus, "
-                        + "DATE_FORMAT(fechaCreacion, '%d/%m/%Y') AS 'fechaCreacion', \n" +
-                          "DATE_FORMAT(fechaDeAprobacion, '%d/%m/%Y') AS 'fechaDeAprobacion', "
-                        + "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador\n" +
-                          "FROM SolicitudDeCambio\n" +
-                          "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador "
-                        + "WHERE idDesarrollador = ?";
+                String consulta = "SELECT sc.numeroSolicitud, sc.nombreSolicitudDeCambio, es.nombreEstado AS estado, es.idEstadoSolicitud AS idEstado,\n" +
+                                    "d.idDesarrollador, d.nombreCompleto AS nombreDesarrollador, sc.idSolicitudDeCambio,\n" +
+                                    "DATE_FORMAT(sc.fechaCreacion, '%d/%m/%Y') AS fechaCreacion,\n" +
+                                    "DATE_FORMAT(sc.fechaDeAprobacion, '%d/%m/%Y') AS fechaDeAprobacion,\n" +
+                                    "sc.razon, sc.descripcion, sc.impacto,\n" +
+                                    "sc.accionPropuesta, rp.idResponsableDelProyecto, rp.nombreCompleto AS nombreResponsableProyecto\n" +
+                                    "FROM SolicitudDeCambio sc\n" +
+                                    "INNER JOIN Desarrollador d ON sc.Desarrollador_idDesarrollador = d.idDesarrollador\n" +
+                                    "INNER JOIN EstadoSolicitud es ON sc.EstadoSolicitud_idEstadoSolicitud = es.idEstadoSolicitud\n" +
+                                    "LEFT JOIN ResponsableDelProyecto rp ON sc.ResponsableDelProyecto_idResponsableDelProyecto = rp.idResponsableDelProyecto\n" +
+                                    "WHERE sc.Desarrollador_idDesarrollador = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idDesarrollador);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -75,11 +84,17 @@ public class SolicitudDAO {
                     solicitud.setIdSolicitud(resultado.getInt("idSolicitudDeCambio"));
                     solicitud.setNombre(resultado.getString("nombreSolicitudDeCambio"));
                     solicitud.setNumSolicitud(resultado.getInt("numeroSolicitud"));
-                    solicitud.setEstatus(resultado.getString("estatus"));
+                    solicitud.setIdEstado(resultado.getInt("idEstado"));
+                    solicitud.setEstado(resultado.getString("estado"));
                     solicitud.setFechaRegistro(resultado.getString("fechaCreacion"));
                     solicitud.setFechaAprobacion(resultado.getString("fechaDeAprobacion"));
                     solicitud.setIdDesarrollador(resultado.getInt("idDesarrollador"));
-                    solicitud.setNombreDesarrollador(resultado.getString("desarrollador"));
+                    solicitud.setNombreDesarrollador(resultado.getString("nombreDesarrollador"));
+                    solicitud.setAprobadoPor(resultado.getString("nombreResponsableProyecto"));
+                    solicitud.setDescripcion(resultado.getString("descripcion"));
+                    solicitud.setRazon(resultado.getString("razon"));
+                    solicitud.setImpacto(resultado.getString("impacto"));
+                    solicitud.setAccionPropuesta(resultado.getString("accionPropuesta"));
                     solicitudes.add(solicitud);
                 }
                 conexionBD.close();
@@ -101,14 +116,15 @@ public class SolicitudDAO {
         if(conexionBD!=null){
             try{
                 String sentencia = "INSERT INTO solicituddecambio(nombreSolicitudDeCambio, descripcion, " +
-                    "numeroSolicitud, razon, estatus, fechaCreacion, impacto,accionPropuesta, Desarrollador_idDesarrollador) " +
+                    "numeroSolicitud, razon, EstadoSolicitud_idEstadoSolicitud, fechaCreacion, " +
+                    "impacto,accionPropuesta, Desarrollador_idDesarrollador) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setString(1, nuevaSolicitud.getNombre());
                 prepararSentencia.setString(2, nuevaSolicitud.getDescripcion());
                 prepararSentencia.setInt(3, nuevaSolicitud.getNumSolicitud());
                 prepararSentencia.setString(4, nuevaSolicitud.getRazon());
-                prepararSentencia.setString(5, nuevaSolicitud.getEstatus());
+                prepararSentencia.setInt(5, nuevaSolicitud.getIdEstado());
                 prepararSentencia.setString(6, nuevaSolicitud.getFechaRegistro());
                 prepararSentencia.setString(7, nuevaSolicitud.getImpacto());
                 prepararSentencia.setString(8, nuevaSolicitud.getAccionPropuesta());
@@ -129,6 +145,5 @@ public class SolicitudDAO {
                     + "intentalo más tarde");
         }
         return respuesta;
-        
     }
 }
