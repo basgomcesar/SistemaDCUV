@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import sistemadcuv.modelo.pojo.Archivo;
 
 public class FXMLRegistroDeActividadController implements Initializable {
 
@@ -17,7 +18,7 @@ public class FXMLRegistroDeActividadController implements Initializable {
     @FXML
     private TextField tfAccion;
     @FXML
-    private TableView<?> tvArchivo;
+    private TableView<Archivo> tvArchivo;
     @FXML
     private TableColumn<?, ?> colNombreArchivo;
     @FXML
