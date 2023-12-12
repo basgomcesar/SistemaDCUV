@@ -99,7 +99,6 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
         this.colDesarrollador.setCellValueFactory(new PropertyValueFactory("nombreDesarrollador"));
         this.colFechaRegistro.setCellValueFactory(new PropertyValueFactory("fechaRegistro"));
         this.colFechaAprobacion.setCellValueFactory(new PropertyValueFactory("fechaAprobacion"));
-        tvListadoSolicitudes.setEditable(false);
         tvListadoSolicitudes.setOnMouseClicked(event -> {
         if (event.getClickCount() == 2) {
             btnVerDetalles();

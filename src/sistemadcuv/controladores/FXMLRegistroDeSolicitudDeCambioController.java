@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -398,23 +396,28 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
 
     @FXML
     private void btnDescargarArchivos(ActionEvent event) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Selecciona la carpeta de destino");
-        Stage escenarioBase = (Stage) lbEstado.getScene().getWindow();
-        File carpetaDestino = directoryChooser.showDialog(escenarioBase);
+        
+        if(archivos.size() > 0){
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Selecciona la carpeta de destino");
+            Stage escenarioBase = (Stage) lbNombreProyecto.getScene().getWindow();
+            File carpetaDestino = directoryChooser.showDialog(escenarioBase);
 
-        if (carpetaDestino != null) {
-            try {
-                for (Archivo archivo : archivos) {
-                    File archivoDestino = new File(carpetaDestino.getAbsolutePath(), archivo.getNombreArchivo());
-                    Files.write(archivoDestino.toPath(), archivo.getArchivo());
+            if (carpetaDestino != null) {
+                try {
+                    for (Archivo archivo : archivos) {
+                        File archivoDestino = new File(carpetaDestino.getAbsolutePath(), archivo.getNombreArchivo());
+                        Files.write(archivoDestino.toPath(), archivo.getArchivo());
+                    }
+
+                    Utilidades.mostrarAletarSimple("Descarga exitosa", "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), Alert.AlertType.INFORMATION);
+                } catch (IOException ex) {
+                    Utilidades.mostrarAletarSimple("Error al descargar", "Ha ocurrido un error al descargar los archivos", Alert.AlertType.WARNING);
+                    ex.printStackTrace();
                 }
-
-                Utilidades.mostrarAletarSimple("Descarga exitosa", "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), Alert.AlertType.INFORMATION);
-            } catch (IOException ex) {
-                Utilidades.mostrarAletarSimple("Error al descargar", "Ha ocurrido un error al descargar los archivos", Alert.AlertType.WARNING);
-                ex.printStackTrace();
             }
+        }else{
+            Utilidades.mostrarAletarSimple("Sin Archivos", "No existen archivos para descargar", Alert.AlertType.INFORMATION);
         }
     }
     

@@ -16,10 +16,12 @@ public class Cambio {
     private int idDesarrollador;
     private String desarrollador;
     private int idTipoCambio;
+    private int idEstado;
+    
     public Cambio() {
     }
 
-    public Cambio(int idCambio, String accionPropuesta, String descripcion, int esfuerzo, String estado, String fechaInicio, String fechaFin, String impacto, String nombre, String razonCambio, String tipo, int idDesarrollador, String desarrollador) {
+    public Cambio(int idCambio, String accionPropuesta, String descripcion, int esfuerzo, String estado, String fechaInicio, String fechaFin, String impacto, String nombre, String razonCambio, String tipo, int idDesarrollador, String desarrollador, int idTipoCambio, int idEstado) {
         this.idCambio = idCambio;
         this.accionPropuesta = accionPropuesta;
         this.descripcion = descripcion;
@@ -33,6 +35,16 @@ public class Cambio {
         this.tipo = tipo;
         this.idDesarrollador = idDesarrollador;
         this.desarrollador = desarrollador;
+        this.idTipoCambio = idTipoCambio;
+        this.idEstado = idEstado;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
     }
 
     public int getIdDesarrollador() {
