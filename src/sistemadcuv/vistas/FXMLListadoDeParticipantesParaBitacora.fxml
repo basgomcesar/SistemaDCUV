@@ -12,10 +12,10 @@
 
 <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="802.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeParticipantesParaBitacoraController">
    <children>
-      <TableView editable="true" layoutX="106.0" layoutY="115.0" minHeight="-Infinity" prefHeight="190.0" prefWidth="676.0" style="-fx-background-radius: 10; -fx-background-color: transparent;">
+      <TableView fx:id="tvParticipantes" editable="true" layoutX="106.0" layoutY="115.0" minHeight="-Infinity" onMouseClicked="#btnBitacoraDesarrollador" prefHeight="190.0" prefWidth="676.0" style="-fx-background-radius: 10; -fx-background-color: transparent;">
          <columns>
-            <TableColumn prefWidth="338.0" sortType="DESCENDING" text="Nombre" />
-            <TableColumn prefWidth="369.0" text="Correo" />
+            <TableColumn fx:id="colNombre" prefWidth="338.0" sortType="DESCENDING" text="Nombre" />
+            <TableColumn fx:id="colCorreo" prefWidth="369.0" text="Correo" />
          </columns>
          <effect>
             <DropShadow color="#97a1a0" height="6.17" radius="2.585" width="6.17" />

@@ -1,46 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="802.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLBitacoraDeCambiosDesarrolladorController">
+<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="802.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLBitacoraDeCambiosDesarrolladorController">
    <children>
-      <TableView editable="true" layoutX="88.0" layoutY="94.0" minHeight="-Infinity" prefHeight="301.0" prefWidth="675.0">
+      <TableView fx:id="tvCambios" editable="true" layoutX="88.0" layoutY="94.0" minHeight="-Infinity" prefHeight="301.0" prefWidth="675.0">
          <columns>
-            <TableColumn prefWidth="118.0" sortType="DESCENDING" text="Nombre" />
-            <TableColumn prefWidth="145.0" text="Estatus" />
-            <TableColumn minWidth="7.0" prefWidth="122.0" text="Desarrollador" />
-            <TableColumn minWidth="4.0" prefWidth="135.0" text="Fecha Inicio" />
-            <TableColumn minWidth="7.0" prefWidth="136.0" text="Fecha finalización" />
+            <TableColumn fx:id="colNombreCambio" prefWidth="118.0" sortType="DESCENDING" text="Nombre" />
+            <TableColumn fx:id="colEstatus" prefWidth="145.0" text="Estatus" />
+            <TableColumn fx:id="colDesarrollador" minWidth="7.0" prefWidth="122.0" text="Desarrollador" />
+            <TableColumn fx:id="colFechaInicio" minWidth="4.0" prefWidth="135.0" text="Fecha Inicio" />
+            <TableColumn fx:id="colFechaFinalizacion" minWidth="7.0" prefWidth="136.0" text="Fecha finalización" />
          </columns>
          <effect>
             <DropShadow color="#97a1a0" height="6.17" radius="2.585" width="6.17" />
          </effect>
       </TableView>
-      <TextField layoutX="86.0" layoutY="63.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
-         <effect>
-            <DropShadow blurType="GAUSSIAN" color="#97a1a0" height="9.41" radius="4.205" width="9.41" />
-         </effect>
-      </TextField>
-      <Label layoutX="88.0" layoutY="15.0" prefHeight="45.0" prefWidth="336.0" text="Bitacora de Cambios">
+      <Label layoutX="88.0" layoutY="50.0" prefHeight="24.0" prefWidth="183.0" text="Bitacora de Cambios">
          <font>
-            <Font name="Arial Bold" size="32.0" />
+            <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
       <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="744.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
@@ -48,7 +35,7 @@
             <Image url="@../../Imágenes/RECURSOS/8666609_user_icon.png" />
          </image>
       </ImageView>
-      <Label layoutX="654.0" layoutY="24.0" prefHeight="25.0" prefWidth="102.0" text="Usuario XYZ">
+      <Label fx:id="lbUsuarioActivo" layoutX="654.0" layoutY="24.0" prefHeight="25.0" prefWidth="102.0" text="Usuario XYZ">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="16.0" />
          </font>
@@ -72,18 +59,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <Button layoutX="625.0" layoutY="63.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="138.0" style="-fx-background-color: #000000;" text="Consultar bitacora personal" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <effect>
-            <DropShadow color="#869497" height="32.86" radius="7.715" width="0.0" />
-         </effect>
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
-      <Button layoutX="678.0" layoutY="407.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #426B1F;" text="Exportar (.pdf)" textFill="WHITE">
+      <Button layoutX="678.0" layoutY="407.0" mnemonicParsing="false" onAction="#btnExportarBitacoraCambios" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #426B1F;" text="Exportar (.pdf)" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -134,5 +110,10 @@
             <Label layoutX="13.0" layoutY="401.0" text="Bitacora" />
          </children>
       </Pane>
+      <Label fx:id="lbNombreDesarrollador" layoutX="275.0" layoutY="50.0" prefHeight="24.0" prefWidth="287.0" text="nombreDesarrollador">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

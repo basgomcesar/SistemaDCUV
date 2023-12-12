@@ -14,12 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import sistemadcuv.controladores.FXMLBitacoraDeCambiosGeneralController;
-import sistemadcuv.controladores.FXMLListadoDeActividadesController;
-import sistemadcuv.controladores.FXMLListadoDeCambiosController;
-import sistemadcuv.controladores.FXMLListadoDeDefectosController;
-import sistemadcuv.controladores.FXMLListadoDeSolicitudesDeCambioController;
-import sistemadcuv.controladores.FXMLParticipantesDelProyectoController;
 import sistemadcuv.interfaces.InitializableVentana;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
@@ -41,7 +35,8 @@ public class Utilidades {
     
     public static boolean correoValido(String correo){        
         if(correo != null && !correo.isEmpty()){
-            Pattern patronCorreo = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
+            Pattern patronCorreo = Pattern.compile(
+                    "([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
             Matcher matchPatron = patronCorreo.matcher(correo);
             
             return matchPatron.find();

@@ -69,6 +69,8 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
     
     private ObservableList<Cambio> cambios;
     private SortedList<Cambio> sortedListaCambios;
+    @FXML
+    private Label lbBitacoraPorDesarrollador;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -82,6 +84,7 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
         cargarInformacionCambios(desarrollador, responsable);
         if(desarrollador != null){
             lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
+            lbBitacoraPorDesarrollador.setVisible(false);
         }else{
             lbUsuarioActivo.setText("Usuario: " + responsable.getNombreCompleto());
         }
