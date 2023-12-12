@@ -12,9 +12,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -58,6 +60,8 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
     private DatePicker dpFechaHasta;
     
     private ObservableList<Cambio> cambios;
+    @FXML
+    private Button btnRegistrarCambio;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -236,6 +240,16 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
                 responsableSesion, 
                 "FXMLListadoDeSolicitudesDeCambio.fxml",
                 "Listado de solicitudes de cambio");
+    }
+
+    @FXML
+    private void clicRegistrarCambio(ActionEvent event) {
+        Utilidades.mostrarAletarSimple("Advertencia",
+                "Recuerde que solo puede hacer cambios de menor impacto, "
+                        + "de lo contrario se tendra que "
+                        + "solicitar una solicitud de cambio", 
+                Alert.AlertType.INFORMATION);
+        
     }
 
     

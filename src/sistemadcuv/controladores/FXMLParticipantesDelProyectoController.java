@@ -95,7 +95,8 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
         configurarColumnaEliminar();
     }
     private void obtenerInformacion(int idProyecto){
-        HashMap<String, Object> respuesta = ProyectoDAO.obtenerDesarrolladoresPorProyecto(idProyecto);
+        HashMap<String, Object> respuesta = ProyectoDAO.
+                obtenerDesarrolladoresActivosPorProyecto(idProyecto);
         if(!(boolean) respuesta.get("error")){
             desarrolladores = FXCollections.observableArrayList();
             ArrayList<Desarrollador> desarrolladorDAO = (ArrayList<Desarrollador>) respuesta.get("desarrolladores");
@@ -207,9 +208,13 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
                                 + "-fx-fill:#ff1744;"
                         );
                         deleteIcon.setOnMouseClicked((MouseEvent event) -> {
-                                Desarrollador desarrollador = tvDesarrolladores.getSelectionModel().getSelectedItem();
-                                if(Utilidades.mostrarDialogoConfirmacion("Alerta de confirmación ", 
-                                        "¿Esta seguro de eliminar al desarrollador " + desarrollador.getNombreCompleto()+
+                                Desarrollador desarrollador = tvDesarrolladores.getSelectionModel().
+                                        getSelectedItem();
+                                if(Utilidades.mostrarDialogoConfirmacion(
+                                        
+                                        "Alerta de confirmación ", 
+                                        "¿Esta seguro de eliminar al desarrollador " + 
+                                                desarrollador.getNombreCompleto()+
                                                 "? ya que al eliminar no podra deshacer los cambios"))
                                     eliminarDesarrollador(desarrollador);
                         });

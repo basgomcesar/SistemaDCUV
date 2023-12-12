@@ -245,7 +245,6 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
                 "Bitacora general de cambios");
     }
 
-    @FXML
     private void btnSolicitudes(MouseEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
         Utilidades.irAVentana(escenarioBase, 
