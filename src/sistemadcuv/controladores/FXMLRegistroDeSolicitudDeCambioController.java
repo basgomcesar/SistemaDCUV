@@ -6,11 +6,13 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sistemadcuv.modelo.dao.ArchivoDAO;
@@ -86,11 +89,15 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     @FXML
     private Button bAgregar;
     @FXML
-    private Button bEliminar;
-    @FXML
     private Button bRechazar;
     @FXML
     private Button bAceptar;
+    @FXML
+    private Button bEliminarArchivo;
+    @FXML
+    private Button bDescargar;
+    @FXML
+    private Button bEliminarSolicitud;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -110,8 +117,6 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
         String fechaRegistro = fechaActual.format(formatoFecha);
         lbFechaRegistro.setText(fechaRegistro);
         this.totalSolicitudes = totalSolicitudes + 1;
-        lbNumSolicitud.setText("Número de Solicitud: " +String.valueOf(this.totalSolicitudes));
-        lbEstado.setText("Pendiente");
         if(solicitudEdicion == null){
             configurarVentanaRegistrar();
         } else{
@@ -126,6 +131,10 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
         lbFechaAprovacion.setVisible(false);
         bAceptar.setVisible(false);
         bRechazar.setVisible(false);
+        bDescargar.setVisible(false);
+        bEliminarSolicitud.setVisible(false);
+        lbNumSolicitud.setText("Número de Solicitud: " +String.valueOf(this.totalSolicitudes));
+        lbEstado.setText("Pendiente");
     }
     
     private void cargarInformacionDetalles(SolicitudDeCambio solicitudEdicion){
@@ -136,10 +145,45 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
             lbAprobadoPor.setText("Aprobado por: " + solicitudEdicion.getAprobadoPor());
             lbFechaAprovacion.setText("Fecha de aprobación: " + solicitudEdicion.getFechaAprobacion());
         }
+        if(desarrolladorSesion != null){
+            bAceptar.setVisible(false);
+            bRechazar.setVisible(false);
+        }
+        if(solicitudEdicion.getIdEstado() != 1){
+            bEliminarSolicitud.setVisible(false);
+        }
+        lbFechaRegistro.setText(solicitudEdicion.getFechaRegistro());
+        lbNumSolicitud.setText("Número de Solicitud: " + solicitudEdicion.getNumSolicitud());
         bAgregar.setVisible(false);
         bCancelar.setVisible(false);
-        bEliminar.setVisible(false);
+        bEliminarArchivo.setVisible(false);
         bRegistrar.setVisible(false);
+        tfAccion.setText(solicitudEdicion.getAccionPropuesta());
+        tfAccion.setEditable(false);
+        tfDescripcion.setText(solicitudEdicion.getDescripcion());
+        tfDescripcion.setEditable(false);
+        tfImpacto.setText(solicitudEdicion.getImpacto());
+        tfImpacto.setEditable(false);
+        tfNombreSolicitud.setText(solicitudEdicion.getNombre());
+        tfNombreSolicitud.setEditable(false);
+        tfRazon.setText(solicitudEdicion.getRazon());
+        tfRazon.setEditable(false);
+        lbEstado.setText(solicitudEdicion.getEstado());
+        cargarArchivos(solicitudEdicion.getIdSolicitud());
+    }
+    
+    private void cargarArchivos(int idSolicitud){
+        HashMap<String, Object> respuesta = new HashMap<>();
+            respuesta = ArchivoDAO.obtenerArchivosSolicitud(idSolicitud);
+        
+        if(!(boolean) respuesta.get("error")){
+            archivos = FXCollections.observableArrayList();
+            ArrayList<Archivo> lista = (ArrayList<Archivo>) respuesta.get("archivos");
+            archivos.addAll(lista);
+            tvArchivo.setItems(archivos);
+        }else{
+            Utilidades.mostrarAletarSimple("Error", respuesta.get("mensaje").toString(), Alert.AlertType.ERROR);
+        }
     }
     
     private void configurarTablaArchivos(){
@@ -152,24 +196,28 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     }
     
     private void registrarSolicitud(SolicitudDeCambio nuevaSolicitud) {
-    HashMap<String, Object> respuesta = SolicitudDAO.registrarSolicitudDeCambio(nuevaSolicitud);
-    if (!(boolean) respuesta.get("error")) {
-        if (archivos != null && !archivos.isEmpty()) {
-            for (Archivo archivo : archivos) {
-                archivo.setIdSolicitud((int) respuesta.get("idSolicitud"));
-                registrarArchivo(archivo);
+        HashMap<String, Object> respuesta = SolicitudDAO.registrarSolicitudDeCambio(nuevaSolicitud);
+        if (!(boolean) respuesta.get("error")) {
+            if (archivos != null && !archivos.isEmpty()) {
+                for (Archivo archivo : archivos) {
+                    archivo.setIdSolicitud((int) respuesta.get("idSolicitud"));
+                    registrarArchivo(archivo);
+                }
+            Utilidades.mostrarAletarSimple("Registro exitoso", 
+                        (String)respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
+                observador.operacionExitosa("Registro", nuevaSolicitud.getNombre());
+                cerrarVentana();
+            } else {
+                Utilidades.mostrarAletarSimple("Registro exitoso",
+                        (String) respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
+                observador.operacionExitosa("Registro", nuevaSolicitud.getNombre());
+                cerrarVentana();
             }
         } else {
-            Utilidades.mostrarAletarSimple("Registro exitoso",
-                    (String) respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
-            observador.operacionExitosa("Registro", nuevaSolicitud.getNombre());
-            cerrarVentana();
+            Utilidades.mostrarAletarSimple("Error en el registro",
+                    (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
         }
-    } else {
-        Utilidades.mostrarAletarSimple("Error en el registro",
-                (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
     }
-}
     
     private void establecerEstiloNormal(){        
         tfNombreSolicitud.setStyle(estiloNormal);
@@ -243,14 +291,9 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     
     private void registrarArchivo(Archivo archivo){
         HashMap<String, Object> respuesta = ArchivoDAO.registrarArchivoDeSolicitud(archivo);
-            if( !(boolean) respuesta.get("error")){
-                Utilidades.mostrarAletarSimple("Registro exitoso", 
-                        (String)respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
-                observador.operacionExitosa("Registro", archivo.getNombreArchivo());
-                cerrarVentana();
-            }else{
+            if( (boolean) respuesta.get("error")){
                 Utilidades.mostrarAletarSimple("Error en el registro", 
-                        (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
+                        (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);   
             }
     }
 
@@ -265,35 +308,64 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     }
 
     @FXML
-private void btnAgregarArchivo(ActionEvent event) {
-    try {
-        FileChooser dialogoSeleccion = new FileChooser();
-        dialogoSeleccion.setTitle("Selecciona el archivo");
-        String etiquetaTipoDato = "Archivo PDF(*.pdf)";
-        String extensionArchivo = "*.PDF";
-        FileChooser.ExtensionFilter filtroSeleccion =
-                new FileChooser.ExtensionFilter(etiquetaTipoDato, extensionArchivo);
-        dialogoSeleccion.getExtensionFilters().add(filtroSeleccion);
-        Stage escenarioBase = (Stage) lbEstado.getScene().getWindow();
-        List<File> archivosSeleccionados = dialogoSeleccion.showOpenMultipleDialog(escenarioBase);
+    private void btnAgregarArchivo(ActionEvent event) {
+        try {
+            FileChooser dialogoSeleccion = new FileChooser();
+            dialogoSeleccion.setTitle("Selecciona el archivo");
+            String etiquetaTipoDato = "Archivo PDF(*.pdf)";
+            String extensionArchivo = "*.PDF";
+            FileChooser.ExtensionFilter filtroSeleccion =
+                    new FileChooser.ExtensionFilter(etiquetaTipoDato, extensionArchivo);
+            dialogoSeleccion.getExtensionFilters().add(filtroSeleccion);
+            Stage escenarioBase = (Stage) lbEstado.getScene().getWindow();
+            List<File> archivosSeleccionados = dialogoSeleccion.showOpenMultipleDialog(escenarioBase);
 
-        if (archivosSeleccionados != null) {
-            for (File archivo : archivosSeleccionados) {
-                documentoSol = new Archivo();
-                documentoSol.setArchivo(Files.readAllBytes(archivo.toPath()));
-                documentoSol.setNombreArchivo(archivo.getName());
-                archivos.add(documentoSol);
+            if (archivosSeleccionados != null) {
+                for (File archivo : archivosSeleccionados) {
+                    documentoSol = new Archivo();
+                    documentoSol.setArchivo(Files.readAllBytes(archivo.toPath()));
+                    documentoSol.setNombreArchivo(archivo.getName());
+                    archivos.add(documentoSol);
+                }
+                tvArchivo.setItems(archivos);
             }
-            tvArchivo.setItems(archivos);
+        } catch (IOException ex) {
+            Utilidades.mostrarAletarSimple("ERROR AL CARGAR", "Ha ocurrido un error"
+                    + " al cargar los archivos", Alert.AlertType.WARNING);
         }
-    } catch (IOException ex) {
-        Utilidades.mostrarAletarSimple("ERROR AL CARGAR", "Ha ocurrido un error"
-                + " al cargar los archivos", Alert.AlertType.WARNING);
     }
-}
+
+    private void cerrarVentana(){
+        Stage escenario = (Stage) tfNombreSolicitud.getScene().getWindow();
+        escenario.close();
+    }
+    @FXML
+    private void btnRechazarSolicitud(ActionEvent event) {
+        solicitudEdicion.setIdEstado(3);
+        modificarEstado(solicitudEdicion);
+    }
 
     @FXML
-    private void btnEliminar(ActionEvent event) {
+    private void btnAceptarSolicitud(ActionEvent event) {
+        solicitudEdicion.setIdEstado(2);
+        modificarEstado(solicitudEdicion);
+    }
+    
+    private void modificarEstado(SolicitudDeCambio solicitud){
+        HashMap<String, Object> respuesta = SolicitudDAO.modificarEstadoSolicitud(solicitud);
+            if( !(boolean) respuesta.get("error")){
+                Utilidades.mostrarAletarSimple("Estado modificado", 
+                        (String)respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
+                observador.operacionExitosa("Modificacion", solicitud.getNombre());
+                cerrarVentana();
+            }else{
+                Utilidades.mostrarAletarSimple("Error al modificar", 
+                        (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
+            }
+    }
+
+    @FXML
+    private void btnEliminarArchivo(ActionEvent event) {
         Archivo archivoSeleccionado = tvArchivo.getSelectionModel().getSelectedItem();
         if (archivoSeleccionado != null) {
             archivos.remove(archivoSeleccionado);
@@ -304,15 +376,57 @@ private void btnAgregarArchivo(ActionEvent event) {
         }
     }
 
-    private void cerrarVentana(){
-        Stage escenario = (Stage) tfNombreSolicitud.getScene().getWindow();
-        escenario.close();
-    }
     @FXML
-    private void btnRechazarSolicitud(ActionEvent event) {
-    }
+    private void btnDescargarArchivos(ActionEvent event) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Selecciona la carpeta de destino");
+        Stage escenarioBase = (Stage) lbEstado.getScene().getWindow();
+        File carpetaDestino = directoryChooser.showDialog(escenarioBase);
 
+        if (carpetaDestino != null) {
+            try {
+                for (Archivo archivo : archivos) {
+                    File archivoDestino = new File(carpetaDestino.getAbsolutePath(), archivo.getNombreArchivo());
+                    Files.write(archivoDestino.toPath(), archivo.getArchivo());
+                }
+
+                Utilidades.mostrarAletarSimple("Descarga exitosa", "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), Alert.AlertType.INFORMATION);
+            } catch (IOException ex) {
+                Utilidades.mostrarAletarSimple("Error al descargar", "Ha ocurrido un error al descargar los archivos", Alert.AlertType.WARNING);
+                ex.printStackTrace();
+            }
+        }
+    }
+    
     @FXML
-    private void btnAceptarSolicitud(ActionEvent event) {
+    private void btnEliminarSolicitud(ActionEvent event) {
+        boolean eliminarSolicitud = Utilidades.mostrarDialogoConfirmacion("Cancelar proceso", 
+                    "¿Estás seguro de que desea eliminar esta solicitud?");                            
+            if(eliminarSolicitud){
+                if(archivos.size() > 0){
+                    HashMap<String, Object> respuesta = ArchivoDAO.eliminarArchivosSolicitud(solicitudEdicion.getIdSolicitud());
+                    if( !(boolean) respuesta.get("error")){
+                        eliminarSolicitud(solicitudEdicion.getIdSolicitud());
+                    }else{
+                        Utilidades.mostrarAletarSimple("Error al eliminar", 
+                                (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
+                    }
+                } else{
+                    eliminarSolicitud(solicitudEdicion.getIdSolicitud());
+                }
+            }
+    }
+    
+    private void eliminarSolicitud(int idSolicitud){
+        HashMap<String, Object> respuesta = SolicitudDAO.eliminarSolicitud(idSolicitud);
+                if( !(boolean) respuesta.get("error")){
+                    Utilidades.mostrarAletarSimple("Solicitud Eliminada", 
+                            (String)respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
+                    observador.operacionExitosa("Eliminacion", solicitudEdicion.getNombre());
+                    cerrarVentana();
+                }else{
+                    Utilidades.mostrarAletarSimple("Error al eliminar", 
+                            (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
+                }
     }
 }

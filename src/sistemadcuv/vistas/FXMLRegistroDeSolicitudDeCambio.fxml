@@ -65,7 +65,7 @@
           <TableColumn fx:id="colNombreArchivo" prefWidth="199.0" text="Archivo" />
         </columns>
       </TableView>
-      <Button fx:id="bEliminar" layoutX="583.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: red;" text="Eliminar" textFill="WHITE">
+      <Button fx:id="bEliminarArchivo" layoutX="583.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnEliminarArchivo" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: red;" text="Eliminar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -99,6 +99,28 @@
          </font>
       </Button>
       <Button fx:id="bAceptar" defaultButton="true" layoutX="28.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnAceptarSolicitud" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #426B1F;" text="Aceptar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#7c908d" height="36.58" offsetY="1.0" radius="14.575" width="23.72" />
+         </effect>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="bDescargar" defaultButton="true" layoutX="583.0" layoutY="326.0" mnemonicParsing="false" onAction="#btnDescargarArchivos" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #426B1F;" text="Descargar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#7c908d" height="36.58" offsetY="1.0" radius="14.575" width="23.72" />
+         </effect>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="bEliminarSolicitud" layoutX="427.0" layoutY="540.0" mnemonicParsing="false" onAction="#btnEliminarSolicitud" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: red;" text="Eliminar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
