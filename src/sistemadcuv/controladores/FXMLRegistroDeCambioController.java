@@ -27,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -58,7 +59,7 @@ public class FXMLRegistroDeCambioController implements Initializable {
     @FXML
     private Button btnCancelar;
     @FXML
-    private Label lNombreProyecto;
+    private Label lbNombreProyecto;
     @FXML
     private Label lbDesarrollador;
     @FXML
@@ -72,16 +73,24 @@ public class FXMLRegistroDeCambioController implements Initializable {
     @FXML
     private TableColumn colNombreArchivo;
     @FXML
-    private Button bAgregar;
+    private Button btnAgregar;
     @FXML
     private Button btnEliminar;
     private Desarrollador desarrolladorSesion;
+    private ResponsableDeProyecto responsableSesion;
     @FXML
     private ComboBox<TipoArtefacto> cbTipoCambio;
     private ObservableList<TipoArtefacto> tiposDeCambios;
     private Archivo documentoCambio;
     private ObservableList<Archivo> archivos;
-    private ObservadorCambios observadorCambios;
+    private ObservadorCambios observador;
+    private Cambio cambioSeleccion;
+    private DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private DateTimeFormatter formatoRegistro = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    @FXML
+    private Button bDescargar;
+    @FXML
+    private Button bGuardar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -89,7 +98,6 @@ public class FXMLRegistroDeCambioController implements Initializable {
         archivos = FXCollections.observableArrayList();
         configurarCampoEsfuerzo();
         cargarInformacionTiposArtefactos();
-        configurarDatePicker();
         configurarTablaArchivos();
     }    
     private void configurarTablaArchivos(){
@@ -129,13 +137,77 @@ public class FXMLRegistroDeCambioController implements Initializable {
         }   
     }
 
-    void inicializarFormulario(Desarrollador desarrolladorSesion,ObservadorCambios observador) {
+    void inicializarFormulario(Cambio cambioSeleccion, Desarrollador desarrolladorSesion,ResponsableDeProyecto responsableSesion , ObservadorCambios observador) {
+        this.responsableSesion = responsableSesion;
+        this.cambioSeleccion = cambioSeleccion;
         this.desarrolladorSesion = desarrolladorSesion;
-        this.observadorCambios = observador;
-        lNombreProyecto.setText(desarrolladorSesion.getNombreProyecto());
-        lbDesarrollador.setText(desarrolladorSesion.getNombreCompleto());
+        this.observador = observador;
+        if(desarrolladorSesion != null){
+            lbNombreProyecto.setText(desarrolladorSesion.getNombreProyecto());
+            lbDesarrollador.setText(desarrolladorSesion.getNombreCompleto());
+        } else{
+            lbNombreProyecto.setText(responsableSesion.getNombreProyecto());
+            lbDesarrollador.setText(cambioSeleccion.getDesarrollador());
+        }
+        
+        if(cambioSeleccion != null){
+            cargarDetallesCambio(cambioSeleccion);
+        } else{
+            configurarDatePicker();
+            bDescargar.setVisible(false);
+            bGuardar.setVisible(false);
+        }
         
     }
+    
+    private void cargarDetallesCambio(Cambio cambioSeleccion){
+        btnAgregar.setVisible(false);
+        btnCancelar.setVisible(false);
+        btnCrear.setVisible(false);
+        btnEliminar.setVisible(false);
+        tfDescripcion.setText(cambioSeleccion.getDescripcion());
+        tfDescripcion.setEditable(false);
+        tfEsfuerzo.setText(Integer.toString(cambioSeleccion.getEsfuerzo()));
+        tfImpacto.setText(cambioSeleccion.getImpacto());
+        tfImpacto.setEditable(false);
+        tfNombreCambio.setText(cambioSeleccion.getNombre());
+        tfNombreCambio.setEditable(false);
+        tfRazon.setText(cambioSeleccion.getRazonCambio());
+        tfRazon.setEditable(false);
+        LocalDate fechaInicio = LocalDate.parse(cambioSeleccion.getFechaInicio(), formatoFecha);
+        dpInicio.setValue(fechaInicio);
+        dpInicio.setDisable(true);
+        int posicionTipoArtefacto = buscarTipoArtefacto(this.cambioSeleccion.getIdTipoCambio());
+        cbTipoCambio.getSelectionModel().select(posicionTipoArtefacto);
+        cbTipoCambio.setDisable(true);
+        cargarArchivos(cambioSeleccion.getIdCambio());
+        habilitarFechaFin();
+        if(cambioSeleccion.getFechaFin() != null){
+            LocalDate fechaFin = LocalDate.parse(cambioSeleccion.getFechaFin(), formatoFecha);
+            dpFin.setValue(fechaFin);
+            dpFin.setEditable(false);
+            dpFin.setDisable(true);
+            tfEsfuerzo.setEditable(false);
+            bGuardar.setVisible(false);
+        }
+
+
+    }
+    
+    private void cargarArchivos(int idCambio){
+        HashMap<String, Object> respuesta = new HashMap<>();
+            respuesta = ArchivoDAO.obtenerArchivosCambio(idCambio);
+        
+        if(!(boolean) respuesta.get("error")){
+            archivos = FXCollections.observableArrayList();
+            ArrayList<Archivo> lista = (ArrayList<Archivo>) respuesta.get("archivos");
+            archivos.addAll(lista);
+            tvArchivo.setItems(archivos);
+        }else{
+            Utilidades.mostrarAletarSimple("Error", respuesta.get("mensaje").toString(), Alert.AlertType.ERROR);
+        }
+    }
+    
     private boolean esCamposVacios(){
         return tfNombreCambio.getText().trim().isEmpty() ||
                 tfDescripcion.getText().trim().isEmpty() ||
@@ -189,7 +261,7 @@ public class FXMLRegistroDeCambioController implements Initializable {
         });
     }
     @FXML
-    private void btnAgregarArchivo(ActionEvent event) {
+    private void clicAgregarArchivo(ActionEvent event) {
         try {
             FileChooser dialogoSeleccion = new FileChooser();
             dialogoSeleccion.setTitle("Selecciona el archivo");
@@ -263,7 +335,7 @@ public class FXMLRegistroDeCambioController implements Initializable {
                     registrarArchivo(archivo);
                 }  
             }
-            this.observadorCambios.operacionExitosa("Operacion exitosa", 
+            this.observador.operacionExitosa("Operacion exitosa", 
             nuevoCambio.getNombre() );
             Utilidades.mostrarAletarSimple("Registro exitoso", 
                     "El cambio se ha registrado ", 
@@ -283,10 +355,73 @@ public class FXMLRegistroDeCambioController implements Initializable {
                         (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);   
             }
     }
+    
+    private int buscarTipoArtefacto(int idTipoArtefacto){
+        for (int i = 0; i < tiposDeCambios.size(); i++) {
+            if(tiposDeCambios.get(i).getIdArtefacto() == idTipoArtefacto)
+                return i;
+        }
+        return 0;
+    }
+    
+    @FXML
+    private void btnDescargarArchivos(ActionEvent event) {
+        
+        if(archivos.size() > 0){
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Selecciona la carpeta de destino");
+            Stage escenarioBase = (Stage) lbDesarrollador.getScene().getWindow();
+            File carpetaDestino = directoryChooser.showDialog(escenarioBase);
+
+            if (carpetaDestino != null) {
+                try {
+                    for (Archivo archivo : archivos) {
+                        File archivoDestino = new File(carpetaDestino.getAbsolutePath(), archivo.getNombreArchivo());
+                        Files.write(archivoDestino.toPath(), archivo.getArchivo());
+                    }
+
+                    Utilidades.mostrarAletarSimple("Descarga exitosa", "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), Alert.AlertType.INFORMATION);
+                } catch (IOException ex) {
+                    Utilidades.mostrarAletarSimple("Error al descargar", "Ha ocurrido un error al descargar los archivos", Alert.AlertType.WARNING);
+                    ex.printStackTrace();
+                }
+            }
+        }else{
+            Utilidades.mostrarAletarSimple("Sin Archivos", "No existen archivos para descargar", Alert.AlertType.INFORMATION);
+        }
+    }
 
     private void cerrarVentana() {
         Stage escenario = (Stage) btnCancelar.getScene().getWindow();
         escenario.close();
+    }
+
+    @FXML
+    private void btnGuardarCambios(ActionEvent event) {
+        if(!esCamposVacios()){
+            modificarCambio();
+        }else{
+            Utilidades.mostrarAletarSimple("Campos vacios",
+                    "Por favor asegurese de llenar "
+                            + "los campos correspondientes", 
+                    Alert.AlertType.INFORMATION);
+        }
+    }
+    
+    private void modificarCambio(){
+        cambioSeleccion.setEsfuerzo(Integer.parseInt(tfEsfuerzo.getText()));
+        cambioSeleccion.setFechaFin(dpFin.getValue().toString());
+        cambioSeleccion.setIdEstado(2);
+        HashMap<String, Object> respuesta = CambioDAO.modificarCambio(cambioSeleccion);
+            if( !(boolean) respuesta.get("error")){
+                Utilidades.mostrarAletarSimple("Estado modificado", 
+                        (String)respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
+                observador.operacionExitosa("Modificacion", cambioSeleccion.getNombre());
+                cerrarVentana();
+            }else{
+                Utilidades.mostrarAletarSimple("Error al modificar", 
+                        (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
+            }
     }
     
 }

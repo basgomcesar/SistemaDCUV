@@ -68,7 +68,9 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
     private ObservableList<Cambio> cambios;
     @FXML
     private Button btnRegistrarCambio;
-
+    private DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private DateTimeFormatter formatoRegistro = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
@@ -93,6 +95,11 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
         this.colDesarrollador.setCellValueFactory(new PropertyValueFactory("desarrollador"));
         this.colFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         this.colFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
+        tvCambios.setOnMouseClicked(event -> {
+        if (event.getClickCount() == 2) {
+            btnVerDetalles();
+        }
+        });
     }
     
     private void cargarInformacionCambios(Desarrollador desarrollador, ResponsableDeProyecto responsable){
@@ -168,13 +175,10 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
             LocalDate fechaInicio = dpFechaDesde.getValue();
             LocalDate fechaFin = dpFechaHasta.getValue();
 
-            // CASO DEFAULT
             if (fechaInicio == null && fechaFin == null) {
                 return true;
             }
 
-            // CRITERIO DE EVALUACION
-            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate fechaCambio = LocalDate.parse(fechasFiltro.getFechaInicio(), formatoFecha);
 
             if (fechaInicio != null && fechaFin != null) {
@@ -256,20 +260,20 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
                         + "de lo contrario tendra que "
                         + "generar una solicitud de cambio", 
                 Alert.AlertType.INFORMATION);
-        irVentanaRegistrarCambio();
+        irVentanaFormularioCambio(null);
     }
 
-    private void irVentanaRegistrarCambio() {
+    private void irVentanaFormularioCambio(Cambio cambioSeleccionado) {
         try{
             FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeCambio.fxml");
             Parent vista = loader.load();
             Scene escena = new Scene(vista);
             FXMLRegistroDeCambioController controller = loader.getController();
-            controller.inicializarFormulario(desarrolladorSesion,this);
+            controller.inicializarFormulario(cambioSeleccionado, desarrolladorSesion,responsableSesion, this);
             
             Stage escenario = new Stage();
             escenario.setScene(escena);
-            escenario.setTitle("Registrar cambio");
+            escenario.setTitle("Formulario cambio");
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
         }catch(IOException ex){
@@ -281,6 +285,12 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
     public void operacionExitosa(String tipoOperacion, String nombre) {
         cargarInformacionCambios(this.desarrolladorSesion,
                 this.responsableSesion);
+    }
+
+    @FXML
+    private void btnVerDetalles() {
+        Cambio cambioSeleccionado = tvCambios.getSelectionModel().getSelectedItem();
+        irVentanaFormularioCambio(cambioSeleccionado);
     }
 
     

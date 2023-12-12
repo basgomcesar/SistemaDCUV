@@ -25,7 +25,7 @@ public class CambioDAO {
 "                            Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador \n" +
 "                            FROM cambio c \n" +
 "                            INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador \n" +
-"									INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion";
+"                            INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Cambio> cambios = new ArrayList();
@@ -59,7 +59,7 @@ public class CambioDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta ="SELECT idCambio, nombre,descripcion,esfuerzo, ea.nombreEstado as estado , DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio'," +
+                String consulta ="SELECT idCambio, nombre,descripcion, impacto, razonCambio, TipoArtefacto_idTipoArtefacto AS idTipoArtefacto, esfuerzo, ea.nombreEstado as estado , DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio'," +
                     "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin', " +
                     "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador " +
                     "FROM cambio c " +
@@ -76,6 +76,9 @@ public class CambioDAO {
                     cambio.setIdCambio(resultado.getInt("idCambio"));
                     cambio.setNombre(resultado.getString("nombre"));
                     cambio.setDescripcion(resultado.getString("descripcion"));
+                    cambio.setImpacto(resultado.getString("impacto"));
+                    cambio.setRazonCambio(resultado.getString("razonCambio"));
+                    cambio.setIdTipoCambio(resultado.getInt("idTipoArtefacto"));
                     cambio.setEsfuerzo(resultado.getInt("esfuerzo"));
                     cambio.setEstado(resultado.getString("estado"));
                     cambio.setFechaInicio(resultado.getString("fechaInicio"));
@@ -128,6 +131,38 @@ public class CambioDAO {
                     respuesta.put("mensaje", "Solicitud de cambio registrada");
                 }else{                    
                     respuesta.put("mensaje", "Error al registrar");
+                }
+            }catch(SQLException ex){
+                respuesta.put("mensaje", "Error: " + ex.getMessage());
+            }
+        }else{
+            respuesta.put("mensaje", "Por el momento no hay conexion, "
+                    + "intentalo más tarde");
+        }
+        return respuesta;
+    }
+    
+    public static HashMap<String, Object> modificarCambio(Cambio modificarCambio){
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "UPDATE cambio SET esfuerzo = ?, "
+                        + "fechaFin = ?, estadoasignacion_idestadoasignacion = ? "
+                        + "WHERE idCambio = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, modificarCambio.getEsfuerzo());
+                prepararSentencia.setString(2, modificarCambio.getFechaFin());
+                prepararSentencia.setInt(3, modificarCambio.getIdEstado());
+                prepararSentencia.setInt(4, modificarCambio.getIdCambio());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                conexionBD.close();
+                if(filasAfectadas == 1){
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "Estado modificado");
+                }else{                    
+                    respuesta.put("mensaje", "Error al modificar");
                 }
             }catch(SQLException ex){
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
