@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -119,7 +120,7 @@ public class SolicitudDAO {
                     "numeroSolicitud, razon, EstadoSolicitud_idEstadoSolicitud, fechaCreacion, " +
                     "impacto,accionPropuesta, Desarrollador_idDesarrollador) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, Statement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setString(1, nuevaSolicitud.getNombre());
                 prepararSentencia.setString(2, nuevaSolicitud.getDescripcion());
                 prepararSentencia.setInt(3, nuevaSolicitud.getNumSolicitud());
@@ -130,12 +131,74 @@ public class SolicitudDAO {
                 prepararSentencia.setString(8, nuevaSolicitud.getAccionPropuesta());
                 prepararSentencia.setInt(9, nuevaSolicitud.getIdDesarrollador());
                 int filasAfectadas = prepararSentencia.executeUpdate();
+                ResultSet generatedKeys = prepararSentencia.getGeneratedKeys();
+                if (generatedKeys.next()){
+                    int idSolicitud = generatedKeys.getInt(1);
+                    respuesta.put("idSolicitud", idSolicitud);
+                }
                 conexionBD.close();
                 if(filasAfectadas == 1){
                     respuesta.put("error", false);
                     respuesta.put("mensaje", "Solicitud de cambio registrada");
                 }else{                    
                     respuesta.put("mensaje", "Error al registrar");
+                }
+            }catch(SQLException ex){
+                respuesta.put("mensaje", "Error: " + ex.getMessage());
+            }
+        }else{
+            respuesta.put("mensaje", "Por el momento no hay conexion, "
+                    + "intentalo más tarde");
+        }
+        return respuesta;
+    }
+    
+    public static HashMap<String, Object> modificarEstadoSolicitud(SolicitudDeCambio modificarSolicitud){
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "UPDATE solicituddecambio SET sc.EstadoSolicitud_idEstadoSolicitud = ? "
+                        + "WHERE sc.idSolicitudDeCambio = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, modificarSolicitud.getIdEstado());
+                prepararSentencia.setInt(2, modificarSolicitud.getIdSolicitud());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                conexionBD.close();
+                if(filasAfectadas == 1){
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "Estado modificado");
+                }else{                    
+                    respuesta.put("mensaje", "Error al modificar");
+                }
+            }catch(SQLException ex){
+                respuesta.put("mensaje", "Error: " + ex.getMessage());
+            }
+        }else{
+            respuesta.put("mensaje", "Por el momento no hay conexion, "
+                    + "intentalo más tarde");
+        }
+        return respuesta;
+    }
+    
+    public static HashMap<String, Object> eliminarSolicitud(int idSolicitud){
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "DELETE FROM solicituddecambio "
+                        + "WHERE idSolicitudDeCambio = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idSolicitud);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                conexionBD.close();
+                if(filasAfectadas == 1){
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "Solicitud eliminada");
+                }else{                    
+                    respuesta.put("mensaje", "Error al eliminar");
                 }
             }catch(SQLException ex){
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
