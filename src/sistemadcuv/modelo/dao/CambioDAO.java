@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import sistemadcuv.modelo.ConexionBD;
 import sistemadcuv.modelo.pojo.Cambio;
+import sistemadcuv.modelo.pojo.SolicitudDeCambio;
 
 public class CambioDAO {
     
@@ -74,7 +76,7 @@ public class CambioDAO {
                     cambio.setIdCambio(resultado.getInt("idCambio"));
                     cambio.setNombre(resultado.getString("nombre"));
                     cambio.setDescripcion(resultado.getString("descripcion"));
-                    cambio.setEsfuerzo(resultado.getString("esfuerzo"));
+                    cambio.setEsfuerzo(resultado.getInt("esfuerzo"));
                     cambio.setEstado(resultado.getString("estado"));
                     cambio.setFechaInicio(resultado.getString("fechaInicio"));
                     cambio.setFechaFin(resultado.getString("fechaFin"));
@@ -90,6 +92,49 @@ public class CambioDAO {
             }
         } else{
             
+        }
+        return respuesta;
+    }
+    public static HashMap<String, Object> registrarCambioBajoImpacto(Cambio nuevoCambio){
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "INSERT INTO cambio(nombre, descripcion, " +
+                    "esfuerzo, fechaInicio, fechaFin, impacto, " +
+                    "razonCambio,Desarrollador_idDesarrollador, " +
+                    "estadoasignacion_idEstadoAsignacion, tipoartefacto_idTipoArtefacto) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 2,?) ;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, Statement.RETURN_GENERATED_KEYS);
+                prepararSentencia.setString(1, nuevoCambio.getNombre());
+                prepararSentencia.setString(2, nuevoCambio.getDescripcion());
+                prepararSentencia.setInt(3, nuevoCambio.getEsfuerzo());
+                prepararSentencia.setString(4, nuevoCambio.getFechaInicio());
+                prepararSentencia.setString(5, nuevoCambio.getFechaFin());
+                prepararSentencia.setString(6, nuevoCambio.getImpacto());
+                prepararSentencia.setString(7, nuevoCambio.getRazonCambio());
+                prepararSentencia.setInt(8, nuevoCambio.getIdDesarrollador());
+                prepararSentencia.setInt(9, nuevoCambio.getIdTipoCambio());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                ResultSet generatedKeys = prepararSentencia.getGeneratedKeys();
+                if (generatedKeys.next()){
+                    int idCambio = generatedKeys.getInt(1);
+                    respuesta.put("idCambio", idCambio);
+                }
+                conexionBD.close();
+                if(filasAfectadas == 1){
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "Solicitud de cambio registrada");
+                }else{                    
+                    respuesta.put("mensaje", "Error al registrar");
+                }
+            }catch(SQLException ex){
+                respuesta.put("mensaje", "Error: " + ex.getMessage());
+            }
+        }else{
+            respuesta.put("mensaje", "Por el momento no hay conexion, "
+                    + "intentalo más tarde");
         }
         return respuesta;
     }

@@ -23,7 +23,8 @@ public class FXMLRegistroDeActividadController implements Initializable {
     private TableColumn<?, ?> colNombreArchivo;
     @FXML
     private Label lNombreProyecto;
-
+    private Archivo documentoSol;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

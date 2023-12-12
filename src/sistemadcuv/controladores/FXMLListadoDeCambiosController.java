@@ -36,10 +36,11 @@ import sistemadcuv.modelo.pojo.Cambio;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
 import sistemadcuv.modelo.pojo.SolicitudDeCambio;
+import sistemadcuv.observador.ObservadorCambios;
 import sistemadcuv.utils.Utilidades;
 
 
-public class FXMLListadoDeCambiosController implements Initializable,InitializableVentana  {
+public class FXMLListadoDeCambiosController implements Initializable,InitializableVentana,ObservadorCambios  {
 
     @FXML
     private Label lbUsuarioActivo;
@@ -264,7 +265,7 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
             Parent vista = loader.load();
             Scene escena = new Scene(vista);
             FXMLRegistroDeCambioController controller = loader.getController();
-            controller.inicializarFormulario(desarrolladorSesion);
+            controller.inicializarFormulario(desarrolladorSesion,this);
             
             Stage escenario = new Stage();
             escenario.setScene(escena);
@@ -274,6 +275,12 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
         }catch(IOException ex){
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void operacionExitosa(String tipoOperacion, String nombre) {
+        cargarInformacionCambios(this.desarrolladorSesion,
+                this.responsableSesion);
     }
 
     
