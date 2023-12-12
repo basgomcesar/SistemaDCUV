@@ -37,7 +37,7 @@
             <TableColumn fx:id="colFechaFin" prefWidth="149.99995930989587" text="Fecha Fin" />
         </columns>
       </TableView>
-      <Button layoutX="745.0" layoutY="401.0" mnemonicParsing="false" onAction="#clicAgregarActividad" prefHeight="38.0" prefWidth="39.0" style="-fx-background-color: #426B1F; -fx-background-radius: 50;" text="+" textFill="WHITE">
+      <Button fx:id="btnAgregarActividad" layoutX="745.0" layoutY="401.0" mnemonicParsing="false" onAction="#clicAgregarActividad" prefHeight="38.0" prefWidth="39.0" style="-fx-background-color: #426B1F; -fx-background-radius: 50;" text="+" textFill="WHITE">
          <effect>
             <DropShadow color="#a5abaa" height="0.0" offsetY="1.0" radius="0.0" width="0.0" />
          </effect>
