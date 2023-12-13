@@ -157,6 +157,9 @@ public class ArchivoDAO {
         }else{
             respuesta.put("mensaje", "Por el momento no hay conexion, "
                     + "intentalo más tarde");
+        }
+        return respuesta;
+    }
     
     public static HashMap<String, Object> obtenerArchivosCambio(int idCambio){
         HashMap<String, Object> respuesta = new LinkedHashMap<>();

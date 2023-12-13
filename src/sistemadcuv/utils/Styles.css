@@ -1,0 +1,44 @@
+.boton-item{
+    -fx-background-color:  #11a258;
+    -fx-background-radius: 20;
+}
+.boton-mouse:hover {
+    -fx-background-color: #cccccc;
+}
+.boton-selected{
+    -fx-background-color: #cccccc;
+    -fx-background-radius: 20;
+}
+.shadow{
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+}
+.list-view {
+    -fx-background-color: #f2f2f2; 
+}
+.list-cell {
+    -fx-text-fill: #333333; /* Color del texto */
+    -fx-padding: 10px;
+}
+.list-cell:hover {
+    -fx-background-color: #cccccc; /* Color de fondo al pasar el mouse */
+}
+.pane {
+    -fx-background-color: transparent; /* Fondo transparente */
+}
+.myTextField {
+    -fx-background-color: lightblue;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-family: "System";
+    -fx-padding: 5px;
+    -fx-border-color: gray;
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+}
+
+.myTextField:focused {
+    -fx-border-color: dodgerblue;
+}
+.handEffect{
+    -fx-cursor: hand;
+}
