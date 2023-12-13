@@ -212,7 +212,7 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
     @FXML
     private void btnExportarBitacoraCambios(ActionEvent event) throws DocumentException {
         DirectoryChooser directorioSeleccion = new DirectoryChooser();
-        File directorio = directorioSeleccion.showDialog(tfNombre.getScene().getWindow());
+        File directorio = directorioSeleccion.showDialog(lbUsuarioActivo.getScene().getWindow());
 
         try {
             if (directorio != null) {
@@ -222,15 +222,14 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
                 PdfWriter.getInstance(documento, new FileOutputStream(rutaArchivo));
                 documento.open();
 
-                LocalDate fechaActual = LocalDate.now();
-                DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                String fechaDocumento = fechaActual.format(formatoFecha);
+                String fechaDocumento = Utilidades.formatearFecha(
+                        Utilidades.obtenerFechaActual());
                 documento.add(new Paragraph("\tBitácora de Cambios"));
                 documento.add(new Paragraph("\t"+fechaDocumento));
 
-                PdfPTable tabla = new PdfPTable(5);
+                PdfPTable tabla = new PdfPTable(6);
 
-                float[] columnWidths = {10f, 6f, 8f, 6f, 6f};
+                float[] columnWidths = {10f, 6f, 10f, 8f, 6f, 6f};
                 tabla.setWidths(columnWidths);
 
                 tabla.setSpacingBefore(10f);
@@ -240,13 +239,15 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
                 
                 tabla.addCell(getCell("Nombre", true));
                 tabla.addCell(getCell("Estado", true));
+                tabla.addCell(getCell("Descripcion",true));
                 tabla.addCell(getCell("Desarrollador", true));
                 tabla.addCell(getCell("Fecha Inicio", true));
                 tabla.addCell(getCell("Fecha Fin", true));
 
-                for (Cambio cambio : sortedListaCambios) {
+                for (Cambio cambio : cambios) {
                     tabla.addCell(getCell(cambio.getNombre(), false));
                     tabla.addCell(getCell(cambio.getEstado(), false));
+                    tabla.addCell(getCell(cambio.getDescripcion(), false));
                     tabla.addCell(getCell(cambio.getDesarrollador(), false));
                     tabla.addCell(getCell(cambio.getFechaInicio(), false));
                     tabla.addCell(getCell(cambio.getFechaFin(), false));
@@ -259,10 +260,17 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
                         + " en el directorio: " + rutaArchivo, Alert.AlertType.INFORMATION);
             }
         } catch (DocumentException | IOException e) {
-            e.printStackTrace();
             Utilidades.mostrarAletarSimple("Error de Exportación", "No se ha podido guardar el archivo.",
                     Alert.AlertType.ERROR);
-        }
+        } 
+    }
+    private PdfPCell getCell(String contenido, boolean esEncabezado) {
+        PdfPCell cell = new PdfPCell(new Paragraph(contenido));
+
+        cell.setHorizontalAlignment(esEncabezado ? PdfPCell.ALIGN_CENTER : PdfPCell.ALIGN_CENTER);
+        cell.setBackgroundColor(esEncabezado ? BaseColor.LIGHT_GRAY : BaseColor.WHITE);
+
+        return cell;
     }
 
     @FXML
@@ -282,14 +290,5 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
                     ex.getMessage(), 
                     Alert.AlertType.INFORMATION);
         }
-    }
-    
-    private PdfPCell getCell(String contenido, boolean esEncabezado) {
-        PdfPCell cell = new PdfPCell(new Paragraph(contenido));
-
-        cell.setHorizontalAlignment(esEncabezado ? PdfPCell.ALIGN_CENTER : PdfPCell.ALIGN_CENTER);
-        cell.setBackgroundColor(esEncabezado ? BaseColor.LIGHT_GRAY : BaseColor.WHITE);
-
-        return cell;
     }
 }

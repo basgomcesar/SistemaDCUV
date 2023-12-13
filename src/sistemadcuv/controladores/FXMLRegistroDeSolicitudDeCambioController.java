@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -32,6 +30,7 @@ import sistemadcuv.modelo.dao.ArchivoDAO;
 import sistemadcuv.modelo.dao.SolicitudDAO;
 import sistemadcuv.modelo.pojo.Archivo;
 import sistemadcuv.modelo.pojo.Desarrollador;
+import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
 import sistemadcuv.modelo.pojo.SolicitudDeCambio;
 import sistemadcuv.observador.ObservadorSolicitudes;
 import sistemadcuv.utils.Utilidades;
@@ -64,6 +63,7 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     private Label lbSolicitante;
     
     private Desarrollador desarrolladorSesion;
+    private ResponsableDeProyecto responsableSesion;
     private ObservadorSolicitudes observador;
     private String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     private String estiloNormal = "-fx-border-width: 0;";
@@ -98,6 +98,7 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     private Button bDescargar;
     @FXML
     private Button bEliminarSolicitud;
+    private String fechaRegistro;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -106,15 +107,29 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
         
     }
     
-    public void inicializarFormulario(Desarrollador desarrolladorSesion, SolicitudDeCambio solicitudEdicion, 
+    public void inicializarFormulario(ResponsableDeProyecto responsableSesion, Desarrollador desarrolladorSesion, SolicitudDeCambio solicitudEdicion, 
             int totalSolicitudes, ObservadorSolicitudes observador){
+        this.responsableSesion = responsableSesion;
         this.desarrolladorSesion = desarrolladorSesion;
         this.solicitudEdicion = solicitudEdicion;
         this.observador = observador;
-        lbNombreProyecto.setText(desarrolladorSesion.getNombreProyecto());
-        lbSolicitante.setText(desarrolladorSesion.getNombreCompleto());
+        if(desarrolladorSesion != null){
+        lbNombreProyecto.setText("Proyecto: "+desarrolladorSesion.getNombreProyecto());
+        lbSolicitante.setText("Solicitante: "+desarrolladorSesion.getNombreCompleto());
+            if(solicitudEdicion != null && solicitudEdicion.getIdEstado() != 1){
+                bEliminarSolicitud.setVisible(false);
+            }
+        }else{
+        lbNombreProyecto.setText("Proyecto: "+responsableSesion.getNombreProyecto());
+        lbSolicitante.setText("Solicitante: "+solicitudEdicion.getNombreDesarrollador());
+        bEliminarSolicitud.setVisible(false);
+            if(solicitudEdicion.getIdEstado() != 1){
+                bAceptar.setVisible(false);
+                bRechazar.setVisible(false);
+            }
+        }
         fechaActual = LocalDate.now();
-        String fechaRegistro = fechaActual.format(formatoFecha);
+        fechaRegistro = fechaActual.format(formatoFecha);
         lbFechaRegistro.setText(fechaRegistro);
         this.totalSolicitudes = totalSolicitudes + 1;
         if(solicitudEdicion == null){
@@ -138,11 +153,11 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     }
     
     private void cargarInformacionDetalles(SolicitudDeCambio solicitudEdicion){
-        if(solicitudEdicion.getAprobadoPor() == null){
+        if(solicitudEdicion.getIdEstado() == 1){
             lbAprobadoPor.setText("Pendiente de revisión");
             lbFechaAprovacion.setText("Pendiente de revisión");
         } else{
-            lbAprobadoPor.setText("Aprobado por: " + solicitudEdicion.getAprobadoPor());
+            lbAprobadoPor.setText("Aprobado por: " + solicitudEdicion.getNombreDesarrollador());
             lbFechaAprovacion.setText("Fecha de aprobación: " + solicitudEdicion.getFechaAprobacion());
         }
         if(desarrolladorSesion != null){
@@ -352,6 +367,9 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     }
     
     private void modificarEstado(SolicitudDeCambio solicitud){
+        solicitud.setIdResponsable(responsableSesion.getIdResponsable());
+        fechaRegistro = fechaActual.toString();
+        solicitud.setFechaAprobacion(fechaRegistro);
         HashMap<String, Object> respuesta = SolicitudDAO.modificarEstadoSolicitud(solicitud);
             if( !(boolean) respuesta.get("error")){
                 Utilidades.mostrarAletarSimple("Estado modificado", 
@@ -378,23 +396,28 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
 
     @FXML
     private void btnDescargarArchivos(ActionEvent event) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Selecciona la carpeta de destino");
-        Stage escenarioBase = (Stage) lbEstado.getScene().getWindow();
-        File carpetaDestino = directoryChooser.showDialog(escenarioBase);
+        
+        if(archivos.size() > 0){
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Selecciona la carpeta de destino");
+            Stage escenarioBase = (Stage) lbNombreProyecto.getScene().getWindow();
+            File carpetaDestino = directoryChooser.showDialog(escenarioBase);
 
-        if (carpetaDestino != null) {
-            try {
-                for (Archivo archivo : archivos) {
-                    File archivoDestino = new File(carpetaDestino.getAbsolutePath(), archivo.getNombreArchivo());
-                    Files.write(archivoDestino.toPath(), archivo.getArchivo());
+            if (carpetaDestino != null) {
+                try {
+                    for (Archivo archivo : archivos) {
+                        File archivoDestino = new File(carpetaDestino.getAbsolutePath(), archivo.getNombreArchivo());
+                        Files.write(archivoDestino.toPath(), archivo.getArchivo());
+                    }
+
+                    Utilidades.mostrarAletarSimple("Descarga exitosa", "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), Alert.AlertType.INFORMATION);
+                } catch (IOException ex) {
+                    Utilidades.mostrarAletarSimple("Error al descargar", "Ha ocurrido un error al descargar los archivos", Alert.AlertType.WARNING);
+                    ex.printStackTrace();
                 }
-
-                Utilidades.mostrarAletarSimple("Descarga exitosa", "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), Alert.AlertType.INFORMATION);
-            } catch (IOException ex) {
-                Utilidades.mostrarAletarSimple("Error al descargar", "Ha ocurrido un error al descargar los archivos", Alert.AlertType.WARNING);
-                ex.printStackTrace();
             }
+        }else{
+            Utilidades.mostrarAletarSimple("Sin Archivos", "No existen archivos para descargar", Alert.AlertType.INFORMATION);
         }
     }
     

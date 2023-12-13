@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -12,9 +18,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="802.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeCambiosController">
+<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="802.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeCambiosController">
    <children>
-      <TableView fx:id="tvCambios" editable="true" layoutX="101.0" layoutY="99.0" minHeight="-Infinity" prefHeight="327.0" prefWidth="663.0">
+      <TableView fx:id="tvCambios" editable="true" layoutX="101.0" layoutY="99.0" minHeight="-Infinity" onMouseClicked="#btnVerDetalles" prefHeight="327.0" prefWidth="663.0">
          <columns>
             <TableColumn fx:id="colNombre" prefWidth="171.0" sortType="DESCENDING" text="Nombre" />
             <TableColumn fx:id="colEstatus" prefWidth="103.0" text="Estatus" />

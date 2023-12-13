@@ -38,7 +38,8 @@ public class TipoArtefactoDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         } else{
-            
+            respuesta.put("mensaje", "Por el momento no hay conexion, "
+                    + "intentalo más tarde");
         }
         return respuesta;
     }

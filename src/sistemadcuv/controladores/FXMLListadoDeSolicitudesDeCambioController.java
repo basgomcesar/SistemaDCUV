@@ -280,7 +280,7 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
             Parent vista = loader.load();
             Scene escena = new Scene(vista);
             FXMLRegistroDeSolicitudDeCambioController controller = loader.getController();
-            controller.inicializarFormulario(desarrolladorSesion, solicitudEdicion, totalSolicitudes, this);
+            controller.inicializarFormulario(responsableSesion, desarrolladorSesion, solicitudEdicion, totalSolicitudes, this);
             
             Stage escenario = new Stage();
             escenario.setScene(escena);
