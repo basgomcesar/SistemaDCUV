@@ -20,10 +20,11 @@ import javafx.stage.Stage;
 import sistemadcuv.interfaces.InitializableVentana;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
+import sistemadcuv.observador.ObservadorActividades;
 import sistemadcuv.utils.Utilidades;
 
 
-public class FXMLListadoDeActividadesController implements Initializable,InitializableVentana  {
+public class FXMLListadoDeActividadesController implements Initializable,InitializableVentana,ObservadorActividades  {
 
     private Desarrollador desarrolladorSesion;
     private ResponsableDeProyecto responsableSesion;
@@ -138,7 +139,7 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
             Scene escena = new Scene(vista);
             FXMLRegistroDeActividadController controller = loader.getController();
 
-//            controller.inicializarFormulario(desarrolladorSesion, solicitudEdicion, totalSolicitudes, this);
+            controller.inicializarFormulario(responsableSesion,this);
             
             Stage escenario = new Stage();
             escenario.setScene(escena);
@@ -148,6 +149,11 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
         }catch(IOException ex){
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void operacionExitosa(String tipoOperacion, String nombre) {
+        //cargarInformacion();
     }
 
 }

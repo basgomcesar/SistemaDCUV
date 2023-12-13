@@ -13,8 +13,11 @@
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/SolicitudDAO.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeSolicitudDeCambioController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeCambiosController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeSolicitudesDeCambioController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistrarDesarrolladorController.java</file>
             <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeCambioController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ArchivoDAO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -7,7 +7,7 @@ public class Actividad {
     private String estado;
     private String fechaInicio;
     private String fechaFin;
-
+    private int idDesarrollador;
     public Actividad() {
     }
 
@@ -17,6 +17,14 @@ public class Actividad {
         this.estado = estado;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+    }
+
+    public void setIdDesarrollador(int idDesarrollador) {
+        this.idDesarrollador = idDesarrollador;
+    }
+
+    public int getIdDesarrollador() {
+        return idDesarrollador;
     }
 
     public String getTitulo() {

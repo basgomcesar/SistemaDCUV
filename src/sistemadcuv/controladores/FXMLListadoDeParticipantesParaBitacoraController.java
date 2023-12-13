@@ -157,6 +157,7 @@ public class FXMLListadoDeParticipantesParaBitacoraController implements Initial
 
     @FXML
     private void btnBitacoraGeneral(MouseEvent event) {
+        btnBitacora(null);
     }
     
 }
