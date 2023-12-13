@@ -2,6 +2,7 @@ package sistemadcuv.controladores;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -31,17 +32,17 @@ public class FXMLListadoDeDefectosController implements Initializable,Initializa
     }    
 
     @FXML
-    private void btnActividades(MouseEvent event) {
+    private void btnActividades(ActionEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
         Utilidades.irAVentana(escenarioBase, 
                 desarrolladorSesion, 
                 responsableSesion, 
                 "FXMLListadoDeActividades.fxml",
-                "Listado de actividades");
+                "Listado de actividades");        
     }
 
     @FXML
-    private void btnCambios(MouseEvent event) {
+    private void btnCambios(ActionEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
         Utilidades.irAVentana(escenarioBase, 
                 desarrolladorSesion, 
@@ -50,9 +51,18 @@ public class FXMLListadoDeDefectosController implements Initializable,Initializa
                 "Listado de cambios");
     }
 
+    @FXML
+    private void btnSolicitudes(ActionEvent event) {
+        Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
+        Utilidades.irAVentana(escenarioBase, 
+                desarrolladorSesion, 
+                responsableSesion, 
+                "FXMLListadoDeSolicitudesDeCambio.fxml",
+                "Listado de solicitudes de cambio");
+    }
 
     @FXML
-    private void btnDefectos(MouseEvent event) {
+    private void btnDefectos(ActionEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
         Utilidades.irAVentana(escenarioBase, 
                 desarrolladorSesion, 
@@ -62,7 +72,7 @@ public class FXMLListadoDeDefectosController implements Initializable,Initializa
     }
 
     @FXML
-    private void btnParticipantes(MouseEvent event) {
+    private void btnParticipantes(ActionEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
         Utilidades.irAVentana(escenarioBase,
                 desarrolladorSesion,
@@ -72,7 +82,7 @@ public class FXMLListadoDeDefectosController implements Initializable,Initializa
     }
 
     @FXML
-    private void btnBitacora(MouseEvent event) {
+    private void btnBitacora(ActionEvent event) {
         Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
         Utilidades.irAVentana(escenarioBase, 
                 desarrolladorSesion, 
@@ -82,14 +92,9 @@ public class FXMLListadoDeDefectosController implements Initializable,Initializa
     }
 
     @FXML
-    private void btnSolicitudes(MouseEvent event) {
-        Stage escenarioBase = (Stage)lbUsuarioActivo.getScene().getWindow();
-        Utilidades.irAVentana(escenarioBase, 
-                desarrolladorSesion, 
-                responsableSesion, 
-                "FXMLListadoDeSolicitudesDeCambio.fxml",
-                "Listado de solicitudes de cambio");
+    private void btnCerrarSesion(ActionEvent event) {
+        Utilidades.irInicioDeSesion((Stage)
+                lbUsuarioActivo.getScene().getWindow());
     }
-
     
 }

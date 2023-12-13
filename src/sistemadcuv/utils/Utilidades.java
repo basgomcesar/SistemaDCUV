@@ -13,7 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sistemadcuv.controladores.FXMLInicioSesionController;
+import sistemadcuv.controladores.FXMLRegistroDeActividadController;
 import sistemadcuv.interfaces.InitializableVentana;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
@@ -89,5 +92,19 @@ public class Utilidades {
         String fechaFormateada = String.format("%d de %s de %d",
                 fecha.getDayOfMonth(), nombreMes, fecha.getYear());
         return fechaFormateada;
+    }
+    public static void irInicioDeSesion(Stage escenario){
+        try{
+            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLInicioSesion.fxml");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+            FXMLInicioSesionController controller = loader.getController();
+            
+            escenario.setScene(escena);
+            escenario.setTitle("Inicio de Sesión");
+            escenario.show();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
     }
 }
