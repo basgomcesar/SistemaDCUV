@@ -107,7 +107,8 @@ public class FXMLBitacoraDeCambiosDesarrolladorController implements Initializab
 
         try {
             if (directorio != null) {
-                String rutaArchivo = directorio.getAbsolutePath() + "/BitacoraDeCambios.pdf";
+                String rutaArchivo = directorio.getAbsolutePath() + "\\BitacoraDeCambios"+
+                        desarrolladorBitacora.getMatricula()+".pdf";
                 Document documento = new Document();
                 documento.setMargins(5, 5, 40, 30);
                 PdfWriter.getInstance(documento, new FileOutputStream(rutaArchivo));
@@ -115,7 +116,8 @@ public class FXMLBitacoraDeCambiosDesarrolladorController implements Initializab
 
                 String fechaDocumento = Utilidades.formatearFecha(
                         Utilidades.obtenerFechaActual());
-                documento.add(new Paragraph("\tBitácora de Cambios"));
+                documento.add(new Paragraph("\tBitácora de Cambios de "+
+                        desarrolladorBitacora.getNombreCompleto()));
                 documento.add(new Paragraph("\t"+fechaDocumento));
 
                 PdfPTable tabla = new PdfPTable(6);
@@ -147,11 +149,15 @@ public class FXMLBitacoraDeCambiosDesarrolladorController implements Initializab
                 documento.add(tabla);
 
                 documento.close();
-                Utilidades.mostrarAletarSimple("Archivo Exportado", "La información se exportó correctamente"
-                        + " en el directorio: " + rutaArchivo, Alert.AlertType.INFORMATION);
+                Utilidades.mostrarAletarSimple(
+                        "Archivo Exportado", 
+                        "La información se exportó correctamente"
+                        + " en el directorio: " + rutaArchivo, 
+                        Alert.AlertType.INFORMATION);
             }
         } catch (DocumentException | IOException e) {
-            Utilidades.mostrarAletarSimple("Error de Exportación", "No se ha podido guardar el archivo.",
+            Utilidades.mostrarAletarSimple("Error de Exportación", 
+                    "No se ha podido guardar el archivo.",
                     Alert.AlertType.ERROR);
         } 
     }

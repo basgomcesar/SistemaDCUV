@@ -83,10 +83,10 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
         this.responsableSesion = responsable;
         cargarInformacionCambios(desarrollador, responsable);
         if(desarrollador != null){
-            lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
+            lbUsuarioActivo.setText("Desarrollador: " + desarrollador.getNombreCompleto());
             lbBitacoraPorDesarrollador.setVisible(false);
         }else{
-            lbUsuarioActivo.setText("Usuario: " + responsable.getNombreCompleto());
+            lbUsuarioActivo.setText("Responsable: " + responsable.getNombreCompleto());
         }
     }
     
@@ -163,7 +163,7 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
 
         try {
             if (directorio != null) {
-                String rutaArchivo = directorio.getAbsolutePath() + "/BitacoraDeCambios.pdf";
+                String rutaArchivo = directorio.getAbsolutePath() + "\\BitacoraDeCambios.pdf";
                 Document documento = new Document();
                 documento.setMargins(5, 5, 40, 30);
                 PdfWriter.getInstance(documento, new FileOutputStream(rutaArchivo));

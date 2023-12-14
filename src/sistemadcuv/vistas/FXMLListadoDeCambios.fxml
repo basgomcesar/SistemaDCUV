@@ -43,12 +43,12 @@
             <DropShadow color="#97a1a0f7" height="10.0" radius="4.5" width="10.0" />
          </effect>
       </DatePicker>
-      <Label layoutX="152.0" layoutY="14.0" prefHeight="45.0" prefWidth="196.0" text="Cambios">
+      <Label layoutX="152.0" layoutY="14.0" text="Cambios">
          <font>
             <Font name="Arial Bold" size="32.0" />
          </font>
       </Label>
-      <Button fx:id="btnRegistrarCambio" layoutX="690.0" layoutY="412.0" mnemonicParsing="false" onAction="#clicRegistrarCambio" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #426B1F; -fx-background-radius: 10;" text="Agregar cambio" textFill="WHITE">
+      <Button fx:id="btnRegistrarCambio" layoutX="690.0" layoutY="411.0" mnemonicParsing="false" onAction="#clicRegistrarCambio" prefHeight="25.0" prefWidth="132.0" style="-fx-background-color: #426B1F; -fx-background-radius: 10;" text="Agregar cambio" textFill="WHITE">
          <effect>
             <DropShadow color="#a5abaa" height="0.0" offsetY="1.0" radius="0.0" width="0.0" />
          </effect>
@@ -58,9 +58,9 @@
             <Image url="@../../Imágenes/RECURSOS/8666609_user_icon.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbUsuarioActivo" alignment="CENTER" contentDisplay="CENTER" layoutX="653.0" layoutY="24.0" prefHeight="25.0" prefWidth="153.0" text="Usuario XYZ" textAlignment="CENTER">
+      <Label fx:id="lbUsuarioActivo" alignment="CENTER" contentDisplay="CENTER" layoutX="648.0" layoutY="27.0" prefHeight="20.0" text="Usuario XYZ" textAlignment="CENTER">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+            <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
       <Pane prefHeight="450.0" prefWidth="127.0" style="-fx-background-color: #F9FAFB; -fx-border-radius: 10; -fx-background-radius: 30;">

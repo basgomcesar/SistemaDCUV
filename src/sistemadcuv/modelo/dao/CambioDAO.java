@@ -20,7 +20,7 @@ public class CambioDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta ="SELECT idCambio, nombre, ea.nombreEstado as estado, DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio', " +
+                String consulta ="SELECT idCambio, nombre,c.descripcion, ea.nombreEstado as estado, DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio', " +
 "                            DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin'," +
 "                            Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador \n" +
 "                            FROM cambio c \n" +
@@ -34,6 +34,7 @@ public class CambioDAO {
                     Cambio cambio = new Cambio();
                     cambio.setIdCambio(resultado.getInt("idCambio"));
                     cambio.setNombre(resultado.getString("nombre"));
+                    cambio.setDescripcion(resultado.getString("descripcion"));
                     cambio.setEstado(resultado.getString("estado"));
                     cambio.setFechaInicio(resultado.getString("fechaInicio"));
                     cambio.setFechaFin(resultado.getString("fechaFin"));

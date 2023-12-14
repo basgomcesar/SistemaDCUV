@@ -15,27 +15,28 @@
 
 <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="904.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLParticipantesDelProyectoController">
    <children>
-      <TableView fx:id="tvDesarrolladores" editable="true" layoutX="183.0" layoutY="103.0" minHeight="-Infinity" prefHeight="261.0" prefWidth="667.0" style="-fx-background-radius: 10; -fx-background-color: transparent;">
+      <TableView fx:id="tvDesarrolladores" editable="true" layoutX="152.0" layoutY="99.0" minHeight="-Infinity" prefHeight="261.0" prefWidth="695.0" style="-fx-background-radius: 10; -fx-background-color: transparent;">
          <columns>
-            <TableColumn fx:id="colNombreDesarrollador" prefWidth="234.0" sortType="DESCENDING" text="Nombre" />
-            <TableColumn fx:id="colCorreo" minWidth="7.0" prefWidth="188.66668701171875" text="Correo" />
-            <TableColumn fx:id="colEliminar" minWidth="7.0" prefWidth="282.0" text="Eliminar" />
+            <TableColumn fx:id="colNombreDesarrollador" prefWidth="150.66659545898438" sortType="DESCENDING" text="Nombre" />
+            <TableColumn fx:id="colMatricula" prefWidth="202.00006103515625" text="Matricula" />
+            <TableColumn fx:id="colCorreo" minWidth="7.0" prefWidth="153.99993896484375" text="Correo" />
+            <TableColumn fx:id="colEliminar" minWidth="7.0" prefWidth="186.0" text="Eliminar" />
          </columns>
          <effect>
             <DropShadow color="#97a1a0" height="6.17" radius="2.585" width="6.17" />
          </effect>
       </TableView>
-      <TextField fx:id="tfBusquedaNombre" layoutX="183.0" layoutY="67.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
+      <TextField fx:id="tfBusquedaNombre" layoutX="152.0" layoutY="61.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
          <effect>
             <DropShadow blurType="GAUSSIAN" color="#97a1a0" height="9.41" radius="4.205" width="9.41" />
          </effect>
       </TextField>
-      <Label layoutX="136.0" layoutY="15.0" prefHeight="45.0" prefWidth="243.0" text="Participantes">
+      <Label layoutX="152.0" layoutY="14.0" text="Participantes">
          <font>
             <Font name="Arial Bold" size="32.0" />
          </font>
       </Label>
-      <Button fx:id="btnAgregarParticipante" layoutX="706.0" layoutY="374.0" mnemonicParsing="false" onAction="#clicAgregarParticipante" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #426B1F;" text="Agregar desarrollador" textFill="WHITE">
+      <Button fx:id="btnAgregarParticipante" layoutX="695.0" layoutY="399.0" mnemonicParsing="false" onAction="#clicAgregarParticipante" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #426B1F;" text="Agregar desarrollador" textFill="WHITE">
          <effect>
             <DropShadow color="#a5abaa" height="0.0" offsetY="1.0" radius="0.0" width="0.0" />
          </effect>
@@ -45,9 +46,9 @@
             <Image url="@../../Imágenes/RECURSOS/8666609_user_icon.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbUsuarioActivo" layoutX="576.0" layoutY="35.0" prefHeight="25.0" prefWidth="274.0" text="Usuario XYZ">
+      <Label fx:id="lbUsuarioActivo" layoutX="648.0" layoutY="27.0" prefHeight="20.0" text="Usuario XYZ">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+            <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
       <Pane prefHeight="450.0" prefWidth="127.0" style="-fx-background-color: #F9FAFB; -fx-border-radius: 10; -fx-background-radius: 30;">

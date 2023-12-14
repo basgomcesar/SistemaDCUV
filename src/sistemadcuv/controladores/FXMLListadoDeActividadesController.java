@@ -67,8 +67,14 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
     }
 
     private void cargarCampos() {
-        if(this.desarrolladorSesion != null)
+        if(this.desarrolladorSesion != null){
             btnAgregarActividad.setVisible(false);
+            lbUsuarioActivo.setText("Desarrollador: "+
+                    desarrolladorSesion.getNombreCompleto());
+        }else{
+            lbUsuarioActivo.setText("Responsable: "+
+                    responsableSesion.getNombreCompleto());
+        }
     }
 
     @FXML

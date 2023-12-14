@@ -82,9 +82,11 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
         this.responsableSesion = responsable;
         cargarInformacionCambios(desarrollador, responsable);
         if(desarrollador != null){
-            lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
+            lbUsuarioActivo.setText("Desarrollador: " + 
+                    desarrollador.getNombreCompleto());
         }else{
-            lbUsuarioActivo.setText("Usuario: " + responsable.getNombreCompleto());
+            lbUsuarioActivo.setText("Responsable: " +
+                    responsable.getNombreCompleto());
             btnRegistrarCambio.setVisible(false);
         }
     }

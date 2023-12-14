@@ -17,7 +17,7 @@
    <children>
       <Pane layoutX="127.0" layoutY="52.0" prefHeight="397.0" prefWidth="777.0" style="-fx-background-color: #cecea5; -fx-border-radius: 30;">
          <children>
-            <Button layoutX="616.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnExportarBitacoraCambios" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #426B1F;" text="Exportar (.pdf)" textFill="WHITE">
+            <Button defaultButton="true" layoutX="616.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnExportarBitacoraCambios" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #426B1F;" text="Exportar (.pdf)" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -52,9 +52,9 @@
             <Image url="@../../Imágenes/RECURSOS/8666609_user_icon.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbUsuarioActivo" layoutX="675.0" layoutY="25.0" prefHeight="25.0" prefWidth="214.0" text="Usuario XYZ">
+      <Label fx:id="lbUsuarioActivo" layoutX="648.0" layoutY="27.0" prefHeight="20.0" text="Usuario XYZ">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+            <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
       <Label alignment="CENTER" layoutX="385.0" layoutY="25.0" onMouseClicked="#btnBitacoraGeneral" prefHeight="25.0" prefWidth="78.0" style="-fx-border-radius: 9; -fx-border-color: #cecea5;" text="General">
