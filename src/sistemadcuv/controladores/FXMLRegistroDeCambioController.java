@@ -86,11 +86,12 @@ public class FXMLRegistroDeCambioController implements Initializable {
     private ObservadorCambios observador;
     private Cambio cambioSeleccion;
     private DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private DateTimeFormatter formatoRegistro = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     @FXML
     private Button bDescargar;
     @FXML
     private Button bGuardar;
+    @FXML
+    private Button bCerrar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -162,6 +163,7 @@ public class FXMLRegistroDeCambioController implements Initializable {
             configurarDatePicker();
             bDescargar.setVisible(false);
             bGuardar.setVisible(false);
+            bCerrar.setVisible(false);
         }
         
     }
@@ -187,17 +189,23 @@ public class FXMLRegistroDeCambioController implements Initializable {
         cbTipoCambio.getSelectionModel().select(posicionTipoArtefacto);
         cbTipoCambio.setDisable(true);
         cargarArchivos(cambioSeleccion.getIdCambio());
-        habilitarFechaFin();
+        if(responsableSesion != null||cambioSeleccion.getIdEstado() != 1){
+            deshabilitarEdicion(cambioSeleccion);
+        }else{
+            habilitarFechaFin();
+        }
+
+    }
+    
+    private void deshabilitarEdicion(Cambio cambioSeleccion){
         if(cambioSeleccion.getFechaFin() != null){
             LocalDate fechaFin = LocalDate.parse(cambioSeleccion.getFechaFin(), formatoFecha);
             dpFin.setValue(fechaFin);
+        }
             dpFin.setEditable(false);
             dpFin.setDisable(true);
             tfEsfuerzo.setEditable(false);
             bGuardar.setVisible(false);
-        }
-
-
     }
     
     private void cargarArchivos(int idCambio){
@@ -452,6 +460,11 @@ public class FXMLRegistroDeCambioController implements Initializable {
                         (String) respuesta.get("mensaje"),
                         Alert.AlertType.WARNING);
             }
+    }
+
+    @FXML
+    private void btnCerrarVentana(ActionEvent event) {
+        cerrarVentana();
     }
     
 }

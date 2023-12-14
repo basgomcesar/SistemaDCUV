@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import sistemadcuv.modelo.ConexionBD;
-import sistemadcuv.modelo.pojo.Materia;
 import sistemadcuv.modelo.pojo.Periodo;
 
 public class PeriodoDAO {
@@ -38,8 +36,7 @@ public class PeriodoDAO {
                 respuesta.put("periodo", "Error: al obtener el periodo actual");
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion,"
-                    + "por favor intentelo mas tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }

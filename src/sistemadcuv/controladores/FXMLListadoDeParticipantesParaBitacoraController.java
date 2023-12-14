@@ -5,8 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -98,7 +96,7 @@ public class FXMLListadoDeParticipantesParaBitacoraController implements Initial
             escenario.setTitle("Bitacora de cambios desarrollador");
             escenario.show();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Utilidades.mostrarAletarSimple("Error al cargar la ventana", "Ha ocurrido un error al cargar la ventana", Alert.AlertType.WARNING);
         } 
     }
 

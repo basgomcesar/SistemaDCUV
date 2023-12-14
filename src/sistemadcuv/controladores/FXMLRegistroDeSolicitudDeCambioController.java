@@ -99,6 +99,8 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     @FXML
     private Button bEliminarSolicitud;
     private String fechaRegistro;
+    @FXML
+    private Button bCerrar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -113,6 +115,7 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
         this.desarrolladorSesion = desarrolladorSesion;
         this.solicitudEdicion = solicitudEdicion;
         this.observador = observador;
+        this.totalSolicitudes = totalSolicitudes + 1;
         if(desarrolladorSesion != null){
         lbNombreProyecto.setText("Proyecto: "+desarrolladorSesion.getNombreProyecto());
         lbSolicitante.setText("Solicitante: "+desarrolladorSesion.getNombreCompleto());
@@ -131,7 +134,6 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
         fechaActual = LocalDate.now();
         fechaRegistro = fechaActual.format(formatoFecha);
         lbFechaRegistro.setText(fechaRegistro);
-        this.totalSolicitudes = totalSolicitudes + 1;
         if(solicitudEdicion == null){
             configurarVentanaRegistrar();
         } else{
@@ -144,6 +146,7 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
         lnFechaAprovacion.setVisible(false);
         lbAprobadoPor.setVisible(false);
         lbFechaAprovacion.setVisible(false);
+        bCerrar.setVisible(false);
         bAceptar.setVisible(false);
         bRechazar.setVisible(false);
         bDescargar.setVisible(false);
@@ -157,7 +160,7 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
             lbAprobadoPor.setText("Pendiente de revisión");
             lbFechaAprovacion.setText("Pendiente de revisión");
         } else{
-            lbAprobadoPor.setText("Aprobado por: " + solicitudEdicion.getNombreDesarrollador());
+            lbAprobadoPor.setText("Aprobado por: " + solicitudEdicion.getNombreResponsable());
             lbFechaAprovacion.setText("Fecha de aprobación: " + solicitudEdicion.getFechaAprobacion());
         }
         if(desarrolladorSesion != null){
@@ -207,7 +210,25 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
 
     @FXML
     private void btnRegistrar(ActionEvent event) {
-        validarCampos();
+        if(validarCampos()){
+                SolicitudDeCambio solicitudValida = new SolicitudDeCambio();
+                solicitudValida.setNombre(tfNombreSolicitud.getText());
+                solicitudValida.setDescripcion(tfDescripcion.getText());
+                solicitudValida.setImpacto(tfImpacto.getText());
+                solicitudValida.setAccionPropuesta(tfAccion.getText());
+                solicitudValida.setRazon(tfRazon.getText());
+                solicitudValida.setIdEstado(1);
+                solicitudValida.setNumSolicitud(totalSolicitudes);
+                solicitudValida.setFechaRegistro(lbFechaRegistro.getText());
+                solicitudValida.setIdDesarrollador(desarrolladorSesion.getIdDesarrollador());
+                solicitudValida.setNombreDesarrollador(desarrolladorSesion.getNombreCompleto());
+                fechaActual = LocalDate.now();
+                fechaRegistro = fechaActual.format(formatoRegistro);
+                solicitudValida.setFechaRegistro(fechaRegistro);
+                registrarSolicitud(solicitudValida);
+            }else{
+            Utilidades.mostrarAletarSimple("Campos inválidos", "Campos inválidos, vuelve a intentarlo", Alert.AlertType.WARNING);
+        }
     }
     
     private void registrarSolicitud(SolicitudDeCambio nuevaSolicitud) {
@@ -242,66 +263,41 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
         tfRazon.setStyle(estiloNormal);
     }
     
-    private void validarCampos(){
+    private boolean validarCampos(){
+        Boolean datosValidos = true;
         try {
             establecerEstiloNormal();
-            boolean datosValidos = true;
             
-            String nombre = tfNombreSolicitud.getText();
-            String descripcion = tfDescripcion.getText();
-            String impacto = tfImpacto.getText();
-            String accion = tfAccion.getText();
-            String razon = tfRazon.getText();
-            String fechaRegistro = fechaActual.format(formatoRegistro);
-            
-            if(nombre.isEmpty()){
+            if(tfNombreSolicitud.getText().isEmpty()){
                 tfNombreSolicitud.setStyle(estiloError);
                 datosValidos = false;
             }
             
-            if(descripcion.isEmpty()){
+            if(tfDescripcion.getText().isEmpty()){
                 tfDescripcion.setStyle(estiloError);
                 datosValidos = false;
             }
             
-            if(impacto.isEmpty()){
+            if(tfImpacto.getText().isEmpty()){
                 tfImpacto.setStyle(estiloError);
                 datosValidos = false;
             }
             
-            if(accion.isEmpty()){
+            if(tfAccion.getText().isEmpty()){
                 tfAccion.setStyle(estiloError);
                 datosValidos = false;
             }
             
-            if(razon.isEmpty()){
+            if(tfRazon.getText().isEmpty()){
                 tfRazon.setStyle(estiloError);
                 datosValidos = false;
             }
             
-            if(datosValidos){
-                SolicitudDeCambio solicitudValida = new SolicitudDeCambio();
-                solicitudValida.setNombre(nombre);
-                solicitudValida.setDescripcion(descripcion);
-                solicitudValida.setImpacto(impacto);
-                solicitudValida.setAccionPropuesta(accion);
-                solicitudValida.setRazon(razon);
-                solicitudValida.setIdEstado(1);
-                solicitudValida.setNumSolicitud(totalSolicitudes);
-                solicitudValida.setFechaRegistro(fechaRegistro);
-                solicitudValida.setIdDesarrollador(desarrolladorSesion.getIdDesarrollador());
-                solicitudValida.setNombreDesarrollador(desarrolladorSesion.getNombreCompleto());
-                if(solicitudEdicion == null){
-                    registrarSolicitud(solicitudValida);
-                }else{
-                    
-                }   
-            }
         } catch (NumberFormatException ex) {
             Utilidades.mostrarAletarSimple("Error al enviar", "Ocurrió un error al enviar la informacion", 
                     Alert.AlertType.WARNING);
-            ex.printStackTrace();
         }
+        return datosValidos;
     }
     
     private void registrarArchivo(Archivo archivo){
@@ -413,7 +409,6 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
                     Utilidades.mostrarAletarSimple("Descarga exitosa", "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), Alert.AlertType.INFORMATION);
                 } catch (IOException ex) {
                     Utilidades.mostrarAletarSimple("Error al descargar", "Ha ocurrido un error al descargar los archivos", Alert.AlertType.WARNING);
-                    ex.printStackTrace();
                 }
             }
         }else{
@@ -451,5 +446,10 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
                     Utilidades.mostrarAletarSimple("Error al eliminar", 
                             (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
                 }
+    }
+
+    @FXML
+    private void btnCerrarVentana(ActionEvent event) {
+        cerrarVentana();
     }
 }

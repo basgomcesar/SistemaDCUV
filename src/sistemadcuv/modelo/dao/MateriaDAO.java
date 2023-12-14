@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import sistemadcuv.modelo.ConexionBD;
-import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.Materia;
 
 
