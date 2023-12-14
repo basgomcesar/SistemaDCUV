@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="PROGRAMACION">
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/pojo/Desarrollador.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeSolicitudesDeCambioController.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLBitacoraDeCambiosGeneralController.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeSolicitudDeCambioController.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/pojo/Archivo.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/DesarrolladorDAO.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLInicioSesionController.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/SolicitudDAO.java</file>
-        </group>
         <group>
             <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeParticipantesParaBitacoraController.java</file>
             <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ArchivoDAO.java</file>
@@ -21,6 +11,16 @@
             <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLBitacoraDeCambiosGeneralController.java</file>
             <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/utils/Styles.css</file>
             <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeActividadesController.java</file>
+        </group>
+        <group name="PROGRAMACION">
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeSolicitudesDeCambioController.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeSolicitudDeCambioController.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/CambioDAO.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/pojo/Cambio.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/SolicitudDAO.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/TipoArtefactoDAO.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeCambiosController.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeCambioController.java</file>
         </group>
     </open-files>
 </project-private>
