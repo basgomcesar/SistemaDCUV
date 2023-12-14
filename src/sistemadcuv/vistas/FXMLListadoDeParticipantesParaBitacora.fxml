@@ -33,7 +33,7 @@
             <DropShadow color="#97a1a0" height="6.17" radius="2.585" width="6.17" />
          </effect>
       </TableView>
-      <TextField layoutX="180.0" layoutY="73.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
+      <TextField fx:id="tfBusquedaNombre" layoutX="180.0" layoutY="73.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
          <effect>
             <DropShadow blurType="GAUSSIAN" color="#97a1a0" height="9.41" radius="4.205" width="9.41" />
          </effect>

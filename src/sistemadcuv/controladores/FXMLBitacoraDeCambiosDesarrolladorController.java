@@ -93,6 +93,7 @@ public class FXMLBitacoraDeCambiosDesarrolladorController implements Initializab
     }
 
     private void prepararCampos() {
+        lbUsuarioActivo.setText("Responsable: "+responsableSesion.getNombreCompleto());
         lbNombreDesarrollador.setText(desarrolladorBitacora.getNombreCompleto());
     }
 

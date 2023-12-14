@@ -5,8 +5,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -39,6 +44,8 @@ public class FXMLListadoDeParticipantesParaBitacoraController implements Initial
     private TableColumn colNombre;
     @FXML
     private TableColumn colCorreo;
+    @FXML
+    private TextField tfBusquedaNombre;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,6 +64,7 @@ public class FXMLListadoDeParticipantesParaBitacoraController implements Initial
                     get("desarrolladores");
             desarrolladores.addAll(desarrolladorDAO);
             tvParticipantes.setItems(desarrolladores);
+            busquedaTablaNombre();
         }else{
             Utilidades.mostrarAletarSimple(
                     "Error de carga", 
@@ -102,7 +110,32 @@ public class FXMLListadoDeParticipantesParaBitacoraController implements Initial
                     Alert.AlertType.WARNING);
         } 
     }
-
+    private void busquedaTablaNombre(){
+        if(!desarrolladores.isEmpty()){
+            FilteredList<Desarrollador> filtradoNombre = new FilteredList<>(desarrolladores, p -> true);
+            tfBusquedaNombre.textProperty().addListener(new ChangeListener<String>(){
+                @Override
+                public void changed (ObservableValue<? extends String> observable,
+                    String oldValue, String newValue){
+                    filtradoNombre.setPredicate(nombreFiltro ->{
+                        if(newValue == null || newValue.isEmpty()){
+                            return true;
+                        }
+                        String lowerNewValue = newValue.toLowerCase();
+                        if(nombreFiltro.getNombreCompleto().trim().toLowerCase().contains(lowerNewValue)){
+                            return true;
+                        }else if(nombreFiltro.getNombreCompleto().trim().toLowerCase().contains(newValue)){
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+            });
+            SortedList<Desarrollador> sortedDesarrolladores = new SortedList<>(filtradoNombre);
+            sortedDesarrolladores.comparatorProperty().bind(tvParticipantes.comparatorProperty());
+            tvParticipantes.setItems(sortedDesarrolladores);
+        }
+    }
     @FXML
     private void btnBitacoraGeneral(MouseEvent event) {
         btnBitacora(null);
@@ -173,5 +206,6 @@ public class FXMLListadoDeParticipantesParaBitacoraController implements Initial
         Utilidades.irInicioDeSesion((Stage)
                 lbUsuarioActivo.getScene().getWindow());
     }
+    
     
 }
