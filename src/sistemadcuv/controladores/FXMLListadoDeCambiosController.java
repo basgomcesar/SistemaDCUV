@@ -217,7 +217,10 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
         }catch(IOException ex){
-            Utilidades.mostrarAletarSimple("Error al cargar la ventana", "Ha ocurrido un error al cargar la ventana", Alert.AlertType.WARNING);
+            Utilidades.mostrarAletarSimple(
+                    "Error al cargar la ventana", 
+                    "Ha ocurrido un error al cargar la ventana", 
+                    Alert.AlertType.WARNING);
         }
     }
 

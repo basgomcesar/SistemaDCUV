@@ -186,4 +186,48 @@ public class CambioDAO {
         }
         return respuesta;
     }
+
+    public static HashMap<String, Object> registrarCambioDeSolicitud(Cambio nuevoCambio) {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "INSERT INTO cambio(nombre, descripcion,fechaInicio, " +
+                    "impacto, " +
+                    "razonCambio,Desarrollador_idDesarrollador, " +
+                    "estadoasignacion_idEstadoAsignacion, tipoartefacto_idTipoArtefacto, "+
+                    "SolicitudDeCambio_idSolicitudDeCambio) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, 1,?,?) ;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, 
+                        Statement.RETURN_GENERATED_KEYS);
+                prepararSentencia.setString(1, nuevoCambio.getNombre());
+                prepararSentencia.setString(2, nuevoCambio.getDescripcion());
+                prepararSentencia.setString(3, nuevoCambio.getFechaInicio());
+                prepararSentencia.setString(4, nuevoCambio.getImpacto());
+                prepararSentencia.setString(5, nuevoCambio.getRazonCambio());
+                prepararSentencia.setInt(6, nuevoCambio.getIdDesarrollador());
+                prepararSentencia.setInt(7, nuevoCambio.getIdTipoCambio());
+                prepararSentencia.setInt(8, nuevoCambio.getIdSolicitud());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                ResultSet generatedKeys = prepararSentencia.getGeneratedKeys();
+                if (generatedKeys.next()){
+                    int idCambio = generatedKeys.getInt(1);
+                    respuesta.put("idCambio", idCambio);
+                }
+                conexionBD.close();
+                if(filasAfectadas == 1){
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "El cambio ha sido guardado en la base de datos");
+                }else{                    
+                    respuesta.put("mensaje", "Error al registrar");
+                }
+            }catch(SQLException ex){
+                respuesta.put("mensaje", "Error: al intentar guardar el cambio" );
+            }
+        }else{
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+        }
+        return respuesta;
+    }
 }

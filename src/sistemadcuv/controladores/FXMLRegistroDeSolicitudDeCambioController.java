@@ -14,7 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,6 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Line;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadcuv.modelo.dao.ArchivoDAO;
 import sistemadcuv.modelo.dao.SolicitudDAO;
@@ -227,7 +231,10 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
                 solicitudValida.setFechaRegistro(fechaRegistro);
                 registrarSolicitud(solicitudValida);
             }else{
-            Utilidades.mostrarAletarSimple("Campos inválidos", "Campos inválidos, vuelve a intentarlo", Alert.AlertType.WARNING);
+            Utilidades.mostrarAletarSimple(
+                    "Campos inválidos", 
+                    "Campos inválidos, vuelve a intentarlo", 
+                    Alert.AlertType.WARNING);
         }
     }
     
@@ -354,12 +361,15 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     private void btnRechazarSolicitud(ActionEvent event) {
         solicitudEdicion.setIdEstado(3);
         modificarEstado(solicitudEdicion);
+        cerrarVentana();
     }
 
     @FXML
     private void btnAceptarSolicitud(ActionEvent event) {
         solicitudEdicion.setIdEstado(2);
         modificarEstado(solicitudEdicion);
+        abrirVentanaRegistroCambio(solicitudEdicion);
+        cerrarVentana();
     }
     
     private void modificarEstado(SolicitudDeCambio solicitud){
@@ -371,7 +381,6 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
                 Utilidades.mostrarAletarSimple("Estado modificado", 
                         (String)respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
                 observador.operacionExitosa("Modificacion", solicitud.getNombre());
-                cerrarVentana();
             }else{
                 Utilidades.mostrarAletarSimple("Error al modificar", 
                         (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
@@ -451,5 +460,26 @@ public class FXMLRegistroDeSolicitudDeCambioController implements Initializable 
     @FXML
     private void btnCerrarVentana(ActionEvent event) {
         cerrarVentana();
+    }
+
+    private void abrirVentanaRegistroCambio(SolicitudDeCambio solicitudAceptada) {
+        try{
+            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeCambioSolicitud.fxml");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+            FXMLRegistroDeCambioSolicitudController controller = loader.getController();
+            controller.inicializarFormulario(responsableSesion,solicitudAceptada,archivos);
+            
+            Stage escenario = new Stage();
+            escenario.setScene(escena);
+            escenario.setTitle("Formulario cambio");
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait();
+        }catch(IOException ex){
+            Utilidades.mostrarAletarSimple(
+                    "Error al cargar la ventana",
+                    "Ha ocurrido un error al cargar la ventana", 
+                    Alert.AlertType.WARNING);
+        }
     }
 }
