@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import sistemadcuv.modelo.ConexionBD;
-import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.Materia;
 
 
@@ -36,8 +35,7 @@ public class MateriaDAO {
                 respuesta.put("materias", "Error "+ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion,"
-                    + "por favor intentelo mas tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }

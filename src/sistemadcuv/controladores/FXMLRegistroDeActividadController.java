@@ -33,7 +33,6 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import sistemadcuv.modelo.dao.ActividadDAO;
 import sistemadcuv.modelo.dao.ArchivoDAO;
-import sistemadcuv.modelo.dao.CambioDAO;
 import sistemadcuv.modelo.pojo.Actividad;
 import sistemadcuv.modelo.pojo.Archivo;
 import sistemadcuv.modelo.pojo.Desarrollador;
@@ -150,7 +149,7 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
         }catch(IOException ex){
-            ex.printStackTrace();
+            Utilidades.mostrarAletarSimple("Error al abrir ventana", "Ha ocurrido un error al cargar la ventana", Alert.AlertType.WARNING);
         }
     }
 

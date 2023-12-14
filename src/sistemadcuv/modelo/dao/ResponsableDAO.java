@@ -47,8 +47,7 @@ public class ResponsableDAO {
                 respuesta.put("responsable", "Error "+ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion,"
-                    + "por favor intentelo mas tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }

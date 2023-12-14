@@ -58,7 +58,7 @@ public class SolicitudDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         } else{
-            
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -110,7 +110,7 @@ public class SolicitudDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         } else{
-            
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -152,8 +152,7 @@ public class SolicitudDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -184,8 +183,7 @@ public class SolicitudDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -212,8 +210,7 @@ public class SolicitudDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }

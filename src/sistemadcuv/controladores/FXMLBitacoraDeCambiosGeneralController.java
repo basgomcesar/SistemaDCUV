@@ -12,8 +12,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -125,12 +123,12 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
                 @Override
                 public void changed(ObservableValue<? extends String> observable, 
                         String oldValue, String newValue) {
+
                     filtradoBusquedas.setPredicate(nombreFiltro -> {
-                        //CASO DEFAULT
                         if(newValue == null || newValue.isEmpty()){
                             return true;
                         }
-                        //CRITERIO DE EVALUACION
+
                         String lowerNewValue = newValue.toLowerCase();
                         if(nombreFiltro.getNombre().toLowerCase().contains(lowerNewValue)){
                             return true;
@@ -237,7 +235,7 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
             Utilidades.mostrarAletarSimple("Error al cargar ventana", 
                     ex.getMessage(), 
                     Alert.AlertType.ERROR);
-            ex.printStackTrace();
+            Utilidades.mostrarAletarSimple("Error al cargar la ventana", "Ha ocurrido un error al cargar la ventana", Alert.AlertType.WARNING);
         }
     }
 

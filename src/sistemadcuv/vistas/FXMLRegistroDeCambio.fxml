@@ -117,5 +117,16 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Button>
+      <Button fx:id="bCerrar" layoutX="711.0" layoutY="24.0" mnemonicParsing="false" onAction="#btnCerrarVentana" prefHeight="15.0" prefWidth="85.0" style="-fx-background-color: #C0C0C0;" text="Cerrar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow color="#7c908d" height="36.58" offsetY="1.0" radius="14.575" width="23.72" />
+         </effect>
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

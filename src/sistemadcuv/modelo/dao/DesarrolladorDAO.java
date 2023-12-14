@@ -47,8 +47,7 @@ public class DesarrolladorDAO {
                 respuesta.put("desarrollador", "Error "+ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion,"
-                    + "por favor intentelo mas tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -79,8 +78,7 @@ public class DesarrolladorDAO {
                 respuesta.put("asignaciones", "Error "+ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion,"
-                    + "por favor intentelo mas tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -107,8 +105,7 @@ public class DesarrolladorDAO {
                 respuesta.put("mensaje", "Error: "+ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion,"
-                    + "por favor intentelo mas tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -145,8 +142,7 @@ public class DesarrolladorDAO {
                 respuesta.put("mensaje", "Error: "+ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion,"
-                    + "por favor intentelo mas tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }

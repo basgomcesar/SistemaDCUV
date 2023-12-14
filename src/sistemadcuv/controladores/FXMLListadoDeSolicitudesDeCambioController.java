@@ -27,8 +27,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadcuv.interfaces.InitializableVentana;
@@ -69,7 +67,6 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
     private ObservableList<SolicitudDeCambio> solicitudes;
     @FXML
     private Button bRegistrar;
-    private int totalSolicitudes;
     
 
     @Override
@@ -84,7 +81,6 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
         cargarInformacionSolicitudes(desarrollador, responsable);
         if(desarrollador != null){
         lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
-        totalSolicitudes = solicitudes.size();
         } else{
         lbUsuarioActivo.setText("Usuario: " + responsable.getNombreCompleto());
         bRegistrar.setVisible(false);
@@ -199,7 +195,7 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
 
     @FXML
     private void btnRegistrarSolicitud(ActionEvent event) {
-        irFormulario(null);
+        irFormulario(null, solicitudes.size());
     }
 
     @Override
@@ -210,10 +206,10 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
     @FXML
     private void btnVerDetalles() {
         SolicitudDeCambio solicitudSeleccionada = tvListadoSolicitudes.getSelectionModel().getSelectedItem();
-            irFormulario(solicitudSeleccionada);
+            irFormulario(solicitudSeleccionada, solicitudes.size());
     }
     
-    private void irFormulario(SolicitudDeCambio solicitudEdicion){
+    private void irFormulario(SolicitudDeCambio solicitudEdicion, int totalSolicitudes){
         try{
             FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeSolicitudDeCambio.fxml");
             Parent vista = loader.load();
@@ -227,7 +223,7 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
         }catch(IOException ex){
-            ex.printStackTrace();
+            Utilidades.mostrarAletarSimple("Error al cargar la ventana", "Ha ocurrido un error al cargar la ventana", Alert.AlertType.WARNING);
         }
     }
 

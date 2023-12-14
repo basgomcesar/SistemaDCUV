@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import sistemadcuv.modelo.ConexionBD;
 import sistemadcuv.modelo.pojo.Cambio;
-import sistemadcuv.modelo.pojo.SolicitudDeCambio;
 
 public class CambioDAO {
     
@@ -20,12 +19,13 @@ public class CambioDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta ="SELECT idCambio, nombre, ea.nombreEstado as estado, DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio', " +
-"                            DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin'," +
-"                            Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador \n" +
-"                            FROM cambio c \n" +
-"                            INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador \n" +
-"                            INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion";
+                String consulta ="SELECT idCambio, nombre,descripcion, impacto, razonCambio, TipoArtefacto_idTipoArtefacto AS idTipoArtefacto, esfuerzo, \n" +
+                                    "ea.nombreEstado as estado , EstadoAsignacion_idEstadoAsignacion as idEstado, DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio',\n" +
+                                    "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin',\n" +
+                                    "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador\n" +
+                                    "FROM cambio c\n" +
+                                    "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador\n" +
+                                    "INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Cambio> cambios = new ArrayList();
@@ -34,7 +34,13 @@ public class CambioDAO {
                     Cambio cambio = new Cambio();
                     cambio.setIdCambio(resultado.getInt("idCambio"));
                     cambio.setNombre(resultado.getString("nombre"));
+                    cambio.setDescripcion(resultado.getString("descripcion"));
+                    cambio.setImpacto(resultado.getString("impacto"));
+                    cambio.setRazonCambio(resultado.getString("razonCambio"));
+                    cambio.setIdTipoCambio(resultado.getInt("idTipoArtefacto"));
+                    cambio.setEsfuerzo(resultado.getInt("esfuerzo"));
                     cambio.setEstado(resultado.getString("estado"));
+                    cambio.setIdEstado(resultado.getInt("idEstado"));
                     cambio.setFechaInicio(resultado.getString("fechaInicio"));
                     cambio.setFechaFin(resultado.getString("fechaFin"));
                     cambio.setIdDesarrollador(resultado.getInt("idDesarrollador"));
@@ -48,7 +54,7 @@ public class CambioDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         } else{
-            
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -59,13 +65,14 @@ public class CambioDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta ="SELECT idCambio, nombre,descripcion, impacto, razonCambio, TipoArtefacto_idTipoArtefacto AS idTipoArtefacto, esfuerzo, ea.nombreEstado as estado , DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio'," +
-                    "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin', " +
-                    "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador " +
-                    "FROM cambio c " +
-                    "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador " +
-                    "INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion " +
-                    "WHERE idDesarrollador = ?";
+                String consulta ="SELECT idCambio, nombre,descripcion, impacto, razonCambio, TipoArtefacto_idTipoArtefacto AS idTipoArtefacto, esfuerzo, \n" +
+                                    "ea.nombreEstado as estado , EstadoAsignacion_idEstadoAsignacion as idEstado, DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio',\n" +
+                                    "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin',\n" +
+                                    "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador\n" +
+                                    "FROM cambio c\n" +
+                                    "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador\n" +
+                                    "INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion\n" +
+                                    "WHERE idDesarrollador = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idDesarrollador);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -81,6 +88,7 @@ public class CambioDAO {
                     cambio.setIdTipoCambio(resultado.getInt("idTipoArtefacto"));
                     cambio.setEsfuerzo(resultado.getInt("esfuerzo"));
                     cambio.setEstado(resultado.getString("estado"));
+                    cambio.setIdEstado(resultado.getInt("idEstado"));
                     cambio.setFechaInicio(resultado.getString("fechaInicio"));
                     cambio.setFechaFin(resultado.getString("fechaFin"));
                     cambio.setIdDesarrollador(resultado.getInt("idDesarrollador"));
@@ -94,7 +102,7 @@ public class CambioDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         } else{
-            
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -136,8 +144,7 @@ public class CambioDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
@@ -168,8 +175,7 @@ public class CambioDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
         }
         return respuesta;
     }
