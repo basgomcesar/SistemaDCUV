@@ -23,11 +23,12 @@ public class FXMLListadoDeDefectosController implements Initializable,Initializa
     public void inicializarInformacion(Desarrollador desarrolladorSesion, ResponsableDeProyecto responsableSesion) {
         this.desarrolladorSesion = desarrolladorSesion;
         this.responsableSesion = responsableSesion;
+        configurarCampos();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
 
     @FXML
@@ -94,6 +95,15 @@ public class FXMLListadoDeDefectosController implements Initializable,Initializa
     private void btnCerrarSesion(ActionEvent event) {
         Utilidades.irInicioDeSesion((Stage)
                 lbUsuarioActivo.getScene().getWindow());
+    }
+
+    private void configurarCampos() {
+        if(desarrolladorSesion != null)
+            lbUsuarioActivo.setText("Desarrollador: "+
+                    desarrolladorSesion.getNombreCompleto());
+        else
+            lbUsuarioActivo.setText("Responsable: "+
+                    responsableSesion.getNombreCompleto());
     }
     
 }
