@@ -66,6 +66,8 @@ public class FXMLListadoDeParticipantesParaBitacoraController implements Initial
     public void inicializarInformacion(Desarrollador desarrolladorSesion, ResponsableDeProyecto responsableSesion) {
         this.desarrolladorSesion = desarrolladorSesion;
         this.responsableSesion = responsableSesion;
+        lbUsuarioActivo.setText("Responsable: "+
+                responsableSesion.getNombreCompleto());
         cargarInformacion();
     }
 

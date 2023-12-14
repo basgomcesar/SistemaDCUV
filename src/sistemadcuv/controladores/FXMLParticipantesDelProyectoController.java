@@ -62,6 +62,8 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
     private Button btnAgregarParticipante;
     @FXML
     private TextField tfBusquedaNombre;
+    @FXML
+    private TableColumn<?, ?> colMatricula;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -78,10 +80,12 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
 
     private void cargarInformacion() {
         if(desarrolladorSesion == null){
-            lbUsuarioActivo.setText("Responsable - "+responsableSesion.getNombreCompleto());
+            lbUsuarioActivo.setText("Responsable: "+
+                    responsableSesion.getNombreCompleto());
             obtenerInformacion(responsableSesion.getIdProyecto());
         }else{
-            lbUsuarioActivo.setText("Desarrollador - "+desarrolladorSesion.getNombreCompleto());
+            lbUsuarioActivo.setText("Desarrollador: "+
+                    desarrolladorSesion.getNombreCompleto());
             obtenerInformacion(desarrolladorSesion.getIdProyecto());
             btnAgregarParticipante.setVisible(false);
             colEliminar.setVisible(false);
@@ -91,6 +95,7 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
     private void configurarTabla() {
         this.colNombreDesarrollador.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
         this.colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
+        this.colMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
         configurarColumnaEliminar();
     }
     private void obtenerInformacion(int idProyecto){
@@ -126,7 +131,11 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
                     controlador.clicCancelar(null);
         });
         } catch (IOException ex) {
-            Logger.getLogger(FXMLParticipantesDelProyectoController.class.getName()).log(Level.SEVERE, null, ex);
+            Utilidades.mostrarAletarSimple(
+                    "Error",
+                    "Ocurrio un error al cargar la ventana,"
+                            + " inenta mas tarde",
+                    Alert.AlertType.INFORMATION);
         }        
     }
     private void configurarColumnaEliminar(){

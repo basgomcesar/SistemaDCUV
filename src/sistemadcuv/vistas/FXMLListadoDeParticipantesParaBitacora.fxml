@@ -16,8 +16,15 @@
 
 <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="904.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeParticipantesParaBitacoraController">
    <children>
-      <Pane layoutX="127.0" layoutY="52.0" prefHeight="397.0" prefWidth="777.0" style="-fx-background-color: #cecea5; -fx-border-radius: 30;" />
-      <TableView fx:id="tvParticipantes" editable="true" layoutX="180.0" layoutY="120.0" minHeight="-Infinity" onMouseClicked="#btnBitacoraDesarrollador" prefHeight="190.0" prefWidth="676.0" style="-fx-background-radius: 10; -fx-background-color: transparent;">
+      <Pane layoutX="127.0" layoutY="52.0" prefHeight="397.0" prefWidth="777.0" style="-fx-background-color: #cecea5; -fx-border-radius: 30;">
+         <children>
+            <Label layoutX="53.0" layoutY="72.0" text="Da doble clic en el desarrollador para visualizar su bitacora">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <TableView fx:id="tvParticipantes" editable="true" layoutX="180.0" layoutY="160.0" minHeight="-Infinity" onMouseClicked="#btnBitacoraDesarrollador" prefHeight="190.0" prefWidth="676.0" style="-fx-background-radius: 10; -fx-background-color: transparent;">
          <columns>
             <TableColumn fx:id="colNombre" prefWidth="338.0" sortType="DESCENDING" text="Nombre" />
             <TableColumn fx:id="colCorreo" prefWidth="369.0" text="Correo" />
@@ -41,9 +48,9 @@
             <Image url="@../../Imágenes/RECURSOS/8666609_user_icon.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbUsuarioActivo" layoutX="693.0" layoutY="25.0" prefHeight="25.0" prefWidth="102.0" text="Usuario XYZ">
+      <Label fx:id="lbUsuarioActivo" layoutX="648.0" layoutY="27.0" prefHeight="20.0" text="Usuario XYZ">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+            <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
       <Pane prefHeight="450.0" prefWidth="127.0" style="-fx-background-color: #F9FAFB; -fx-border-radius: 10; -fx-background-radius: 30;">
