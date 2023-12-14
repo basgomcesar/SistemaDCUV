@@ -16,7 +16,7 @@
 
 <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="904.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeDefectosController">
    <children>
-      <TableView editable="true" layoutX="137.0" layoutY="98.0" minHeight="-Infinity" prefHeight="305.0" prefWidth="711.0">
+      <TableView editable="true" layoutX="152.0" layoutY="99.0" minHeight="-Infinity" prefHeight="305.0" prefWidth="711.0">
          <columns>
             <TableColumn prefWidth="234.0" sortType="DESCENDING" text="Nombre" />
             <TableColumn prefWidth="116.0" text="Estatus" />
@@ -27,27 +27,27 @@
             <DropShadow color="#97a1a0" height="6.17" radius="2.585" width="6.17" />
          </effect>
       </TableView>
-      <TextField layoutX="137.0" layoutY="61.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
+      <TextField layoutX="152.0" layoutY="61.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
          <effect>
             <DropShadow blurType="GAUSSIAN" color="#97a1a0" height="9.41" radius="4.205" width="9.41" />
          </effect>
       </TextField>
-      <DatePicker layoutX="484.0" layoutY="61.0" prefHeight="25.0" prefWidth="132.0" promptText="Desde">
+      <DatePicker layoutX="521.0" layoutY="61.0" prefHeight="25.0" prefWidth="132.0" promptText="Desde">
          <effect>
             <DropShadow color="#97a1a0" height="10.0" radius="4.5" width="10.0" />
          </effect>
       </DatePicker>
-      <DatePicker layoutX="629.0" layoutY="61.0" prefHeight="25.0" prefWidth="132.0" promptText="Hasta">
+      <DatePicker layoutX="678.0" layoutY="61.0" prefHeight="25.0" prefWidth="132.0" promptText="Hasta">
          <effect>
             <DropShadow color="#97a1a0f7" height="10.0" radius="4.5" width="10.0" />
          </effect>
       </DatePicker>
-      <Label layoutX="137.0" layoutY="14.0" prefHeight="45.0" prefWidth="196.0" text="Defectos">
+      <Label layoutX="152.0" layoutY="14.0" text="Defectos">
          <font>
             <Font name="Arial Bold" size="32.0" />
          </font>
       </Label>
-      <Button layoutX="646.0" layoutY="403.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="119.0" style="-fx-background-color: #426B1F; -fx-background-radius: 15;" text="Agregar defecto" textFill="WHITE">
+      <Button layoutX="729.0" layoutY="410.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="119.0" style="-fx-background-color: #426B1F; -fx-background-radius: 15;" text="Agregar defecto" textFill="WHITE">
          <effect>
             <DropShadow color="#a5abaa" height="0.0" offsetY="1.0" radius="0.0" width="0.0" />
          </effect>
@@ -57,9 +57,9 @@
             <Image url="@../../Imágenes/RECURSOS/8666609_user_icon.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbUsuarioActivo" layoutX="654.0" layoutY="24.0" prefHeight="25.0" prefWidth="102.0" text="Usuario XYZ">
+      <Label fx:id="lbUsuarioActivo" layoutX="648.0" layoutY="27.0" prefHeight="20.0" text="Usuario XYZ">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+            <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
       <Pane prefHeight="450.0" prefWidth="127.0" style="-fx-background-color: #F9FAFB; -fx-border-radius: 10; -fx-background-radius: 30;">

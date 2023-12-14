@@ -17,7 +17,7 @@
 
 <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="904.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeSolicitudesDeCambioController">
    <children>
-      <TableView fx:id="tvListadoSolicitudes" layoutX="149.0" layoutY="93.0" minHeight="-Infinity" onMouseClicked="#btnVerDetalles" prefHeight="305.0" prefWidth="681.0">
+      <TableView fx:id="tvListadoSolicitudes" layoutX="152.0" layoutY="93.0" minHeight="-Infinity" onMouseClicked="#btnVerDetalles" prefHeight="305.0" prefWidth="681.0">
          <columns>
             <TableColumn fx:id="colNumSolicitud" editable="false" prefWidth="64.0" sortType="DESCENDING" text="Num" />
             <TableColumn fx:id="colNombre" prefWidth="207.0" text="Nombre" />
@@ -30,22 +30,22 @@
             <DropShadow color="#97a1a0" height="6.17" radius="2.585" width="6.17" />
          </effect>
       </TableView>
-      <TextField fx:id="tfNombre" layoutX="149.0" layoutY="61.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
+      <TextField fx:id="tfNombre" layoutX="152.0" layoutY="61.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="274.0" promptText="Buscar por nombre" style="-fx-background-color: FFFFFF;">
          <effect>
             <DropShadow blurType="GAUSSIAN" color="#97a1a0" height="9.41" radius="4.205" width="9.41" />
          </effect>
       </TextField>
-      <DatePicker fx:id="dpFechaDesde" layoutX="536.0" layoutY="61.0" prefHeight="25.0" prefWidth="132.0" promptText="Desde">
+      <DatePicker fx:id="dpFechaDesde" layoutX="521.0" layoutY="61.0" prefHeight="25.0" prefWidth="132.0" promptText="Desde">
          <effect>
             <DropShadow color="#97a1a0" height="10.0" radius="4.5" width="10.0" />
          </effect>
       </DatePicker>
-      <DatePicker fx:id="dpFechaHasta" layoutX="702.0" layoutY="61.0" prefHeight="25.0" prefWidth="132.0" promptText="Hasta">
+      <DatePicker fx:id="dpFechaHasta" layoutX="678.0" layoutY="61.0" prefHeight="25.0" prefWidth="132.0" promptText="Hasta">
          <effect>
             <DropShadow color="#97a1a0f7" height="10.0" radius="4.5" width="10.0" />
          </effect>
       </DatePicker>
-      <Label layoutX="149.0" layoutY="14.0" prefHeight="45.0" prefWidth="364.0" text="Solicitudes de Cambio">
+      <Label layoutX="152.0" layoutY="14.0" text="Solicitudes de Cambio">
          <font>
             <Font name="Arial Bold" size="32.0" />
          </font>
@@ -60,9 +60,9 @@
             <Image url="@../../Imágenes/RECURSOS/8666609_user_icon.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbUsuarioActivo" alignment="CENTER" contentDisplay="CENTER" layoutX="677.0" layoutY="25.0" prefHeight="25.0" prefWidth="153.0" text="Usuario XYZ" textAlignment="CENTER">
+      <Label fx:id="lbUsuarioActivo" contentDisplay="CENTER" layoutX="648.0" layoutY="27.0" prefHeight="20.0" text="Usuario XYZ" textAlignment="CENTER">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+            <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
       <Button defaultButton="true" layoutX="149.0" layoutY="411.0" mnemonicParsing="false" onAction="#btnLimpiarBusqueda" prefHeight="26.0" prefWidth="153.0" style="-fx-background-color: #426B1F;" text="Limpiar Busqueda" textFill="WHITE">

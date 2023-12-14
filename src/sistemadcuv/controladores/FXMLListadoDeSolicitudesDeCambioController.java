@@ -83,11 +83,11 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
         this.responsableSesion = responsable;
         cargarInformacionSolicitudes(desarrollador, responsable);
         if(desarrollador != null){
-        lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
-        totalSolicitudes = solicitudes.size();
+            lbUsuarioActivo.setText("Desarrollador: " + desarrollador.getNombreCompleto());
+            totalSolicitudes = solicitudes.size();
         } else{
-        lbUsuarioActivo.setText("Usuario: " + responsable.getNombreCompleto());
-        bRegistrar.setVisible(false);
+            lbUsuarioActivo.setText("Responsable: " + responsable.getNombreCompleto());
+            bRegistrar.setVisible(false);
         }
         
     }
