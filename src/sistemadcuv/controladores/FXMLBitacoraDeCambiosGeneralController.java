@@ -224,7 +224,6 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
     @FXML
     private void btnBitacoraPorDesarrollador(MouseEvent event) {
         try {
-                        System.out.println("ANTES DEL ERRORRRRRRRR");
             Stage escenarioBase = (Stage) tfNombre.getScene().getWindow();
             FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLListadoDeParticipantesParaBitacora.fxml");
             Parent vista = loader.load();
