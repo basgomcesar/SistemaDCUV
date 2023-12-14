@@ -4,12 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="PROGRAMACION">
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeSolicitudesDeCambioController.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLBitacoraDeCambiosGeneralController.java</file>
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeSolicitudDeCambioController.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/CambioDAO.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/pojo/Cambio.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/SolicitudDAO.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/TipoArtefactoDAO.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeCambiosController.java</file>
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeCambioController.java</file>
         </group>
         <group>
