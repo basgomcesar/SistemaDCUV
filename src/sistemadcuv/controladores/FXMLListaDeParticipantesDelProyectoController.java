@@ -39,10 +39,6 @@ public class FXMLListaDeParticipantesDelProyectoController implements Initializa
         configurarTabla();
     }    
 
-    @FXML
-    private void clicCerrar(ActionEvent event) {
-        cerrarVentana();
-    }
 
     private void configurarTabla() {
         this.colDesarrollador.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
@@ -83,5 +79,10 @@ public class FXMLListaDeParticipantesDelProyectoController implements Initializa
     private void cerrarVentana() {
         Stage escenario = (Stage) tvDesarrolladores.getScene().getWindow();
         escenario.close();
+    }
+
+    @FXML
+    private void BtnCerrar(ActionEvent event) {
+        cerrarVentana();
     }
 }
