@@ -34,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadcuv.modelo.dao.ProyectoDAO;
 import sistemadcuv.utils.Utilidades;
@@ -127,6 +128,7 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
             Stage escenario = new Stage();
             escenario.setScene(escena);
             escenario.setTitle("Registrar desarrollador");
+            escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.show();
             escenario.setOnCloseRequest(event1 -> {
                     event1.consume();

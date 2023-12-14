@@ -77,11 +77,19 @@ public class FXMLRegistrarDesarrolladorController {
     private void clicGuardar(ActionEvent event) {
         if(!esCamposVacios()){
             if(Utilidades.matriculaValida(tfMatricula.getText().trim())){
-                if(Utilidades.correoValido(tfCorreo.getText())){
-                    registrarDesarrollador();
+                if(!esMatriculaExistente()){
+                    if(Utilidades.correoValido(tfCorreo.getText())){
+                        registrarDesarrollador();
+                    }else{
+                        Utilidades.mostrarAletarSimple("Correo invalido", 
+                                "Por favor ingrese un correo valido",
+                                Alert.AlertType.INFORMATION);
+                    }
                 }else{
-                    Utilidades.mostrarAletarSimple("Correo invalido", 
-                            "Por favor ingrese un correo valido",
+                    Utilidades.mostrarAletarSimple(
+                            "Matricula existente", 
+                            "La matricula que ingreso le pertenece a "
+                                    + "un desarrollador existente", 
                             Alert.AlertType.INFORMATION);
                 }
             }else{
@@ -160,6 +168,22 @@ public class FXMLRegistrarDesarrolladorController {
                     "Hubo un error al cargar el periodo", 
                     Alert.AlertType.ERROR);
         }
+    }
+
+    private boolean esMatriculaExistente() {
+        HashMap<String, Object> resultado = DesarrolladorDAO.
+        verificarMatriculaExistente(tfMatricula.getText().trim());
+        if(!((boolean) resultado.get("error"))){
+            if( (int) resultado.get("numMatricula") > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }else
+            Utilidades.mostrarAletarSimple("Error al verificar matricula", 
+                    (String) resultado.get("mensaje"), 
+                    Alert.AlertType.ERROR);
+        return false;
     }
 
 }

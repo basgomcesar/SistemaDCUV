@@ -81,6 +81,7 @@ public class DesarrolladorDAO {
                 }else{
                     respuesta.put("mensaje", "Las credenciales son incorrectas");
                 }
+                respuesta.put("error", false);
                 conexionBD.close();
             } catch (SQLException ex) {
                 respuesta.put("asignaciones", "Error: al verificar asignaciones ");
@@ -156,6 +157,34 @@ public class DesarrolladorDAO {
         }else{
             respuesta.put("mensaje", "Error al acceder a la base de datos, "
                     + "intenta mas tarde.");
+        }
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> verificarMatriculaExistente(String matricula) {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD != null){
+            try {
+                String consulta = "select " +
+                    "(select count(*) from desarrollador where matricula = ?) as numMatricula ";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setString(1,matricula );
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if(resultado.next()){
+                    respuesta.put("numMatricula", resultado.getInt("numMatricula"));
+                }else{
+                    respuesta.put("mensaje", "Error al verificar matricula");
+                }
+                respuesta.put("error", false);
+                conexionBD.close();
+            } catch (SQLException ex) {
+                respuesta.put("mensaje", "Error: al verificar matricula ");
+            }
+        }else{
+            respuesta.put("mensaje", "Error al acceder a la base de datos,"
+                    + "intenta más tarde.");
         }
         return respuesta;
     }

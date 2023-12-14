@@ -81,7 +81,7 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
         cargarInformacionSolicitudes(desarrollador, responsable);
         if(desarrollador != null){
           
-        lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
+        lbUsuarioActivo.setText("Desarrollador: " + desarrollador.getNombreCompleto());
         } else{
             lbUsuarioActivo.setText("Responsable: " + responsable.getNombreCompleto());
             bRegistrar.setVisible(false);
