@@ -80,6 +80,7 @@ public class FXMLListadoDeSolicitudesDeCambioController implements Initializable
         this.responsableSesion = responsable;
         cargarInformacionSolicitudes(desarrollador, responsable);
         if(desarrollador != null){
+          
         lbUsuarioActivo.setText("Usuario: " + desarrollador.getNombreCompleto());
         } else{
             lbUsuarioActivo.setText("Responsable: " + responsable.getNombreCompleto());
