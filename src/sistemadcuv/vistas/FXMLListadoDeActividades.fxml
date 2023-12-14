@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
@@ -13,7 +18,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="904.0" style="-fx-background-color: #F2F2F2; -fx-border-radius: 30;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeActividadesController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="904.0" style="-fx-background-color: #F2F2F2; -fx-border-radius: 30;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemadcuv.controladores.FXMLListadoDeActividadesController">
    <children>
       <Label layoutX="152.0" layoutY="14.0" text="Actividades">
          <font>
@@ -27,7 +32,7 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Label>
-      <TableView layoutX="152.0" layoutY="99.0" prefHeight="281.0" prefWidth="741.0" style="-fx-background-color: transparent;">
+      <TableView fx:id="tvActividades" layoutX="152.0" layoutY="99.0" prefHeight="281.0" prefWidth="741.0" style="-fx-background-color: transparent;">
         <columns>
           <TableColumn fx:id="colNombre" prefWidth="170.6666717529297" text="Nombre" />
           <TableColumn fx:id="colEstatus" prefWidth="89.33331298828125" text="Estatus" />

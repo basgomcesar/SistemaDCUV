@@ -63,6 +63,7 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
     private Desarrollador desarrolladorSeleccionado;
     private Archivo documentoActividad;
     private ObservableList<Archivo> archivos;
+    private ObservadorActividades observador;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -161,6 +162,7 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
 
     void inicializarFormulario(ResponsableDeProyecto responsableSesion, ObservadorActividades observador) {
         this.responsableSesion = responsableSesion;
+        this.observador = observador;
         cargarInformacion();
     }
 
@@ -204,6 +206,7 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
             Utilidades.mostrarAletarSimple("Actividad registrada", 
                     (String) respuesta.get("mensaje"),
                     Alert.AlertType.INFORMATION);
+            observador.operacionExitosa("Registro", nuevaActividad.getTitulo());
             cerrarVentana();
         }else{
             Utilidades.mostrarAletarSimple("Error al guardar actividad", 

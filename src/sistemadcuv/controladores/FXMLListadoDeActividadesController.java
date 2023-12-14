@@ -2,7 +2,12 @@ package sistemadcuv.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +19,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadcuv.interfaces.InitializableVentana;
+import sistemadcuv.modelo.dao.ActividadDAO;
+import sistemadcuv.modelo.dao.CambioDAO;
+import sistemadcuv.modelo.pojo.Actividad;
+import sistemadcuv.modelo.pojo.Cambio;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
 import sistemadcuv.observador.ObservadorActividades;
@@ -48,10 +59,14 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
     private TableColumn colFechaFin;
     @FXML
     private Button btAgregarActividad;
+    @FXML
+    private TableView<Actividad> tvActividades;
+    private ObservableList<Actividad> actividades;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarDatePicker();
+        configurarTabla();
     }   
     
 
@@ -60,7 +75,7 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
         this.desarrolladorSesion = desarrolladorSesion;
         this.responsableSesion = responsableSesion;
         cargarCampos();
-        
+        cargarInformacionActividades(desarrolladorSesion, responsableSesion);
     }
 
     private void cargarCampos() {
@@ -73,10 +88,39 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
                     responsableSesion.getNombreCompleto());
         }
     }
+    
+    private void configurarTabla(){
+        this.colDesarrollador.setCellValueFactory(new PropertyValueFactory("desarrollador"));
+        this.colEstatus.setCellValueFactory(new PropertyValueFactory("estado"));
+        this.colFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
+        this.colFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
+        this.colNombre.setCellValueFactory(new PropertyValueFactory("titulo"));
+    }
+    
+    private void cargarInformacionActividades(Desarrollador desarrollador, ResponsableDeProyecto responsable){
+        HashMap<String, Object> respuesta = new HashMap<>();
+        if(desarrollador != null){
+            respuesta = ActividadDAO.obtenerListadoActividadesDesarrollador(
+                    desarrolladorSesion.getIdDesarrollador());
+        } else{
+            respuesta = ActividadDAO.obtenerListadoActividades();
+        }
+        if(!(boolean) respuesta.get("error")){
+            actividades = FXCollections.observableArrayList();
+            ArrayList<Actividad> lista = (ArrayList<Actividad>) respuesta.get("actividades");
+            actividades.addAll(lista);
+            tvActividades.setItems(actividades);
+        }else{
+            Utilidades.mostrarAletarSimple(
+                    "Error", 
+                    respuesta.get("mensaje").toString(), 
+                    Alert.AlertType.ERROR);
+        }
+    }
 
     @Override
     public void operacionExitosa(String tipoOperacion, String nombre) {
-        
+        cargarInformacionActividades(desarrolladorSesion, responsableSesion);
     }
 
     @FXML

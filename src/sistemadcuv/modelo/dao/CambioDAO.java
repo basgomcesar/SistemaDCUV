@@ -21,7 +21,6 @@ public class CambioDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-
                 String consulta ="SELECT idCambio, nombre,descripcion, impacto, razonCambio, TipoArtefacto_idTipoArtefacto AS idTipoArtefacto, esfuerzo, \n" +
                                     "ea.nombreEstado as estado , EstadoAsignacion_idEstadoAsignacion as idEstado, DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio',\n" +
                                     "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin',\n" +

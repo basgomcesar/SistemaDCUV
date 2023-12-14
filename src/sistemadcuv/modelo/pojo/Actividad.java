@@ -7,18 +7,50 @@ public class Actividad {
     private String estado;
     private String fechaInicio;
     private String fechaFin;
+    private String desarrollador;
     private int idDesarrollador;
+    private int idActividad;
+    private int idEstado;
+    
     public Actividad() {
     }
 
-    public Actividad(String titulo, String descripcion, String estado, String fechaInicio, String fechaFin) {
+    public Actividad(String titulo, String descripcion, String estado, String fechaInicio, String fechaFin, String desarrollador, int idDesarrollador, int idActividad, int idEstado) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.estado = estado;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.desarrollador = desarrollador;
+        this.idDesarrollador = idDesarrollador;
+        this.idActividad = idActividad;
+        this.idEstado = idEstado;
     }
 
+    public String getDesarrollador() {
+        return desarrollador;
+    }
+
+    public void setDesarrollador(String desarrollador) {
+        this.desarrollador = desarrollador;
+    }
+
+    public int getIdActividad() {
+        return idActividad;
+    }
+
+    public void setIdActividad(int idActividad) {
+        this.idActividad = idActividad;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
+    }
+    
     public void setIdDesarrollador(int idDesarrollador) {
         this.idDesarrollador = idDesarrollador;
     }
