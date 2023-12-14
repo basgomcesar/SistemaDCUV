@@ -27,7 +27,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sistemadcuv.interfaces.InitializableVentana;
@@ -35,7 +34,6 @@ import sistemadcuv.modelo.dao.CambioDAO;
 import sistemadcuv.modelo.pojo.Cambio;
 import sistemadcuv.modelo.pojo.Desarrollador;
 import sistemadcuv.modelo.pojo.ResponsableDeProyecto;
-import sistemadcuv.modelo.pojo.SolicitudDeCambio;
 import sistemadcuv.observador.ObservadorCambios;
 import sistemadcuv.utils.Utilidades;
 
@@ -133,11 +131,11 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
                 public void changed(ObservableValue<? extends String> observable, 
                         String oldValue, String newValue) {
                     filtradoBusquedas.setPredicate(nombreFiltro -> {
-                        //CASO DEFAULT
+                        
                         if(newValue == null || newValue.isEmpty()){
                             return true;
                         }
-                        //CRITERIO DE EVALUACION
+                        
                         String lowerNewValue = newValue.toLowerCase();
                         if(nombreFiltro.getNombre().toLowerCase().contains(lowerNewValue)){
                             return true;
@@ -217,7 +215,7 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.showAndWait();
         }catch(IOException ex){
-            ex.printStackTrace();
+            Utilidades.mostrarAletarSimple("Error al cargar la ventana", "Ha ocurrido un error al cargar la ventana", Alert.AlertType.WARNING);
         }
     }
 
@@ -296,6 +294,13 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
     private void btnCerrarSesion(ActionEvent event) {
         Utilidades.irInicioDeSesion((Stage)
                 lbUsuarioActivo.getScene().getWindow());
+    }
+
+    @FXML
+    private void btnLimpiarBusqueda(ActionEvent event) {
+        tfNombre.clear();
+        dpFechaDesde.setValue(null);
+        dpFechaHasta.setValue(null);
     }
 
     

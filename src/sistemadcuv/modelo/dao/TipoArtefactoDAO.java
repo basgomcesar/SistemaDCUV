@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import sistemadcuv.modelo.ConexionBD;
-import sistemadcuv.modelo.pojo.Cambio;
 import sistemadcuv.modelo.pojo.TipoArtefacto;
 
 
