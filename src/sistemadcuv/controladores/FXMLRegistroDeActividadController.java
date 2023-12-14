@@ -102,10 +102,12 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
             String etiquetaTipoDato = "Archivo PDF(*.pdf)";
             String extensionArchivo = "*.PDF";
             FileChooser.ExtensionFilter filtroSeleccion =
-                    new FileChooser.ExtensionFilter(etiquetaTipoDato, extensionArchivo);
+                    new FileChooser.ExtensionFilter(etiquetaTipoDato, 
+                            extensionArchivo);
             dialogoSeleccion.getExtensionFilters().add(filtroSeleccion);
             Stage escenarioBase = (Stage) dpFin.getScene().getWindow();
-            List<File> archivosSeleccionados = dialogoSeleccion.showOpenMultipleDialog(escenarioBase);
+            List<File> archivosSeleccionados = dialogoSeleccion.
+                    showOpenMultipleDialog(escenarioBase);
 
             if (archivosSeleccionados != null) {
                 for (File archivo : archivosSeleccionados) {
@@ -128,9 +130,13 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
         if (archivoSeleccionado != null) {
             archivos.remove(archivoSeleccionado);
             tvArchivo.setItems(archivos);
-            Utilidades.mostrarAletarSimple("Eliminación exitosa", "Archivo eliminado correctamente", Alert.AlertType.INFORMATION);
+            Utilidades.mostrarAletarSimple("Eliminación exitosa", 
+                    "Archivo eliminado correctamente", 
+                    Alert.AlertType.INFORMATION);
         } else {
-            Utilidades.mostrarAletarSimple("Error al eliminar", "Selecciona un archivo de la tabla para eliminar", Alert.AlertType.WARNING);
+            Utilidades.mostrarAletarSimple("Error al eliminar", 
+                    "Selecciona un archivo de la tabla para eliminar", 
+                    Alert.AlertType.WARNING);
         }   
     }
 
@@ -195,14 +201,13 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
                     registrarArchivo(archivo);
                 }  
             }
-            Utilidades.mostrarAletarSimple(
-                    "Actividad registrada", 
-                    "Actividad creada con exito",
+            Utilidades.mostrarAletarSimple("Actividad registrada", 
+                    (String) respuesta.get("mensaje"),
                     Alert.AlertType.INFORMATION);
             cerrarVentana();
         }else{
             Utilidades.mostrarAletarSimple("Error al guardar actividad", 
-                    "Hubo un error al guardar la actividad", 
+                    (String) respuesta.get("mensaje"), 
                     Alert.AlertType.ERROR);
         }
     }
@@ -210,12 +215,15 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
     private void registrarArchivo(Archivo archivo) {
         HashMap<String, Object> respuesta = ArchivoDAO.registrarArchivoDeActividad(archivo);
             if( (boolean) respuesta.get("error")){
-                Utilidades.mostrarAletarSimple("Error en el registro", 
-                        (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);   
+                Utilidades.mostrarAletarSimple(
+                        "Error en el registro", 
+                        (String) respuesta.get("mensaje"), 
+                        Alert.AlertType.WARNING);   
             }
     }
     private void configurarDatePicker() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", new Locale("es", "ES"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", 
+                new Locale("es", "ES"));
         dpInicio.setConverter(new LocalDateStringConverter(formatter,null));
         dpFin.setConverter(new LocalDateStringConverter(formatter,null));
         this.dpInicio.setEditable(false);
@@ -227,7 +235,7 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
 
                 if (date.isBefore(LocalDate.now())) {
                     setDisable(true);
-                    setStyle("-fx-background-color: #ffc0cb;"); // Estilo para las fechas deshabilitadas
+                    setStyle("-fx-background-color: #ffc0cb;"); 
                 }
             }
         });
@@ -240,15 +248,15 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
             if(dpFin.getValue().isBefore(dpInicio.getValue()))
                     dpFin.setValue(dpInicio.getValue());
             this.dpFin.setDayCellFactory(picker -> new DateCell() {
-            @Override
-            public void updateItem(LocalDate date, boolean empty) {
-                        super.updateItem(date, empty);
-                        if (date.isBefore(dpInicio.getValue())) {
-                            setDisable(true);
-                            setStyle("-fx-background-color: #ffc0cb;"); // Estilo para las fechas deshabilitadas
-                        }
+                @Override
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    if (date.isBefore(dpInicio.getValue())) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #ffc0cb;");
                     }
-                });
+                }
+            });
         }
     }
     private void habilitarFechaFin() {
@@ -259,7 +267,7 @@ public class FXMLRegistroDeActividadController implements Initializable,Observad
                 super.updateItem(date, empty);
                 if (date.isBefore(dpInicio.getValue())) {
                     setDisable(true);
-                    setStyle("-fx-background-color: #ffc0cb;"); // Estilo para las fechas deshabilitadas
+                    setStyle("-fx-background-color: #ffc0cb;");
                 }
             }
         });

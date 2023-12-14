@@ -39,10 +39,6 @@ public class FXMLListaDeParticipantesDelProyectoController implements Initializa
         configurarTabla();
     }    
 
-    @FXML
-    private void clicCerrar(ActionEvent event) {
-        cerrarVentana();
-    }
 
     private void configurarTabla() {
         this.colDesarrollador.setCellValueFactory(new PropertyValueFactory("nombreCompleto"));
@@ -64,7 +60,9 @@ public class FXMLListaDeParticipantesDelProyectoController implements Initializa
             desarrolladores.addAll(lista);
             tvDesarrolladores.setItems(desarrolladores);
         }else{
-            Utilidades.mostrarAletarSimple("Error de carga", (String) respuesta.get("mensaje"),
+            Utilidades.mostrarAletarSimple(
+                    "Error de carga",
+                    (String) respuesta.get("mensaje"),
                     Alert.AlertType.ERROR);
         }
     }
@@ -81,5 +79,10 @@ public class FXMLListaDeParticipantesDelProyectoController implements Initializa
     private void cerrarVentana() {
         Stage escenario = (Stage) tvDesarrolladores.getScene().getWindow();
         escenario.close();
+    }
+
+    @FXML
+    private void BtnCerrar(ActionEvent event) {
+        cerrarVentana();
     }
 }

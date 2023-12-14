@@ -32,10 +32,11 @@ public class MateriaDAO {
                 respuesta.put("error", false);
                 respuesta.put("materias", materias);
             } catch (SQLException ex) {
-                respuesta.put("materias", "Error "+ex.getMessage());
+                respuesta.put("materias", "Error al obtener las materias");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos,"
+                    + "intenta mas tarde.");
         }
         return respuesta;
     }

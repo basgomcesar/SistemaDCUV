@@ -32,10 +32,11 @@ public class ArchivoDAO {
                     respuesta.put("mensaje", "Error al guardar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar guardar un archivo" );
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -60,10 +61,11 @@ public class ArchivoDAO {
                     respuesta.put("mensaje", "Error al guardar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al guardar un archivo");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -83,7 +85,7 @@ public class ArchivoDAO {
                 respuesta.put("error", false);
                 while(resultado.next()){
                     Archivo archivo = new Archivo();
-                    archivo.setIdSolicitud(resultado.getInt("idArchivo"));
+                    archivo.setIdArchivo(resultado.getInt("idArchivo"));
                     archivo.setNombreArchivo(resultado.getString("nombreArchivo"));
                     archivo.setArchivo(resultado.getBytes("archivo"));
                     archivos.add(archivo);
@@ -92,10 +94,11 @@ public class ArchivoDAO {
                 respuesta.put("error", false);
                 respuesta.put("archivos", archivos);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al obtener un archivo");
             }
         } else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -119,11 +122,11 @@ public class ArchivoDAO {
                     respuesta.put("mensaje", "Error al eliminar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
-                ex.printStackTrace();
+                respuesta.put("mensaje", "Error: al intentar eliminar un archivo" );
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -149,10 +152,11 @@ public class ArchivoDAO {
                     respuesta.put("mensaje", "Error al guardar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al guardar un archivo");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -185,7 +189,37 @@ public class ArchivoDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         } else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde.");
+        }
+        return respuesta;
+    }
+
+    public static HashMap<String, Object> actualizarArchivo(int idArchivo, int idCambio) {
+        HashMap<String, Object> respuesta = new HashMap<>();
+        respuesta.put("error", true);
+        Connection conexionBD = ConexionBD.obtenerConexion();
+        if(conexionBD!=null){
+            try{
+                String sentencia = "UPDATE archivo SET Cambio_idCambio = ? "
+                        + "WHERE idArchivo = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idCambio);
+                prepararSentencia.setInt(2, idArchivo);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                conexionBD.close();
+                if(filasAfectadas >= 1){
+                    respuesta.put("error", false);
+                    respuesta.put("mensaje", "Archivo(s) acrualizado(s)");
+                }else{                    
+                    respuesta.put("mensaje", "Error al actualizar archivo");
+                }
+            }catch(SQLException ex){
+                respuesta.put("mensaje", "Error: al intentar actualizar un archivo" );
+            }
+        }else{
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }

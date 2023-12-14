@@ -42,11 +42,11 @@ public class ProyectoDAO {
                 respuesta.put("error", false);
                 respuesta.put("desarrolladores", desarrolladores);
             } catch (SQLException ex) {
-                respuesta.put("desarrolladores", "Error "+ex.getMessage());
+                respuesta.put("desarrolladores", "Error: al obtener desarrolladores");
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion,"
-                    + "por favor intentelo mas tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos,"
+                    + "intenta mas tarde.");
         }
         return respuesta;
     }
@@ -82,10 +82,12 @@ public class ProyectoDAO {
                 respuesta.put("error", false);
                 respuesta.put("desarrolladores", desarrolladores);
             } catch (SQLException ex) {
-                respuesta.put("desarrolladores", "Error "+ex.getMessage());
+                respuesta.put("desarrolladores", "Error: al "
+                        + "obtener los desarrolladores ");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos,"
+                    + "intenta más tarde");
         }
         return respuesta;
     }    

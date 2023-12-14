@@ -99,11 +99,11 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
     private void cargarInformacionCambios(Desarrollador desarrollador, ResponsableDeProyecto responsable){
         HashMap<String, Object> respuesta = new HashMap<>();
         if(desarrollador != null){
-            respuesta = CambioDAO.obtenerListadoCambiosDesarrollador(desarrolladorSesion.getIdDesarrollador());
+            respuesta = CambioDAO.obtenerListadoCambiosDesarrollador(
+                    desarrolladorSesion.getIdDesarrollador());
         } else{
             respuesta = CambioDAO.obtenerListadoCambios();
         }
-        
         if(!(boolean) respuesta.get("error")){
             cambios = FXCollections.observableArrayList();
             ArrayList<Cambio> lista = (ArrayList<Cambio>) respuesta.get("cambios");
@@ -112,7 +112,10 @@ public class FXMLBitacoraDeCambiosGeneralController implements Initializable, In
             FilteredList<Cambio> filtradoBusquedas = new FilteredList<>(cambios, p-> true);
             busquedaTablaNombre(filtradoBusquedas);
         }else{
-            Utilidades.mostrarAletarSimple("Error", respuesta.get("mensaje").toString(), Alert.AlertType.ERROR);
+            Utilidades.mostrarAletarSimple(
+                    "Error", 
+                    respuesta.get("mensaje").toString(), 
+                    Alert.AlertType.ERROR);
         }
     }
     

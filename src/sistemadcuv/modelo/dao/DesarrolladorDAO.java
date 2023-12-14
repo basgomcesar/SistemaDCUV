@@ -18,12 +18,15 @@ public class DesarrolladorDAO {
                 String consulta = "SELECT idDesarrollador, nombreCompleto, " +
                     "semestre, matricula ,correo , nombreEstado as estado, contrasenia, Proyecto_idProyecto,nombre " +
                     "FROM " +
-                    "desarrollador, proyecto, estadoUsuario " +
-                    "WHERE matricula = ? AND contrasenia = ? AND Proyecto_idProyecto = idProyecto and nombreEstado = 'Activo'";
+                    "desarrollador d, proyecto, estadoUsuario eu " +
+                    "WHERE matricula = ? AND contrasenia = ? AND Proyecto_idProyecto = idProyecto and "+
+                    "eu.idEstadoUsuario = d.EstadoDesarrollador_idEstadoDesarrollador and nombreEstado = 'activo'";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setString(1, usuario);
                 prepararSentencia.setString(2, contrasenia);
+                System.out.println("eror error erorr");
                 ResultSet resultado = prepararSentencia.executeQuery();
+                System.out.println("eror error erorr");
                 if(resultado.next()){
                     respuesta.put("error", false);
                     respuesta.put("mensaje", "Credenciales correctas");
@@ -39,15 +42,16 @@ public class DesarrolladorDAO {
                     desarrollador.setCorreo(resultado.getString("correo"));
                     respuesta.put("desarrollador", desarrollador);
                 }else{
-                    respuesta.put("mensaje", "Las credenciales son incorrectas");
+                    respuesta.put("mensaje", "Las credenciales son incorrectas "+
+                            "o es un usuario que ha sido eliminado del proyecto");
                 }
                 conexionBD.close();
             } catch (SQLException ex) {
-                ex.printStackTrace();
-                respuesta.put("desarrollador", "Error "+ex.getMessage());
+                respuesta.put("desarrollador", "Error: al verificar la sesion ");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos,"
+                    + "intente más tarde.");
         }
         return respuesta;
     }
@@ -58,12 +62,17 @@ public class DesarrolladorDAO {
         if(conexionBD != null){
             try {
                 String consulta = "select " +
-                    "(select count(*) from cambio c,estadoAsignacion ea where ea.idEstadoAsignacion = c.EstadoAsignacion_idEstadoAsignacion and c.Desarrollador_idDesarrollador = d.idDesarrollador and ea.nombreEstado = 'pendiente')+ " +
-                    "(select count(*) from actividad a,estadoAsignacion ea where ea.idEstadoAsignacion = a.EstadoAsignacion_idEstadoAsignacion and a.Desarrollador_idDesarrollador = d.idDesarrollador and ea.nombreEstado = 'pendiente') "+
+                    "(select count(*) from cambio c,estadoAsignacion ea "+
+                    "where ea.idEstadoAsignacion = c.EstadoAsignacion_idEstadoAsignacion "+
+                    "and "+
+                    "c.Desarrollador_idDesarrollador = d.idDesarrollador and ea.nombreEstado = 'pendiente')+ " +
+                    "(select count(*) from actividad a,estadoAsignacion ea "+
+                    "where ea.idEstadoAsignacion = a.EstadoAsignacion_idEstadoAsignacion "+
+                    "and a.Desarrollador_idDesarrollador = d.idDesarrollador and ea.nombreEstado = 'pendiente') "+
                     " AS total_asignaciones_pendientes " +
                     "FROM desarrollador d " +
                     "where " +
-                    " d.idDesarrollador = ?;";
+                    "d.idDesarrollador = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, desarrollador.getIdDesarrollador());
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -74,11 +83,11 @@ public class DesarrolladorDAO {
                 }
                 conexionBD.close();
             } catch (SQLException ex) {
-                ex.printStackTrace();
-                respuesta.put("asignaciones", "Error "+ex.getMessage());
+                respuesta.put("asignaciones", "Error: al verificar asignaciones ");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos,"
+                    + "intenta más tarde.");
         }
         return respuesta;
     }
@@ -98,14 +107,16 @@ public class DesarrolladorDAO {
                     respuesta.put("error", false);
                     respuesta.put("mensaje", "Desarrollador eliminado con exito");
                 }else{
-                    respuesta.put("mensaje", "Hubo un error al intentar modificar la informacion del paciente, por favor intentalo mas tarde");
+                    respuesta.put("mensaje", "Hubo un error al intentar eliminar un desarrollador, "+
+                            "por favor intentalo mas tarde");
                 }
                 respuesta.put("error", false);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: "+ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar eliminar un desarrollador");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos,"
+                    + "intenta mas tarde.");
         }
         return respuesta;
     }
@@ -134,15 +145,17 @@ public class DesarrolladorDAO {
                     respuesta.put("error", false);
                     respuesta.put("mensaje", "El desarrollador fue guardado con exito");
                 }else{
-                    respuesta.put("mensaje", "Hubo un error al intentar registrar la informacion del desarrollador,"
+                    respuesta.put("mensaje", "Hubo un error al intentar"
+                            + " registrar la informacion del desarrollador,"
                             + "  por favor intentalo mas tarde");
                 }
                 respuesta.put("error", false);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: "+ex.getMessage());
+                respuesta.put("mensaje", "Error: al registrar desarrollador");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta mas tarde.");
         }
         return respuesta;
     }

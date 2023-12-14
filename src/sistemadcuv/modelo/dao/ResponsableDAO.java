@@ -16,13 +16,13 @@ public class ResponsableDAO {
         if(conexionBD != null){
             try {
                 String consulta = "SELECT idResponsableDelProyecto, nombreCompleto, " +
-"                        numeroDePersonal, correoElectronico, contrasenia, Proyecto_idProyecto, nombre" +
-"                        FROM ResponsableDelProyecto, proyecto,estadoUsuario\n" +
-"                        WHERE numeroDePersonal = ?" +
-"			 AND idEstadoUsuario = estadoUsuario_idEstadoUsuario\n" +
-"                        AND contrasenia = ?" +
-"                        AND  Proyecto_idProyecto = idProyecto\n" +
-"                        AND nombreEstado = 'ACTIVO'";
+                    "numeroDePersonal, correoElectronico, contrasenia, Proyecto_idProyecto, nombre " +
+                    "FROM ResponsableDelProyecto, proyecto,estadoUsuario \n" +
+                    "WHERE numeroDePersonal = ? " +
+                    "AND idEstadoUsuario = estadoUsuario_idEstadoUsuario \n" +
+                    "AND contrasenia = ? " +
+                    "AND  Proyecto_idProyecto = idProyecto \n" +
+                    "AND nombreEstado = 'ACTIVO'";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, usuario);
                 prepararSentencia.setString(2, contrasenia);
@@ -43,11 +43,11 @@ public class ResponsableDAO {
                 }
                 conexionBD.close();
             } catch (SQLException ex) {
-                ex.printStackTrace();
-                respuesta.put("responsable", "Error "+ex.getMessage());
+                respuesta.put("responsable", "Error: al verificar responsable ");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos,"
+                    + "intenta más tarde.");
         }
         return respuesta;
     }

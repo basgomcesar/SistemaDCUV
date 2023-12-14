@@ -17,6 +17,7 @@ public class Cambio {
     private String desarrollador;
     private int idTipoCambio;
     private int idEstado;
+    private int idSolicitud;
     
     public Cambio() {
     }
@@ -155,8 +156,16 @@ public class Cambio {
         return tipo;
     }
 
+    public int getIdSolicitud() {
+        return idSolicitud;
+    }
+
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public void setIdSolicitud(int idSolicitud) {
+        this.idSolicitud = idSolicitud;
     }
        
 }

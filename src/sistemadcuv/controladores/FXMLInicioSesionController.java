@@ -29,45 +29,27 @@ public class FXMLInicioSesionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        //PROVICIONAL
-        tfUsuario.setText("zs17345678");
-        tfContrasenia.setText("123");
         
     }    
 
     @FXML
     private void iniciarSesion(ActionEvent event) {
-        HashMap<String, Object> usuarioAutentificado = null ;
+        HashMap<String, Object> respuesta = null ;
         if(!esCamposVacios()){
             String usuario = tfUsuario.getText().trim();
             String contrasenia = tfContrasenia.getText().trim();
             if(Utilidades.matriculaValida(usuario)){
-                usuarioAutentificado = DesarrolladorDAO.verificarSesionDesarrollador(usuario, contrasenia); 
-                Desarrollador desarrollador = (Desarrollador) usuarioAutentificado.get("desarrollador");
-                if(!(desarrollador== null))
-                    irPantallaPrincipalDesarrollador(desarrollador);
-                else
-                    Utilidades.mostrarAletarSimple("Usuario incorrecto", 
-                        "Lo siento, las credenciales proporcionadas no son válidas.\n"+
-                        "Por favor, asegúrate de ingresar el nombre de usuario y la contraseña correctos", 
-                        Alert.AlertType.INFORMATION);
+                respuesta = DesarrolladorDAO.verificarSesionDesarrollador(usuario, contrasenia); 
+                verificarDesarrollador(respuesta);
             }else{
-            if(usuario.matches("\\d+")){
-                usuarioAutentificado = ResponsableDAO.verificarSesionResponsable(Integer.parseInt(usuario),contrasenia);
-                ResponsableDeProyecto responsable = (ResponsableDeProyecto) usuarioAutentificado.get("responsable");
-                if(!(responsable == null ))
-                    irPantallaPrincipalResponsable(responsable);
-                else
+                if(usuario.matches("\\d+")){
+                    respuesta = ResponsableDAO.verificarSesionResponsable(Integer.parseInt(usuario),contrasenia);
+                    verificarResponsable(respuesta);
+                }else
                     Utilidades.mostrarAletarSimple("Usuario incorrecto", 
                         "Lo siento, las credenciales proporcionadas no son válidas.\n"+
                         "Por favor, asegúrate de ingresar el nombre de usuario y la contraseña correctos", 
                         Alert.AlertType.INFORMATION);
-            }else
-                Utilidades.mostrarAletarSimple("Usuario incorrecto", 
-                    "Lo siento, las credenciales proporcionadas no son válidas.\n"+
-                    "Por favor, asegúrate de ingresar el nombre de usuario y la contraseña correctos", 
-                    Alert.AlertType.INFORMATION);
             }
         }else{
             Utilidades.mostrarAletarSimple("Campos vacios", 
@@ -77,7 +59,8 @@ public class FXMLInicioSesionController implements Initializable {
     }
 
     private boolean esCamposVacios() {
-        return tfUsuario.getText().trim().isEmpty() || tfContrasenia.getText().trim().isEmpty();
+        return tfUsuario.getText().trim().isEmpty() ||
+                tfContrasenia.getText().trim().isEmpty();
     }
 
 
@@ -102,6 +85,44 @@ public class FXMLInicioSesionController implements Initializable {
                 responsable,
                 "FXMLListadoDeActividades.fxml",
                 "Listado de actividades");
+    }
+
+    private void verificarDesarrollador(HashMap<String, Object> respuesta) {
+        if(!(boolean)respuesta.get("error")){
+            Desarrollador desarrollador = (Desarrollador) respuesta.get("desarrollador");
+            if(!(desarrollador== null))
+                irPantallaPrincipalDesarrollador(desarrollador);
+            else
+                Utilidades.mostrarAletarSimple("Usuario incorrecto", 
+                    "Lo siento, las credenciales proporcionadas no son válidas.\n"+
+                    "Por favor, asegúrate de ingresar el nombre de usuario y la contraseña correctos", 
+                    Alert.AlertType.INFORMATION);
+            
+        }else{
+            Utilidades.mostrarAletarSimple(
+                    
+                    "Error",
+                    (String) respuesta.get("mensaje"),
+                    Alert.AlertType.ERROR);
+        }
+    }
+
+    private void verificarResponsable(HashMap<String, Object> respuesta) {
+        if(!(boolean)respuesta.get("error")){
+            ResponsableDeProyecto responsable = (ResponsableDeProyecto) respuesta.get("responsable");
+            if(!(responsable == null ))
+                irPantallaPrincipalResponsable(responsable);
+        else
+            Utilidades.mostrarAletarSimple(
+                    "Usuario incorrecto", 
+                "Lo siento, las credenciales proporcionadas no son válidas.\n"+
+                "Por favor, asegúrate de ingresar el nombre de usuario y la contraseña correctos", 
+                Alert.AlertType.INFORMATION);
+        }else
+            Utilidades.mostrarAletarSimple(
+                    "Error",
+                    (String) respuesta.get("mensaje"),
+                    Alert.AlertType.ERROR);
     }
     
 }
