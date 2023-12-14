@@ -64,7 +64,9 @@ public class FXMLListaDeParticipantesDelProyectoController implements Initializa
             desarrolladores.addAll(lista);
             tvDesarrolladores.setItems(desarrolladores);
         }else{
-            Utilidades.mostrarAletarSimple("Error de carga", (String) respuesta.get("mensaje"),
+            Utilidades.mostrarAletarSimple(
+                    "Error de carga",
+                    (String) respuesta.get("mensaje"),
                     Alert.AlertType.ERROR);
         }
     }

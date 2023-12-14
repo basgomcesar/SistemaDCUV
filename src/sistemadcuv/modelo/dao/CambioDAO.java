@@ -8,8 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import javafx.scene.control.Alert;
 import sistemadcuv.modelo.ConexionBD;
 import sistemadcuv.modelo.pojo.Cambio;
+import sistemadcuv.utils.Utilidades;
 
 public class CambioDAO {
     
@@ -52,10 +54,11 @@ public class CambioDAO {
                 respuesta.put("error", false);
                 respuesta.put("cambios", cambios);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar obtener los cambios");
             }
         } else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta mas tarde.");
         }
         return respuesta;
     }
@@ -100,10 +103,11 @@ public class CambioDAO {
                 respuesta.put("error", false);
                 respuesta.put("cambios", cambios);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar obtener los cambios" );
             }
         } else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta mas tarde.");
         }
         return respuesta;
     }
@@ -118,7 +122,8 @@ public class CambioDAO {
                     "razonCambio,Desarrollador_idDesarrollador, " +
                     "estadoasignacion_idEstadoAsignacion, tipoartefacto_idTipoArtefacto) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 2,?) ;";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, 
+                        Statement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setString(1, nuevoCambio.getNombre());
                 prepararSentencia.setString(2, nuevoCambio.getDescripcion());
                 prepararSentencia.setInt(3, nuevoCambio.getEsfuerzo());
@@ -137,12 +142,12 @@ public class CambioDAO {
                 conexionBD.close();
                 if(filasAfectadas == 1){
                     respuesta.put("error", false);
-                    respuesta.put("mensaje", "Solicitud de cambio registrada");
+                    respuesta.put("mensaje", "El cambio ha sido guardado en la base de datos");
                 }else{                    
                     respuesta.put("mensaje", "Error al registrar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar guardar el cambio" );
             }
         }else{
             respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
@@ -173,10 +178,11 @@ public class CambioDAO {
                     respuesta.put("mensaje", "Error al modificar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al modificar el estado del cambio");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }

@@ -17,10 +17,12 @@ public class ActividadDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD!=null){
             try{
-                String sentencia = "INSERT INTO actividad(titulo,descripcion, "
-                        + "Desarrollador_idDesarrollador, EstadoAsignacion_idEstadoAsignacion,fechaInicio,fechaFin) " +
+                String sentencia = "INSERT INTO actividad(titulo,descripcion, "+
+                         "Desarrollador_idDesarrollador, EstadoAsignacion_idEstadoAsignacion, "+
+                         "fechaInicio,fechaFin) " +
                     "VALUES (? ,? ,? ,1 ,? ,?)";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, 
+                        Statement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setString(1, nuevaActividad.getTitulo());
                 prepararSentencia.setString(2, nuevaActividad.getDescripcion());
                 prepararSentencia.setInt(3, nuevaActividad.getIdDesarrollador());
@@ -35,15 +37,16 @@ public class ActividadDAO {
                 conexionBD.close();
                 if(filasAfectadas == 1){
                     respuesta.put("error", false);
-                    respuesta.put("mensaje", "Actividad registrada");
+                    respuesta.put("mensaje", "Actividad creada con exito");
                 }else{                    
                     respuesta.put("mensaje", "Error al registrar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al registrar una actividad");
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -57,7 +60,8 @@ public class ActividadDAO {
                 String sentencia = "INSERT INTO actividad(titulo,descripcion, "
                         + " EstadoAsignacion_idEstadoAsignacion,fechaInicio,fechaFin) " +
                     "VALUES (? ,? ,3 ,? ,?)";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, 
+                        Statement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setString(1, nuevaActividad.getTitulo());
                 prepararSentencia.setString(2, nuevaActividad.getDescripcion());
                 prepararSentencia.setString(3, nuevaActividad.getFechaInicio());
@@ -71,15 +75,16 @@ public class ActividadDAO {
                 conexionBD.close();
                 if(filasAfectadas == 1){
                     respuesta.put("error", false);
-                    respuesta.put("mensaje", "Actividad registrada");
+                    respuesta.put("mensaje", "Actividad creada con exito");
                 }else{                    
-                    respuesta.put("mensaje", "Error al registrar");
+                    respuesta.put("mensaje", "Error: al registrar una actividad");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: " );
             }
         }else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }

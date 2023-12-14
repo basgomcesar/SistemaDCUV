@@ -71,14 +71,18 @@ public class FXMLBitacoraDeCambiosDesarrolladorController implements Initializab
     }
     private void cargarInformacionCambios(){
         HashMap<String, Object> respuesta = new HashMap<>();
-            respuesta = CambioDAO.obtenerListadoCambiosDesarrollador(this.desarrolladorBitacora.getIdDesarrollador());
+            respuesta = CambioDAO.obtenerListadoCambiosDesarrollador(
+                    this.desarrolladorBitacora.getIdDesarrollador());
         if(!(boolean) respuesta.get("error")){
             cambios = FXCollections.observableArrayList();
             ArrayList<Cambio> lista = (ArrayList<Cambio>) respuesta.get("cambios");
             cambios.addAll(lista);
             tvCambios.setItems(cambios);
         }else{
-            Utilidades.mostrarAletarSimple("Error", respuesta.get("mensaje").toString(), Alert.AlertType.ERROR);
+            Utilidades.mostrarAletarSimple(
+                    "Error", 
+                    respuesta.get("mensaje").toString(),
+                    Alert.AlertType.ERROR);
         }
     }
     public void inicializarInformacion(Desarrollador desarrolladorBitacora, ResponsableDeProyecto responsableSesion) {

@@ -49,14 +49,18 @@ public class FXMLListadoDeParticipantesParaBitacoraController implements Initial
         this.colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
     }
     private void cargarInformacion(){
-        HashMap<String, Object> respuesta = ProyectoDAO.obtenerDesarrolladoresPorProyecto(responsableSesion.getIdProyecto());
+        HashMap<String, Object> respuesta = ProyectoDAO.
+                obtenerDesarrolladoresPorProyecto(responsableSesion.getIdProyecto());
         if(!(boolean) respuesta.get("error")){
             desarrolladores = FXCollections.observableArrayList();
-            ArrayList<Desarrollador> desarrolladorDAO = (ArrayList<Desarrollador>) respuesta.get("desarrolladores");
+            ArrayList<Desarrollador> desarrolladorDAO = (ArrayList<Desarrollador>) respuesta.
+                    get("desarrolladores");
             desarrolladores.addAll(desarrolladorDAO);
             tvParticipantes.setItems(desarrolladores);
         }else{
-            Utilidades.mostrarAletarSimple("Error de carga", (String) respuesta.get("mensaje"),
+            Utilidades.mostrarAletarSimple(
+                    "Error de carga", 
+                    (String) respuesta.get("mensaje"),
                     Alert.AlertType.ERROR);
         }
     }
