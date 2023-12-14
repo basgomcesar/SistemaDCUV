@@ -20,6 +20,6 @@
             <Font name="Bell MT" size="18.0" />
          </font>
       </Label>
-      <Button defaultButton="true" layoutX="423.0" layoutY="342.0" mnemonicParsing="false" onAction="#clicCerrar" prefHeight="25.0" prefWidth="110.0" text="Cerrar" />
+      <Button defaultButton="true" layoutX="423.0" layoutY="342.0" mnemonicParsing="false" onAction="#BtnCerrar" prefHeight="25.0" prefWidth="110.0" text="Cerrar" />
    </children>
 </AnchorPane>

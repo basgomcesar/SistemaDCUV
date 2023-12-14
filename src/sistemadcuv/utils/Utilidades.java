@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import sistemadcuv.controladores.FXMLInicioSesionController;
 import sistemadcuv.controladores.FXMLRegistroDeActividadController;
 import sistemadcuv.interfaces.InitializableVentana;
@@ -104,7 +105,33 @@ public class Utilidades {
             escenario.setTitle("Inicio de Sesión");
             escenario.show();
         }catch(IOException ex){
-            ex.printStackTrace();
+            mostrarAletarSimple(
+                    "Error al cargar la ventana",
+                    "Se ha producido un error al intentar cargar la ventana",
+                    Alert.AlertType.ERROR);
         }
+    }
+    public static StringConverter<LocalDate> formateaDatePicker(){
+            StringConverter<LocalDate> converter = new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        };
+        return converter;
     }
 }

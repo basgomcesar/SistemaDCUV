@@ -47,16 +47,13 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
     @FXML
     private TableColumn colFechaFin;
     @FXML
-    private Button btnAgregarActividad;
+    private Button btAgregarActividad;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        configurarDatePicker();
     }   
     
-    private void configurarTabla(){
-        
-    }
 
     @Override
     public void inicializarInformacion(Desarrollador desarrolladorSesion,ResponsableDeProyecto responsableSesion){
@@ -68,32 +65,12 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
 
     private void cargarCampos() {
         if(this.desarrolladorSesion != null){
-            btnAgregarActividad.setVisible(false);
+            btAgregarActividad.setVisible(false);
             lbUsuarioActivo.setText("Desarrollador: "+
                     desarrolladorSesion.getNombreCompleto());
         }else{
             lbUsuarioActivo.setText("Responsable: "+
                     responsableSesion.getNombreCompleto());
-        }
-    }
-
-    @FXML
-    private void clicAgregarActividad(ActionEvent event) {
-        try{
-            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeActividad.fxml");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
-            FXMLRegistroDeActividadController controller = loader.getController();
-
-            controller.inicializarFormulario(responsableSesion,this);
-            
-            Stage escenario = new Stage();
-            escenario.setScene(escena);
-            escenario.setTitle("Registrar actividad");
-            escenario.initModality(Modality.APPLICATION_MODAL);
-            escenario.showAndWait();
-        }catch(IOException ex){
-            Utilidades.mostrarAletarSimple("Error al cargar la ventana", "Ha ocurrido un error al cargar la ventana", Alert.AlertType.WARNING);
         }
     }
 
@@ -166,6 +143,31 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
     private void btnCerrarSesion(ActionEvent event) {
         Utilidades.irInicioDeSesion((Stage)
                 lbUsuarioActivo.getScene().getWindow());
+    }
+
+    @FXML
+    private void btnAgregarActividad(ActionEvent event) {
+        try{
+            FXMLLoader loader = Utilidades.cargarVista("vistas/FXMLRegistroDeActividad.fxml");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+            FXMLRegistroDeActividadController controller = loader.getController();
+
+            controller.inicializarFormulario(responsableSesion,this);
+            
+            Stage escenario = new Stage();
+            escenario.setScene(escena);
+            escenario.setTitle("Registrar actividad");
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait();
+        }catch(IOException ex){
+            Utilidades.mostrarAletarSimple("Error al cargar la ventana", "Ha ocurrido un error al cargar la ventana", Alert.AlertType.WARNING);
+        }        
+    }
+
+    private void configurarDatePicker() {
+        dpDesde.setConverter(Utilidades.formateaDatePicker());
+        dpHasta.setConverter(Utilidades.formateaDatePicker());
     }
 
 }
