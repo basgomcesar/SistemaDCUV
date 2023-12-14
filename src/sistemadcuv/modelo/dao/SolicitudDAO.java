@@ -20,15 +20,15 @@ public class SolicitudDAO {
         if(conexionBD != null){
             try {
                 String consulta = "SELECT sc.numeroSolicitud, sc.nombreSolicitudDeCambio, es.nombreEstado AS estado, es.idEstadoSolicitud AS idEstado,\n" +
-                                    "d.idDesarrollador, d.nombreCompleto AS nombreDesarrollador, sc.idSolicitudDeCambio,\n" +
-                                    "DATE_FORMAT(sc.fechaCreacion, '%d/%m/%Y') AS fechaCreacion,\n" +
-                                    "DATE_FORMAT(sc.fechaDeAprobacion, '%d/%m/%Y') AS fechaDeAprobacion,\n" +
-                                    "sc.razon, sc.descripcion, sc.impacto,\n" +
-                                    "sc.accionPropuesta, rp.idResponsableDelProyecto, rp.nombreCompleto AS nombreResponsableProyecto\n" +
-                                    "FROM SolicitudDeCambio sc\n" +
-                                    "INNER JOIN Desarrollador d ON sc.Desarrollador_idDesarrollador = d.idDesarrollador\n" +
-                                    "INNER JOIN EstadoSolicitud es ON sc.EstadoSolicitud_idEstadoSolicitud = es.idEstadoSolicitud\n" +
-                                    "LEFT JOIN ResponsableDelProyecto rp ON sc.ResponsableDelProyecto_idResponsableDelProyecto = rp.idResponsableDelProyecto";
+                    "d.idDesarrollador, d.nombreCompleto AS nombreDesarrollador, sc.idSolicitudDeCambio,\n" +
+                    "DATE_FORMAT(sc.fechaCreacion, '%d/%m/%Y') AS fechaCreacion,\n" +
+                    "DATE_FORMAT(sc.fechaDeAprobacion, '%d/%m/%Y') AS fechaDeAprobacion,\n" +
+                    "sc.razon, sc.descripcion, sc.impacto,\n" +
+                    "sc.accionPropuesta, rp.idResponsableDelProyecto, rp.nombreCompleto AS nombreResponsableProyecto\n" +
+                    "FROM SolicitudDeCambio sc\n" +
+                    "INNER JOIN Desarrollador d ON sc.Desarrollador_idDesarrollador = d.idDesarrollador\n" +
+                    "INNER JOIN EstadoSolicitud es ON sc.EstadoSolicitud_idEstadoSolicitud = es.idEstadoSolicitud\n" +
+                    "LEFT JOIN ResponsableDelProyecto rp ON sc.ResponsableDelProyecto_idResponsableDelProyecto = rp.idResponsableDelProyecto";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<SolicitudDeCambio> solicitudes = new ArrayList();
@@ -55,10 +55,12 @@ public class SolicitudDAO {
                 respuesta.put("error", false);
                 respuesta.put("solicitudes", solicitudes);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al obtener las solicitudes");
             }
         } else{
-            
+            respuesta.put("mensaje", 
+                    "Error al acceder a la base de datos,"
+                            + "intenta mas tarde");
         }
         return respuesta;
     }
@@ -70,16 +72,16 @@ public class SolicitudDAO {
         if(conexionBD != null){
             try {
                 String consulta = "SELECT sc.numeroSolicitud, sc.nombreSolicitudDeCambio, es.nombreEstado AS estado, es.idEstadoSolicitud AS idEstado,\n" +
-                                    "d.idDesarrollador, d.nombreCompleto AS nombreDesarrollador, sc.idSolicitudDeCambio,\n" +
-                                    "DATE_FORMAT(sc.fechaCreacion, '%d/%m/%Y') AS fechaCreacion,\n" +
-                                    "DATE_FORMAT(sc.fechaDeAprobacion, '%d/%m/%Y') AS fechaDeAprobacion,\n" +
-                                    "sc.razon, sc.descripcion, sc.impacto,\n" +
-                                    "sc.accionPropuesta, rp.idResponsableDelProyecto, rp.nombreCompleto AS nombreResponsableProyecto\n" +
-                                    "FROM SolicitudDeCambio sc\n" +
-                                    "INNER JOIN Desarrollador d ON sc.Desarrollador_idDesarrollador = d.idDesarrollador\n" +
-                                    "INNER JOIN EstadoSolicitud es ON sc.EstadoSolicitud_idEstadoSolicitud = es.idEstadoSolicitud\n" +
-                                    "LEFT JOIN ResponsableDelProyecto rp ON sc.ResponsableDelProyecto_idResponsableDelProyecto = rp.idResponsableDelProyecto\n" +
-                                    "WHERE sc.Desarrollador_idDesarrollador = ?";
+                    "d.idDesarrollador, d.nombreCompleto AS nombreDesarrollador, sc.idSolicitudDeCambio,\n" +
+                    "DATE_FORMAT(sc.fechaCreacion, '%d/%m/%Y') AS fechaCreacion,\n" +
+                    "DATE_FORMAT(sc.fechaDeAprobacion, '%d/%m/%Y') AS fechaDeAprobacion,\n" +
+                    "sc.razon, sc.descripcion, sc.impacto,\n" +
+                    "sc.accionPropuesta, rp.idResponsableDelProyecto, rp.nombreCompleto AS nombreResponsableProyecto\n" +
+                    "FROM SolicitudDeCambio sc\n" +
+                    "INNER JOIN Desarrollador d ON sc.Desarrollador_idDesarrollador = d.idDesarrollador\n" +
+                    "INNER JOIN EstadoSolicitud es ON sc.EstadoSolicitud_idEstadoSolicitud = es.idEstadoSolicitud\n" +
+                    "LEFT JOIN ResponsableDelProyecto rp ON sc.ResponsableDelProyecto_idResponsableDelProyecto = rp.idResponsableDelProyecto\n" +
+                    "WHERE sc.Desarrollador_idDesarrollador = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idDesarrollador);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -110,7 +112,9 @@ public class SolicitudDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         } else{
-            
+            respuesta.put("mensaje", 
+                    "Error al acceder a la base de datos,"
+                            + "intenta mas tarde");
         }
         return respuesta;
     }
@@ -149,11 +153,12 @@ public class SolicitudDAO {
                     respuesta.put("mensaje", "Error al registrar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al registrar solicitud");
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", 
+                    "Error al acceder a la base de datos,"
+                            + "intenta mas tarde");
         }
         return respuesta;
     }
@@ -181,11 +186,12 @@ public class SolicitudDAO {
                     respuesta.put("mensaje", "Error al modificar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al modificar solicitud");
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", 
+                    "Error al acceder a la base de datos,"
+                            + "intenta mas tarde");
         }
         return respuesta;
     }
@@ -209,11 +215,12 @@ public class SolicitudDAO {
                     respuesta.put("mensaje", "Error al eliminar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al eliminar solicitud");
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", 
+                    "Error al acceder a la base de datos,"
+                            + "intenta mas tarde");
         }
         return respuesta;
     }

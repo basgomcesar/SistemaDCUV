@@ -110,7 +110,9 @@ public class FXMLParticipantesDelProyectoController implements Initializable,Obs
             tvDesarrolladores.setItems(desarrolladores);
             busquedaTablaNombre();
         }else{
-            Utilidades.mostrarAletarSimple("Error de carga", (String) respuesta.get("mensaje"),
+            Utilidades.mostrarAletarSimple(
+                    "Error de carga",
+                    (String) respuesta.get("mensaje"),
                     Alert.AlertType.ERROR);
         }
     }

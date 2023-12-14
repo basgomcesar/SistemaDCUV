@@ -32,11 +32,11 @@ public class ArchivoDAO {
                     respuesta.put("mensaje", "Error al guardar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar guardar un archivo" );
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -61,11 +61,11 @@ public class ArchivoDAO {
                     respuesta.put("mensaje", "Error al guardar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al guardar un archivo");
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -94,10 +94,11 @@ public class ArchivoDAO {
                 respuesta.put("error", false);
                 respuesta.put("archivos", archivos);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al obtener un archivo");
             }
         } else{
-            
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -121,12 +122,11 @@ public class ArchivoDAO {
                     respuesta.put("mensaje", "Error al eliminar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
-                ex.printStackTrace();
+                respuesta.put("mensaje", "Error: al intentar eliminar un archivo" );
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -152,11 +152,11 @@ public class ArchivoDAO {
                     respuesta.put("mensaje", "Error al guardar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al guardar un archivo");
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }
@@ -189,7 +189,8 @@ public class ArchivoDAO {
                 respuesta.put("mensaje", "Error: " + ex.getMessage());
             }
         } else{
-            respuesta.put("mensaje", "Error al acceder a la base de datos, intenta más tarde.");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde.");
         }
         return respuesta;
     }

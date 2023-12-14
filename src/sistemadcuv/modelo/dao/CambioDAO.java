@@ -8,9 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import javafx.scene.control.Alert;
 import sistemadcuv.modelo.ConexionBD;
 import sistemadcuv.modelo.pojo.Cambio;
-import sistemadcuv.modelo.pojo.SolicitudDeCambio;
+import sistemadcuv.utils.Utilidades;
 
 public class CambioDAO {
     
@@ -21,11 +22,11 @@ public class CambioDAO {
         if(conexionBD != null){
             try {
                 String consulta ="SELECT idCambio, nombre,c.descripcion, ea.nombreEstado as estado, DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio', " +
-"                            DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin'," +
-"                            Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador \n" +
-"                            FROM cambio c \n" +
-"                            INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador \n" +
-"                            INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion";
+                    "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin'," +
+                    "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador \n" +
+                    "FROM cambio c \n" +
+                    "INNER JOIN desarrollador d ON Desarrollador_idDesarrollador = d.idDesarrollador \n" +
+                    "INNER JOIN estadoAsignacion ea ON ea.idEstadoAsignacion = EstadoAsignacion_idEstadoAsignacion";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Cambio> cambios = new ArrayList();
@@ -46,10 +47,11 @@ public class CambioDAO {
                 respuesta.put("error", false);
                 respuesta.put("cambios", cambios);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar obtener los cambios");
             }
         } else{
-            
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta mas tarde.");
         }
         return respuesta;
     }
@@ -60,7 +62,9 @@ public class CambioDAO {
         Connection conexionBD = ConexionBD.obtenerConexion();
         if(conexionBD != null){
             try {
-                String consulta ="SELECT idCambio, nombre,descripcion, impacto, razonCambio, TipoArtefacto_idTipoArtefacto AS idTipoArtefacto, esfuerzo, ea.nombreEstado as estado , DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio'," +
+                String consulta ="SELECT idCambio, nombre,descripcion, impacto, razonCambio, "+
+                    "TipoArtefacto_idTipoArtefacto AS idTipoArtefacto, "+
+                    "esfuerzo, ea.nombreEstado as estado , DATE_FORMAT(fechaInicio, '%d/%m/%Y') AS 'fechaInicio'," +
                     "DATE_FORMAT(fechaFin, '%d/%m/%Y') AS 'fechaFin', " +
                     "Desarrollador_idDesarrollador AS idDesarrollador, d.nombreCompleto AS desarrollador " +
                     "FROM cambio c " +
@@ -92,10 +96,11 @@ public class CambioDAO {
                 respuesta.put("error", false);
                 respuesta.put("cambios", cambios);
             } catch (SQLException ex) {
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar obtener los cambios" );
             }
         } else{
-            
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta mas tarde.");
         }
         return respuesta;
     }
@@ -110,7 +115,8 @@ public class CambioDAO {
                     "razonCambio,Desarrollador_idDesarrollador, " +
                     "estadoasignacion_idEstadoAsignacion, tipoartefacto_idTipoArtefacto) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 2,?) ;";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, 
+                        Statement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setString(1, nuevoCambio.getNombre());
                 prepararSentencia.setString(2, nuevoCambio.getDescripcion());
                 prepararSentencia.setInt(3, nuevoCambio.getEsfuerzo());
@@ -129,12 +135,12 @@ public class CambioDAO {
                 conexionBD.close();
                 if(filasAfectadas == 1){
                     respuesta.put("error", false);
-                    respuesta.put("mensaje", "Solicitud de cambio registrada");
+                    respuesta.put("mensaje", "El cambio ha sido guardado en la base de datos");
                 }else{                    
                     respuesta.put("mensaje", "Error al registrar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al intentar guardar el cambio" );
             }
         }else{
             respuesta.put("mensaje", "Por el momento no hay conexion, "
@@ -166,11 +172,11 @@ public class CambioDAO {
                     respuesta.put("mensaje", "Error al modificar");
                 }
             }catch(SQLException ex){
-                respuesta.put("mensaje", "Error: " + ex.getMessage());
+                respuesta.put("mensaje", "Error: al modificar el estado del cambio");
             }
         }else{
-            respuesta.put("mensaje", "Por el momento no hay conexion, "
-                    + "intentalo más tarde");
+            respuesta.put("mensaje", "Error al acceder a la base de datos, "
+                    + "intenta más tarde");
         }
         return respuesta;
     }

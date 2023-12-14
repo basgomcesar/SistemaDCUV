@@ -107,7 +107,8 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
     private void cargarInformacionCambios(Desarrollador desarrollador, ResponsableDeProyecto responsable){
         HashMap<String, Object> respuesta = new HashMap<>();
         if(desarrollador != null){
-            respuesta = CambioDAO.obtenerListadoCambiosDesarrollador(desarrolladorSesion.getIdDesarrollador());
+            respuesta = CambioDAO.obtenerListadoCambiosDesarrollador(
+                    desarrolladorSesion.getIdDesarrollador());
         } else{
             respuesta = CambioDAO.obtenerListadoCambios();
         }
@@ -121,7 +122,10 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
             busquedaTablaFechas(filtradoBusquedas);
             busquedaTablaNombre(filtradoBusquedas);
         }else{
-            Utilidades.mostrarAletarSimple("Error", respuesta.get("mensaje").toString(), Alert.AlertType.ERROR);
+            Utilidades.mostrarAletarSimple(
+                    "Error", 
+                    respuesta.get("mensaje").toString(), 
+                    Alert.AlertType.ERROR);
         }
     }
     
@@ -133,11 +137,9 @@ public class FXMLListadoDeCambiosController implements Initializable,Initializab
                 public void changed(ObservableValue<? extends String> observable, 
                         String oldValue, String newValue) {
                     filtradoBusquedas.setPredicate(nombreFiltro -> {
-                        //CASO DEFAULT
                         if(newValue == null || newValue.isEmpty()){
                             return true;
                         }
-                        //CRITERIO DE EVALUACION
                         String lowerNewValue = newValue.toLowerCase();
                         if(nombreFiltro.getNombre().toLowerCase().contains(lowerNewValue)){
                             return true;

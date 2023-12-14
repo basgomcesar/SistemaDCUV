@@ -35,7 +35,7 @@ public class PeriodoDAO {
                 respuesta.put("error", false);
                 respuesta.put("periodo", periodoActual);
             } catch (SQLException ex) {
-                respuesta.put("periodo", "Error "+ex.getMessage());
+                respuesta.put("periodo", "Error: al obtener el periodo actual");
             }
         }else{
             respuesta.put("mensaje", "Por el momento no hay conexion,"

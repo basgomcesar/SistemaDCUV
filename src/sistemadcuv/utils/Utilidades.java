@@ -48,7 +48,7 @@ public class Utilidades {
         }
     }
     public static boolean matriculaValida(String matricula){
-        String formato = "zs[a-zA-Z0-9]+";
+        String formato = "zs\\d{8}";
         return matricula.matches(formato);
     }
     public static boolean mostrarDialogoConfirmacion(String titulo, String mensaje) {

@@ -63,14 +63,16 @@ public class FXMLRegistrarDesarrolladorController {
             observableMaterias.addAll(materias);
             cbMateria.setItems(observableMaterias);
         }else
-            Utilidades.mostrarAletarSimple("Error materias", 
-                    "Error al cargar materias", Alert.AlertType.ERROR);
+            Utilidades.mostrarAletarSimple("Error materias",
+                    (String) resultado.get("mensaje"), 
+                    Alert.AlertType.ERROR);
     }
     @FXML
     public void clicCancelar(ActionEvent event) {
         if(!hayCamposLlenos())
             cerrarVentana();
-        else if (Utilidades.mostrarDialogoConfirmacion("Dialogo de confirmación",
+        else if (Utilidades.mostrarDialogoConfirmacion(
+                "Dialogo de confirmación",
                 "¿Desea cancelar el registro? tenga en cuenta  que se perdera la información"))
             cerrarVentana();
     }
@@ -157,8 +159,10 @@ public class FXMLRegistrarDesarrolladorController {
             lbFechaFin.setText(Utilidades.formatearFecha(periodoActual.
                     getFechaFin()));
         }else{
-            Utilidades.mostrarAletarSimple("Error al cargar periodo",
-                    "Hubo un error al cargar el periodo", Alert.AlertType.ERROR);
+            Utilidades.mostrarAletarSimple(
+                    "Error al cargar periodo",
+                    "Hubo un error al cargar el periodo", 
+                    Alert.AlertType.ERROR);
         }
     }
 

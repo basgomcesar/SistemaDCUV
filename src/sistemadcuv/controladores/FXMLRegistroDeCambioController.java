@@ -131,9 +131,15 @@ public class FXMLRegistroDeCambioController implements Initializable {
         if (archivoSeleccionado != null) {
             archivos.remove(archivoSeleccionado);
             tvArchivo.setItems(archivos);
-            Utilidades.mostrarAletarSimple("Eliminación exitosa", "Archivo eliminado correctamente", Alert.AlertType.INFORMATION);
+            Utilidades.mostrarAletarSimple(
+                    "Eliminación exitosa", 
+                    "Archivo eliminado correctamente", 
+                    Alert.AlertType.INFORMATION);
         } else {
-            Utilidades.mostrarAletarSimple("Error al eliminar", "Selecciona un archivo de la tabla para eliminar", Alert.AlertType.WARNING);
+            Utilidades.mostrarAletarSimple(
+                    "Error al eliminar", 
+                    "Selecciona un archivo de la tabla para eliminar",
+                    Alert.AlertType.WARNING);
         }   
     }
 
@@ -204,7 +210,10 @@ public class FXMLRegistroDeCambioController implements Initializable {
             archivos.addAll(lista);
             tvArchivo.setItems(archivos);
         }else{
-            Utilidades.mostrarAletarSimple("Error", respuesta.get("mensaje").toString(), Alert.AlertType.ERROR);
+            Utilidades.mostrarAletarSimple(
+                    "Error", 
+                    respuesta.get("mensaje").toString(),
+                    Alert.AlertType.ERROR);
         }
     }
     
@@ -241,7 +250,8 @@ public class FXMLRegistroDeCambioController implements Initializable {
             tiposDeCambios.addAll(tiposCambio);
             cbTipoCambio.setItems(tiposDeCambios);
         }else{
-            Utilidades.mostrarAletarSimple("Error",
+            Utilidades.mostrarAletarSimple(
+                    "Error",
                     "Error al cargar los tipos de cambios", 
                     Alert.AlertType.ERROR);
         }
@@ -283,8 +293,11 @@ public class FXMLRegistroDeCambioController implements Initializable {
                 tvArchivo.setItems(archivos);
             }
         } catch (IOException ex) {
-            Utilidades.mostrarAletarSimple("ERROR AL CARGAR", "Ha ocurrido un error"
-                    + " al cargar los archivos", Alert.AlertType.WARNING);
+            Utilidades.mostrarAletarSimple(
+                    "ERROR AL CARGAR", 
+                    "Ha ocurrido un error"+
+                    " al cargar los archivos", 
+                    Alert.AlertType.WARNING);
         }
     }
     private void configurarDatePicker() {
@@ -337,13 +350,15 @@ public class FXMLRegistroDeCambioController implements Initializable {
             }
             this.observador.operacionExitosa("Operacion exitosa", 
             nuevoCambio.getNombre() );
-            Utilidades.mostrarAletarSimple("Registro exitoso", 
-                    "El cambio se ha registrado ", 
+            Utilidades.mostrarAletarSimple(
+                    "Registro exitoso",
+                    (String) respuesta.get("mensaje"), 
                     Alert.AlertType.INFORMATION);
             cerrarVentana();
         }else{
-            Utilidades.mostrarAletarSimple("Error", 
-                    "Error al intentar guardar el cambio", 
+            Utilidades.mostrarAletarSimple(
+                    "Error",
+                    (String) respuesta.get("mensaje"), 
                     Alert.AlertType.ERROR);
         }
     } 
@@ -351,8 +366,10 @@ public class FXMLRegistroDeCambioController implements Initializable {
     private void registrarArchivo(Archivo archivo) {
         HashMap<String, Object> respuesta = ArchivoDAO.registrarArchivoDeCambio(archivo);
             if( (boolean) respuesta.get("error")){
-                Utilidades.mostrarAletarSimple("Error en el registro", 
-                        (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);   
+                Utilidades.mostrarAletarSimple(
+                        "Error en el registro", 
+                        (String) respuesta.get("mensaje"), 
+                        Alert.AlertType.WARNING);   
             }
     }
     
@@ -380,14 +397,22 @@ public class FXMLRegistroDeCambioController implements Initializable {
                         Files.write(archivoDestino.toPath(), archivo.getArchivo());
                     }
 
-                    Utilidades.mostrarAletarSimple("Descarga exitosa", "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), Alert.AlertType.INFORMATION);
+                    Utilidades.mostrarAletarSimple(
+                            "Descarga exitosa",
+                            "Archivos descargados correctamente en " + carpetaDestino.getAbsolutePath(), 
+                            Alert.AlertType.INFORMATION);
                 } catch (IOException ex) {
-                    Utilidades.mostrarAletarSimple("Error al descargar", "Ha ocurrido un error al descargar los archivos", Alert.AlertType.WARNING);
-                    ex.printStackTrace();
+                    Utilidades.mostrarAletarSimple(
+                            "Error al descargar", 
+                            "Ha ocurrido un error al descargar los archivos", 
+                            Alert.AlertType.WARNING);
                 }
             }
         }else{
-            Utilidades.mostrarAletarSimple("Sin Archivos", "No existen archivos para descargar", Alert.AlertType.INFORMATION);
+            Utilidades.mostrarAletarSimple(
+                    "Sin Archivos", 
+                    "No existen archivos para descargar", 
+                    Alert.AlertType.INFORMATION);
         }
     }
 
@@ -401,9 +426,10 @@ public class FXMLRegistroDeCambioController implements Initializable {
         if(!esCamposVacios()){
             modificarCambio();
         }else{
-            Utilidades.mostrarAletarSimple("Campos vacios",
-                    "Por favor asegurese de llenar "
-                            + "los campos correspondientes", 
+            Utilidades.mostrarAletarSimple(
+                    "Campos vacios",
+                    "Por favor asegurese de llenar "+
+                    "los campos correspondientes", 
                     Alert.AlertType.INFORMATION);
         }
     }
@@ -414,13 +440,17 @@ public class FXMLRegistroDeCambioController implements Initializable {
         cambioSeleccion.setIdEstado(2);
         HashMap<String, Object> respuesta = CambioDAO.modificarCambio(cambioSeleccion);
             if( !(boolean) respuesta.get("error")){
-                Utilidades.mostrarAletarSimple("Estado modificado", 
-                        (String)respuesta.get("mensaje"), Alert.AlertType.INFORMATION);
+                Utilidades.mostrarAletarSimple(
+                        "Estado modificado", 
+                        (String)respuesta.get("mensaje"),
+                        Alert.AlertType.INFORMATION);
                 observador.operacionExitosa("Modificacion", cambioSeleccion.getNombre());
                 cerrarVentana();
             }else{
-                Utilidades.mostrarAletarSimple("Error al modificar", 
-                        (String) respuesta.get("mensaje"), Alert.AlertType.WARNING);
+                Utilidades.mostrarAletarSimple(
+                        "Error al modificar", 
+                        (String) respuesta.get("mensaje"),
+                        Alert.AlertType.WARNING);
             }
     }
     
