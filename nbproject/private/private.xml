@@ -2,23 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeCambiosController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/utils/Utilidades.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeDefectosController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeActividadController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLBitacoraDeCambiosDesarrolladorController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeParticipantesParaBitacoraController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeSolicitudesDeCambioController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistrarDesarrolladorController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/pojo/SolicitudDeCambio.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeCambioController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/pojo/TipoArtefacto.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLBitacoraDeCambiosGeneralController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLParticipantesDelProyectoController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeActividadesController.java</file>
-            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListaDeParticipantesDelProyectoController.java</file>
-        </group>
         <group name="PROGRAMACION">
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeSolicitudesDeCambioController.java</file>
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeSolicitudDeCambioController.java</file>
@@ -28,6 +11,35 @@
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/modelo/dao/TipoArtefactoDAO.java</file>
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeCambiosController.java</file>
             <file>file:/D:/Documents/NetBeansProjects/JavaFX/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeCambioController.java</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeDefectosController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/DesarrolladorDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLInicioSesionController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeActividadController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/PeriodoDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeCambioController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/SolicitudDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLParticipantesDelProyectoController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeCambiosController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistroDeSolicitudDeCambioController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/CambioDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ActividadDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ArchivoDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ProyectoDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLBitacoraDeCambiosDesarrolladorController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/DefectoDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/TipoArtefactoDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeParticipantesParaBitacoraController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeSolicitudesDeCambioController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLRegistrarDesarrolladorController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/pojo/SolicitudDeCambio.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/pojo/TipoArtefacto.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/MateriaDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/modelo/dao/ResponsableDAO.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLBitacoraDeCambiosGeneralController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListadoDeActividadesController.java</file>
+            <file>file:/C:/Users/Cesar/Documents/GitHub/SistemaDCUV/src/sistemadcuv/controladores/FXMLListaDeParticipantesDelProyectoController.java</file>
         </group>
     </open-files>
 </project-private>

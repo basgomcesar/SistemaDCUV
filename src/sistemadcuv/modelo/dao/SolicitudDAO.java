@@ -129,7 +129,8 @@ public class SolicitudDAO {
                     "numeroSolicitud, razon, EstadoSolicitud_idEstadoSolicitud, fechaCreacion, " +
                     "impacto,accionPropuesta, Desarrollador_idDesarrollador) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, 
+                        Statement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setString(1, nuevaSolicitud.getNombre());
                 prepararSentencia.setString(2, nuevaSolicitud.getDescripcion());
                 prepararSentencia.setInt(3, nuevaSolicitud.getNumSolicitud());

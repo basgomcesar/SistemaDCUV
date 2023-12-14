@@ -99,7 +99,7 @@ public class FXMLListadoDeActividadesController implements Initializable,Initial
 
     @Override
     public void operacionExitosa(String tipoOperacion, String nombre) {
-        //cargarInformacion();
+        
     }
 
     @FXML
